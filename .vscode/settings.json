@@ -1,0 +1,4 @@
+{
+    "python-env.workspaceSearchPaths": ["src/python"],
+    "python.analysis.typeCheckingMode": "standard"
+}

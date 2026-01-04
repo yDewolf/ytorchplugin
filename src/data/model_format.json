@@ -1,0 +1,30 @@
+{
+    "modules": {
+        "module_0": {
+            "type": "Linear",
+            "params": {
+                "in_features": 42,
+                "out_features": 32
+            },
+            "activation": "ReLU",
+            "before": "None",
+            "input": "something"
+        },
+        "module_1": {
+            "type": "Linear",
+            "params": {
+                "in_features": "module_0:params:out_features",
+                "out_features": 16
+            },
+            "activation": "ReLU",
+            "before": "reshape_module_0",
+            "input": "module_0:out"
+        }
+    },
+    "functions": {
+        "reshape_module_0": {
+            "type": "reshape", 
+            "args": "(4, 4)"
+        }
+    }
+}
