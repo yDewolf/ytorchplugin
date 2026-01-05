@@ -1,4 +1,5 @@
 {
+    "version": 0,
     "modules": {
         "module_0": {
             "type": "Linear",
@@ -7,7 +8,7 @@
                 "out_features": 32
             },
             "activation": "ReLU",
-            "before": "None",
+            "before": {},
             "input": "something"
         },
         "module_1": {
@@ -17,14 +18,11 @@
                 "out_features": 16
             },
             "activation": "ReLU",
-            "before": "reshape_module_0",
+            "before": {
+                "function": "reshape",
+                "arguments": "(4, 4)"
+            },
             "input": "module_0:out"
-        }
-    },
-    "functions": {
-        "reshape_module_0": {
-            "type": "reshape", 
-            "args": "(4, 4)"
         }
     }
 }
