@@ -1,14 +1,19 @@
+# This is really cool, I love when I can do things like this (Rust made my mind)
+from typing import TypeVar, Generic
+
 FORMAT_VERSION = 0
 VARIABLE_ACCESS: str = "$"
 PATH_SEPARATOR: str = ":"
 
-class InstructionVariable:
+T = TypeVar("T")
+
+class InstructionVariable(Generic[T]):
     var_path: str
 
     target_key: str
-    raw_value: object | None = None # TODO: Puxar isso aqui com base na key
+    raw_value: T | None = None # TODO: Puxar isso aqui com base na key
 
-    def __init__(self, var_path: str, raw_value: object | None, target_key: str = "") -> None:
+    def __init__(self, var_path: str, raw_value: T | None, target_key: str = "") -> None:
         self.var_path = var_path
         self.target_key = target_key
         self.raw_value = raw_value
@@ -20,17 +25,17 @@ class InstructionVariable:
 
     # Path must include variable name
     @staticmethod
-    def from_data_variable(path: list[str], value: object):
+    def from_data_variable(path: list[str], value: T):
         var_path: str = PATH_SEPARATOR.join(path)
         target_key: str = ""
-        raw_value: object | None = value
+        raw_value: T | None = value
 
         if type(value) is str:
             if value.startswith(VARIABLE_ACCESS):
                 target_key = value
                 raw_value = None
 
-        return InstructionVariable(
+        return InstructionVariable[T](
             var_path,
             raw_value,
             target_key=target_key
@@ -75,15 +80,15 @@ class ModuleParameters:
 
 class ModuleInstructions:
     module_key: str
-    module_type: str
+    module_type: InstructionVariable
 
-    init_parameters: ModuleParameters
+    init_parameters: InstructionVariable[ModuleParameters]
     input_key: InstructionVariable
     
-    before: ModuleFunction | None
-    activation: str | None = None
+    before: InstructionVariable[ModuleFunction] | None
+    activation: InstructionVariable
 
-    def __init__(self, module_key: str, type: str, init_parameters: ModuleParameters, input_key: InstructionVariable, before: ModuleFunction | None, activation: str) -> None:
+    def __init__(self, module_key: str, type: InstructionVariable, init_parameters: InstructionVariable[ModuleParameters], input_key: InstructionVariable, before: InstructionVariable[ModuleFunction] | None, activation: InstructionVariable) -> None:
         self.module_key = module_key
         self.module_type = type
         self.init_parameters = init_parameters
@@ -94,16 +99,23 @@ class ModuleInstructions:
     @staticmethod
     def from_dict(key: str, data_dict: dict, root_path: list[str] = []):
         before = data_dict.get("before", {})
-        func: ModuleFunction | None = ModuleFunction.from_dict(before) if before != {} else None
-        
         path = root_path + [key]
+
+        func: InstructionVariable[ModuleFunction] | None = InstructionVariable[ModuleFunction].from_data_variable(
+            path + ["before"],    
+            ModuleFunction.from_dict(before) 
+        ) if before != {} else None
+        
         return ModuleInstructions( 
             key,
-            data_dict["type"],
-            ModuleParameters.from_dict(data_dict["params"], module_path=path),
+            InstructionVariable.from_data_variable(path + ["type"], data_dict["type"]),
+            InstructionVariable[ModuleParameters].from_data_variable(
+                path, 
+                ModuleParameters.from_dict(data_dict["params"], module_path=path)
+            ),
             InstructionVariable.from_data_variable(path + ["input"], data_dict["input"]),
             func,
-            data_dict["activation"]
+            InstructionVariable.from_data_variable(path + ["activation"], data_dict.get("activation", None)),
         )
 
 
@@ -111,10 +123,10 @@ class InstructionHolder:
     version: int = 0
     raw_data: dict
 
-    modules: dict[str, ModuleInstructions]
+    modules: dict[str, InstructionVariable[ModuleInstructions]]
     functions: list[ModuleFunction]
 
-    def __init__(self, raw_data: dict, modules: dict[str, ModuleInstructions], functions: list[ModuleFunction], version = FORMAT_VERSION) -> None:
+    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], functions: list[ModuleFunction], version = FORMAT_VERSION) -> None:
         self.version = version
         self.raw_data = raw_data
         
@@ -124,13 +136,17 @@ class InstructionHolder:
     @staticmethod
     def from_dict(data_dict: dict):
         version = data_dict.get("version", -1)
-        modules: dict[str, ModuleInstructions] = {}
+        modules: dict[str, InstructionVariable[ModuleInstructions]] = {}
 
         modules_data: dict = data_dict.get("modules", {})
+        modules_path: list[str] = ["modules"]
         for module_key in modules_data:
             data: dict = modules_data[module_key]
 
-            instructions = ModuleInstructions.from_dict(module_key, data, root_path=["modules"])
-            modules[module_key] = instructions
+            instructions = ModuleInstructions.from_dict(module_key, data, root_path=modules_path)
+            modules[module_key] = InstructionVariable.from_data_variable(
+                modules_path + [module_key],
+                instructions
+            )
         
         return InstructionHolder(data_dict, modules, [], version=version)
