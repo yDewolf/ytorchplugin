@@ -10,4 +10,8 @@ with open(os.path.join(os.path.dirname(__file__), "..", "data", "model_format.js
     model_data = json.load(file)
 
 holder = InstructionHolder.from_dict(model_data)
-pass
+print(holder.variable_controller.variables.keys())
+print(holder.variable_controller.get_variable("modules:module_1:params:in_features"))
+
+# for module in holder.modules:
+#     print(holder.modules[module])

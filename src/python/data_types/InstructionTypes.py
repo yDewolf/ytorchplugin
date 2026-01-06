@@ -1,5 +1,8 @@
 # This is really cool, I love when I can do things like this (Rust made my mind)
 from typing import TypeVar, Generic
+import logging
+
+INSTRUCTION_LOGGER = logging.Logger("Instruction")
 
 FORMAT_VERSION = 0
 VARIABLE_ACCESS: str = "$"
@@ -40,6 +43,52 @@ class InstructionVariable(Generic[T]):
             raw_value,
             target_key=target_key
         )
+    
+    def __str__(self) -> str:
+        return f"Var({self.var_path}={self.raw_value if not self.raw_value is None else self.target_key})"
+
+
+class VariableController:
+    variables: dict[str, InstructionVariable]
+
+    def __init__(self) -> None:
+        self.variables = {}
+
+    def add_object_variables(self, obj: object, deep: bool = False):
+        for attribute_name in obj.__dict__:
+            attribute = obj.__getattribute__(attribute_name)
+
+            if type(attribute) is InstructionVariable:
+                self.add_variable(attribute, deep)
+
+
+    def add_variable(self, variable: InstructionVariable, deep: bool = False):
+        self.variables[variable.var_path] = variable
+
+        if variable.raw_value is None:
+            return
+        
+        if deep and hasattr(variable.raw_value, "__dict__"):
+            for attribute_name in variable.raw_value.__dict__:
+                attribute = variable.raw_value.__getattribute__(attribute_name)
+
+                if type(attribute) is InstructionVariable:
+                    self.add_variable(attribute, deep)
+
+    def get_variable(self, var_path: str):
+        var_path = var_path.removeprefix(VARIABLE_ACCESS)
+        variable: InstructionVariable | None = self.variables.get(var_path)
+        if variable is None:
+            INSTRUCTION_LOGGER.error(f"Couldn't find {var_path} in Controller {self}")
+            return
+
+        value = variable.raw_value
+        if variable.target_key != "":
+            value = self.get_variable(variable.target_key)
+        
+        return value
+
+
 
 # TODO: Fazer module function funcionar como uma variável
 class ModuleFunction:
@@ -57,6 +106,12 @@ class ModuleFunction:
             data_dict["arguments"],
         )
 
+    def __str__(self) -> str:
+        args_str: list[str] = []
+        for key in self.args:
+            args_str.append(f"{key}={self.args[key]}")
+
+        return f"{self.type}({", ".join(args_str)})"
 
 class ModuleParameters:
     raw_parameters: dict
@@ -118,6 +173,10 @@ class ModuleInstructions:
             InstructionVariable.from_data_variable(path + ["activation"], data_dict.get("activation", None)),
         )
 
+        
+    def __str__(self) -> str:
+        return f"Module({self.module_key}, {self.module_type})"
+
 
 class InstructionHolder:
     version: int = 0
@@ -125,13 +184,15 @@ class InstructionHolder:
 
     modules: dict[str, InstructionVariable[ModuleInstructions]]
     functions: list[ModuleFunction]
+    variable_controller: VariableController
 
-    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], functions: list[ModuleFunction], version = FORMAT_VERSION) -> None:
+    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], functions: list[ModuleFunction], version = FORMAT_VERSION, controller: VariableController = VariableController()) -> None:
         self.version = version
         self.raw_data = raw_data
         
         self.modules = modules
         self.functions = functions
+        self.variable_controller = controller
     
     @staticmethod
     def from_dict(data_dict: dict):
@@ -140,13 +201,20 @@ class InstructionHolder:
 
         modules_data: dict = data_dict.get("modules", {})
         modules_path: list[str] = ["modules"]
+        var_controller: VariableController = VariableController()
+
         for module_key in modules_data:
             data: dict = modules_data[module_key]
 
             instructions = ModuleInstructions.from_dict(module_key, data, root_path=modules_path)
-            modules[module_key] = InstructionVariable.from_data_variable(
+            var = InstructionVariable.from_data_variable(
                 modules_path + [module_key],
                 instructions
             )
+
+            var_controller.add_variable(var)
+            var_controller.add_object_variables(instructions, True)
+            modules[module_key] = var
         
-        return InstructionHolder(data_dict, modules, [], version=version)
+        return InstructionHolder(data_dict, modules, [], version=version, controller=var_controller)
+    
