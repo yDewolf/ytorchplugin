@@ -1,7 +1,7 @@
 
-from python.data_types.InstructionTypes import InstructionAssembler
+from data_types.InstructionTypes import InstructionHolder
 
 
 class ModelAssembler:
-    def assemble_model(self, instructions: InstructionAssembler):
+    def assemble_model(self, instructions: InstructionHolder):
         pass

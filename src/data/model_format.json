@@ -9,20 +9,22 @@
             },
             "activation": "ReLU",
             "before": {},
-            "input": "something"
+            "input": "$something"
         },
         "module_1": {
             "type": "Linear",
             "params": {
-                "in_features": "module_0:params:out_features",
+                "in_features": "$module_0:params:out_features",
                 "out_features": 16
             },
             "activation": "ReLU",
             "before": {
                 "function": "reshape",
-                "arguments": "(4, 4)"
+                "arguments": {
+                    "shape": [4, 4]
+                }
             },
-            "input": "module_0:out"
+            "input": "$module_0:out"
         }
     }
 }
