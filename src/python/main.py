@@ -3,7 +3,7 @@
 import json
 import os
 
-from data_types.InstructionTypes import InstructionHolder
+from python.data_types.ModuleInstructions import InstructionHolder
 
 model_data: dict = {}
 with open(os.path.join(os.path.dirname(__file__), "..", "data", "model_format.json")) as file:

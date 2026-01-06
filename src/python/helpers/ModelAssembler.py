@@ -1,5 +1,5 @@
 
-from data_types.InstructionTypes import InstructionHolder
+from python.data_types.ModuleInstructions import InstructionHolder
 
 
 class ModelAssembler:
