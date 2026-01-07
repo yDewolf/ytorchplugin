@@ -1,4 +1,4 @@
-from python.data_types.InstructionVariables import InstructionVariable, VariableController
+from data_types.InstructionVariables import InstructionVariable, VariableController
 
 FORMAT_VERSION = 0
 

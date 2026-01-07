@@ -78,7 +78,7 @@ class VariableController:
         var_path = var_path.removeprefix(VARIABLE_ACCESS)
         variable: InstructionVariable | None = self.variables.get(var_path)
         if variable is None:
-            INSTRUCTION_LOGGER.error(f"Couldn't find {var_path} in Controller {self}")
+            INSTRUCTION_LOGGER.error(f"ERROR: Couldn't find {var_path} in Controller {self}")
             return
 
         value = variable.raw_value
