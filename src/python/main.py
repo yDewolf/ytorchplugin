@@ -8,6 +8,7 @@ import os
 from data_types.ModuleInstructions import InstructionHolder
 from data_types.ModuleParts import ModulePart
 from helpers.ShapeCalculator import ShapeCalculator
+from helpers.ModelAssembler import ModelAssembler
 
 model_data: dict = {}
 with open(os.path.join(os.path.dirname(__file__), "..", "data", "model_format.json")) as file:
@@ -29,6 +30,7 @@ print(ShapeCalculator.calculate_out_shape(conv2d_part))
 print(ShapeCalculator.calculate_out_shape(conv2d_part, (120, 300, 300)))
 print(ShapeCalculator.calculate_out_shape(conv2d_part, (30, 300, 300)))
 
-
+model = ModelAssembler.assemble_model(holder)
+pass
 # for module in holder.modules:
 #     print(holder.modules[module])

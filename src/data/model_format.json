@@ -1,5 +1,6 @@
 {
     "version": 0,
+    "device": "cpu",
     "modules": {
         "module_0": {
             "type": "Linear",

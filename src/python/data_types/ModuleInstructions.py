@@ -1,6 +1,8 @@
-from data_types.InstructionVariables import InstructionVariable, VariableController
+import logging
+from data_types.InstructionVariables import VARIABLE_ACCESS, InstructionVariable, VariableController
 
 FORMAT_VERSION = 0
+INSTRUCTION_LOGGER = logging.Logger("InstructionLogger")
 
 class ModuleFunction:
     type: str
@@ -31,6 +33,7 @@ class ModuleParameters:
     output_size: InstructionVariable
 
     def __init__(self, param_data: dict, in_features: InstructionVariable, output_size: InstructionVariable) -> None:
+        self.raw_parameters = param_data
         self.in_features = in_features
         self.output_size = output_size
 
@@ -84,21 +87,44 @@ class ModuleInstructions:
             InstructionVariable.from_data_variable(path + ["activation"], data_dict.get("activation", None)),
         )
 
+    def get_module_type(self) -> str:
+        if self.module_type.raw_value is None:
+            return ""
+
+        return self.module_type.raw_value
+
+    def get_init_parameters(self, controller: VariableController) -> dict:
+        if self.init_parameters.raw_value is None:
+            return {}
+
+        parameters: dict = {}
+        for param_key, value in self.init_parameters.raw_value.raw_parameters.items():
+            real_value = value
+            if type(value) is str and value.startswith(VARIABLE_ACCESS):
+                real_value = controller.get_variable(real_value)
+            
+            parameters[param_key] = real_value
         
+        return parameters
+
+
+
     def __str__(self) -> str:
         return f"Module({self.module_key}, {self.module_type})"
 
 
 class InstructionHolder:
-    version: int = 0
     raw_data: dict
+    version: int = 0
+    device: str = "cpu"
 
     modules: dict[str, InstructionVariable[ModuleInstructions]]
     functions: list[ModuleFunction]
     variable_controller: VariableController
 
-    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], functions: list[ModuleFunction], version = FORMAT_VERSION, controller: VariableController = VariableController()) -> None:
+    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], functions: list[ModuleFunction], version = FORMAT_VERSION, device = "cpu", controller: VariableController = VariableController()) -> None:
         self.version = version
+        self.device = device
         self.raw_data = raw_data
         
         self.modules = modules
@@ -108,6 +134,7 @@ class InstructionHolder:
     @staticmethod
     def from_dict(data_dict: dict):
         version = data_dict.get("version", -1)
+        device = data_dict.get("device", "cpu")
         modules: dict[str, InstructionVariable[ModuleInstructions]] = {}
 
         modules_data: dict = data_dict.get("modules", {})
@@ -127,5 +154,21 @@ class InstructionHolder:
             var_controller.add_object_variables(instructions, True)
             modules[module_key] = var
         
-        return InstructionHolder(data_dict, modules, [], version=version, controller=var_controller)
+        return InstructionHolder(data_dict, modules, [], version=version, device=device, controller=var_controller)
     
+
+    def get_modules(self) -> list[ModuleInstructions]:
+        modules: list[ModuleInstructions] = []
+        for variable in self.modules.values():
+            if variable.raw_value is None:
+                INSTRUCTION_LOGGER.error("ERROR: Module variable has None value instead of ModuleInstruction")
+                continue
+
+            modules.append(variable.raw_value)
+        
+        return modules
+
+
+
+    def get_variable(self, path: str):
+        return self.variable_controller.get_variable(path)

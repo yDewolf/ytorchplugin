@@ -43,6 +43,7 @@ class InstructionVariable(Generic[T]):
             target_key=target_key
         )
     
+
     def __str__(self) -> str:
         return f"Var({self.var_path}={self.raw_value if not self.raw_value is None else self.target_key})"
 
@@ -87,3 +88,10 @@ class VariableController:
         
         return value
 
+    def get_non_none_value(self, variable: InstructionVariable):
+        value = self.get_variable(variable.var_path)
+        if value is None:
+            INSTRUCTION_LOGGER.error(f"ERROR: Variable shouldn't have None value - Var: {variable}")
+            return -1
+
+        return value

@@ -1,8 +1,11 @@
+import logging
 from torch.nn import Module
-import torch.nn as nn
-from enum import Enum
-import random
 import torch
+import torch.nn as nn
+import random
+from enum import Enum
+
+PART_LOGGER = logging.Logger("PartLogger")
 
 DIM_ANY_VALUE = -1
 INT32_LIMIT = 2 ** 31
@@ -114,3 +117,11 @@ class ModulePart:
             
             case "conv2d":
                 return ModulePart(nn.Conv2d)
+            
+            case "conv3d":
+                return ModulePart(nn.Conv3d)
+            
+            case _:
+                PART_LOGGER.error(f"ERROR: Couldn't parse type str '{type_str}'")
+                return None
+                # return ModulePart(nn.Module)
