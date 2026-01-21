@@ -63,7 +63,7 @@ class VariableController:
 
 
     def add_variable(self, variable: InstructionVariable, deep: bool = False):
-        self.variables[variable.var_path] = variable
+        self.set_variable(variable)
 
         if variable.raw_value is None:
             return
@@ -74,10 +74,19 @@ class VariableController:
 
                 if type(attribute) is InstructionVariable:
                     self.add_variable(attribute, deep)
+    
+    def set_variable(self, variable: InstructionVariable):
+        self.variables[variable.var_path] = variable
+
+
+    def get_var_from_path(self, var_path: str) -> InstructionVariable | None:
+        var_path = VariableController._get_var_path_without_prefix(var_path)
+        variable: InstructionVariable | None = self.variables.get(var_path)
+        
+        return variable
 
     def get_variable(self, var_path: str):
-        var_path = var_path.removeprefix(VARIABLE_ACCESS)
-        variable: InstructionVariable | None = self.variables.get(var_path)
+        variable = self.get_var_from_path(var_path)
         if variable is None:
             INSTRUCTION_LOGGER.error(f"ERROR: Couldn't find {var_path} in Controller {self}")
             return
@@ -92,6 +101,10 @@ class VariableController:
         value = self.get_variable(variable.var_path)
         if value is None:
             INSTRUCTION_LOGGER.error(f"ERROR: Variable shouldn't have None value - Var: {variable}")
-            return -1
+            return Exception("Non none value is None")
 
         return value
+
+    @staticmethod
+    def _get_var_path_without_prefix(var_path: str):
+        return var_path.removeprefix(VARIABLE_ACCESS)

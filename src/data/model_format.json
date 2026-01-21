@@ -1,6 +1,10 @@
 {
     "version": 0,
     "device": "cpu",
+    "forward": [
+        {"operation": "module_forward", "params": {"module": "$modules:module_0"}},
+        {"operation": "module_forward", "params": {"module": "$modules:module_1"}}
+    ],
     "modules": {
         "module_0": {
             "type": "Linear",
@@ -10,7 +14,7 @@
             },
             "activation": "ReLU",
             "before": {},
-            "input": "$something"
+            "input": "$inputs:something"
         },
         "module_1": {
             "type": "Linear",

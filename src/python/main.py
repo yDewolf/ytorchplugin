@@ -31,6 +31,10 @@ print(ShapeCalculator.calculate_out_shape(conv2d_part, (120, 300, 300)))
 print(ShapeCalculator.calculate_out_shape(conv2d_part, (30, 300, 300)))
 
 model = ModelAssembler.assemble_model(holder)
+model.forward_planner.pre_forward_pass({
+    "something": torch.zeros((1, 42))
+})
+model.forward_planner.forward_pass()
 pass
 # for module in holder.modules:
 #     print(holder.modules[module])

@@ -1,5 +1,6 @@
 import logging
 from data_types.InstructionVariables import VARIABLE_ACCESS, InstructionVariable, VariableController
+from helpers.ForwardPlanner import ForwardOperation
 
 FORMAT_VERSION = 0
 INSTRUCTION_LOGGER = logging.Logger("InstructionLogger")
@@ -118,16 +119,18 @@ class InstructionHolder:
     version: int = 0
     device: str = "cpu"
 
+    forward_operations: list[ForwardOperation]
     modules: dict[str, InstructionVariable[ModuleInstructions]]
     functions: list[ModuleFunction]
     variable_controller: VariableController
 
-    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], functions: list[ModuleFunction], version = FORMAT_VERSION, device = "cpu", controller: VariableController = VariableController()) -> None:
+    def __init__(self, raw_data: dict, modules: dict[str, InstructionVariable[ModuleInstructions]], forward_operations: list[ForwardOperation], functions: list[ModuleFunction], version = FORMAT_VERSION, device = "cpu", controller: VariableController = VariableController()) -> None:
         self.version = version
         self.device = device
         self.raw_data = raw_data
         
         self.modules = modules
+        self.forward_operations = forward_operations
         self.functions = functions
         self.variable_controller = controller
     
@@ -154,7 +157,20 @@ class InstructionHolder:
             var_controller.add_object_variables(instructions, True)
             modules[module_key] = var
         
-        return InstructionHolder(data_dict, modules, [], version=version, device=device, controller=var_controller)
+        forward_data = data_dict.get("forward", [])
+        # forward_path: list[str] = ["forward"]
+        forward_operations: list[ForwardOperation] = []
+        for operation_data in forward_data:
+            operation = ForwardOperation.from_dict(operation_data)
+            
+            # var = InstructionVariable.from_data_variable(
+            #       forward_path
+            # )
+            # var_controller.add_object_variables(operation.raw_params)
+
+            forward_operations.append(operation)
+        
+        return InstructionHolder(data_dict, modules, forward_operations, [], version=version, device=device, controller=var_controller)
     
 
     def get_modules(self) -> list[ModuleInstructions]:

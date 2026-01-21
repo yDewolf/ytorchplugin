@@ -85,6 +85,8 @@ class DimShape:
 
 class ModulePart:
     module_type: type[Module]
+    key: str
+
     torch_module: Module
 
     is_setup: bool = False

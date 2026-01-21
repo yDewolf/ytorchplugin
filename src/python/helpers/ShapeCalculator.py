@@ -24,6 +24,16 @@ class ShapeCalculator:
         device = next(module.torch_module.parameters()).device
 
         shape = module.get_input_shape() if test_shape is None else test_shape
+        if not ShapeCalculator.check_input_shape(module, shape):
+            return (-1, )
+
+        test_tensor = torch.zeros(shape, dtype=dtype, device=device)
+        with torch.no_grad():
+            output: torch.Tensor = module.torch_module.forward(test_tensor)
+            return output.shape
+    
+    @staticmethod
+    def check_input_shape(module: ModulePart, shape: tuple) -> bool:
         is_compatible, wrong_dims = module._input_shape.is_compatible(shape)
         if not is_compatible:
             example_shape = module._input_shape.shape
@@ -38,9 +48,6 @@ class ShapeCalculator:
                     shape_str += ", "
 
             SHAPE_LOGGER.error(f"ERROR: Shape {shape} dimensions {wrong_dims} are not compatible with module shape: ({shape_str}) - Module Type: {module.module_type} - Module Parameters: {module.get_arguments()}")
-            return (-1, )
-
-        test_tensor = torch.zeros(shape, dtype=dtype, device=device)
-        with torch.no_grad():
-            output: torch.Tensor = module.torch_module.forward(test_tensor)
-            return output.shape
+            return False
+    
+        return True
