@@ -1,7 +1,7 @@
 import logging
 import torch
 import torch.nn as nn
-from data_types.ModuleParts import DIM_ANY_VALUE, ModulePart
+from data_types.ModuleParts import DIM_ANY_VALUE, DimShape, ModulePart
 
 SHAPE_LOGGER = logging.Logger("ShapeLog")
 
@@ -24,7 +24,7 @@ class ShapeCalculator:
         device = next(module.torch_module.parameters()).device
 
         shape = module.get_input_shape() if test_shape is None else test_shape
-        if not ShapeCalculator.check_input_shape(module, shape):
+        if not ShapeCalculator.check_module_input_shape(module, shape):
             return (-1, )
 
         test_tensor = torch.zeros(shape, dtype=dtype, device=device)
@@ -33,21 +33,10 @@ class ShapeCalculator:
             return output.shape
     
     @staticmethod
-    def check_input_shape(module: ModulePart, shape: tuple) -> bool:
+    def check_module_input_shape(module: ModulePart, shape: tuple) -> bool:
         is_compatible, wrong_dims = module._input_shape.is_compatible(shape)
         if not is_compatible:
-            example_shape = module._input_shape.shape
-            shape_str: str = ""
-            for idx, value in enumerate(example_shape):
-                if value == DIM_ANY_VALUE:
-                    shape_str += f"[{module._input_shape.size_range[0]}, {module._input_shape.size_range[1]}]"                   
-                else:
-                    shape_str += str(value)
-
-                if idx < len(example_shape) - 1:
-                    shape_str += ", "
-
-            SHAPE_LOGGER.error(f"ERROR: Shape {shape} dimensions {wrong_dims} are not compatible with module shape: ({shape_str}) - Module Type: {module.module_type} - Module Parameters: {module.get_arguments()}")
+            SHAPE_LOGGER.error(f"ERROR: Shape {shape} dimensions {wrong_dims} are not compatible with module shape: ({module._input_shape._make_shape_str()}) - Module Type: {module.module_type} - Module: {module.key if module.key != "" else module.get_arguments()}")
             return False
     
         return True

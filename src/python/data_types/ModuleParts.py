@@ -20,6 +20,22 @@ class DimShape:
         self.shape = shape
         self.size_range = size_range
 
+    def __str__(self) -> str:
+        return f"DimShape(shape=({self._make_shape_str()}))"
+
+    def _make_shape_str(self) -> str:
+        shape_str: str = ""
+        for idx, value in enumerate(self.shape):
+            if value == DIM_ANY_VALUE:
+                shape_str += f"[{self.size_range[0]}, {self.size_range[1]}]"                   
+            else:
+                shape_str += str(value)
+
+            if idx < len(self.shape) - 1:
+                shape_str += ", "
+        
+        return shape_str
+
     @staticmethod
     def from_module(module: Module):
         with torch.no_grad():
@@ -85,7 +101,7 @@ class DimShape:
 
 class ModulePart:
     module_type: type[Module]
-    key: str
+    key: str = ""
 
     torch_module: Module
 

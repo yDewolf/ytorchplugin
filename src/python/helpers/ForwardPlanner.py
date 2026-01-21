@@ -3,8 +3,8 @@ from enum import Enum
 import logging
 
 import torch
-from data_types.ModuleParts import ModulePart
-from data_types.InstructionVariables import InstructionVariable, VariableController
+from data_types.ModuleParts import DimShape, ModulePart
+from data_types.InstructionVariables import PATH_SEPARATOR, InstructionVariable, VariableController
 from helpers.ShapeCalculator import ShapeCalculator
 
 FORWARD_LOGGER = logging.Logger("ForwardLogger")
@@ -101,7 +101,11 @@ class ForwardPlanner:
             self.internal_var_controller.add_variable(var)
 
 
-    def pre_forward_pass(self, inputs: dict[str, torch.Tensor]):
+    def pre_forward_pass(self, inputs: dict[str, torch.Tensor]) -> tuple[bool, list[str], list[str]]:
+        input_is_valid, missing_inputs, invalid_inputs = self.validate_inputs(inputs)
+        if not input_is_valid:
+            return False, missing_inputs, invalid_inputs
+        
         # Setup input variables
         for input_key, value in inputs.items():
             self.internal_var_controller.set_variable(
@@ -109,8 +113,8 @@ class ForwardPlanner:
                     ["inputs", input_key], value
                 )
             )
-
-
+        
+        return True, [], []
 
     def forward_pass(self):
         for idx, operation in enumerate(self.forward_operations):
@@ -145,7 +149,7 @@ class ForwardPlanner:
                         FORWARD_LOGGER.error(f"ERROR: Module's input is not a Tensor on operation {idx} - Module {module_part.key}")
                         break
                     
-                    if not ShapeCalculator.check_input_shape(module_part, input_value.shape):
+                    if not ShapeCalculator.check_module_input_shape(module_part, input_value.shape):
                         FORWARD_LOGGER.error(f"ERROR: Couldn't pass Tensor to module since Shape Error on operation {idx} - Module {module_part.key}")
                         break
 
@@ -160,3 +164,45 @@ class ForwardPlanner:
                 
                 case OperationKeys.PERMUTE: 
                     pass
+            
+    def post_forward_pass(self):
+        # probably some cleanup
+        pass
+
+
+    def get_required_inputs(self) -> dict[str, ModulePart]:
+        # TODO: Get all input keys model needs + its shapes 
+        required_inputs: dict[str, ModulePart] = {}
+        for module in self.modules:
+            input_pointer: InstructionVariable | None = self.global_var_controller.get_var_from_path(InstructionVariable.make_variable_path([
+                "modules", module.key, "input"
+            ]))
+            if input_pointer is None:
+                FORWARD_LOGGER.error(f"ERROR: Module doesn't have a input pointer - Module {module.key}")
+                break
+            
+            clean_input_path = VariableController._get_var_path_without_prefix(input_pointer.target_key)
+            receives_external_input = clean_input_path.startswith("inputs")
+            if not receives_external_input:
+                continue
+            
+            required_inputs[PATH_SEPARATOR.join(clean_input_path.split(PATH_SEPARATOR)[1:])] = module
+            
+        return required_inputs
+
+    def validate_inputs(self, inputs: dict[str, torch.Tensor]) -> tuple[bool, list[str], list[str]]:
+        required_inputs: dict[str, ModulePart] = self.get_required_inputs()
+        
+        missing_inputs: list[str] = []
+        invalid_inputs: list[str] = []
+        for input_key, module in required_inputs.items():
+            input_value = inputs.get(input_key, None)
+            if input_value is None: 
+                missing_inputs.append(input_key)
+                continue
+            
+            if not ShapeCalculator.check_module_input_shape(module, input_value.shape):
+                invalid_inputs.append(input_key)
+                continue
+        
+        return len(missing_inputs) == 0 and len(invalid_inputs) == 0, missing_inputs, invalid_inputs

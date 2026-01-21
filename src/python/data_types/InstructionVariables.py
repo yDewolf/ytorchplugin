@@ -21,7 +21,7 @@ class InstructionVariable(Generic[T]):
         self.raw_value = raw_value
 
     @staticmethod
-    def make_variable_name(path: list[str]):
+    def make_variable_path(path: list[str]):
         return f"${PATH_SEPARATOR.join(path)}"
 
 

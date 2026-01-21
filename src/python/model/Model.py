@@ -11,8 +11,15 @@ class Model:
         self.forward_planner = forward_planner
 
     
-    def forward(self, input: torch.Tensor):
-        pass
+    def forward(self, inputs: dict[str, torch.Tensor]) -> bool:
+        successful, missing_inputs, invalid_inputs = self.forward_planner.pre_forward_pass(inputs)
+        if not successful:
+            return False
+        
+        self.forward_planner.forward_pass()
+        self.forward_planner.post_forward_pass()
+
+        return True
 
     def backward(self):
         pass
