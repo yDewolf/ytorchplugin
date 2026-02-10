@@ -46,6 +46,9 @@ class ForwardOperation:
 
         self.valid = True
 
+    def __str__(self) -> str:
+        return f"FwOperation(key={self.operation_key}, params={self.raw_params})"
+
     @staticmethod
     def from_dict(data_dict: dict):
         operation_type = data_dict.get("operation")
@@ -116,54 +119,16 @@ class ForwardPlanner:
         
         return True, [], []
 
-    def forward_pass(self):
+    def forward_pass(self, safe: bool = True):
         for idx, operation in enumerate(self.forward_operations):
             match operation.operation_key:
                 case OperationKeys.UNKNOWN: return Exception("Unknown Operation Type")
                 case OperationKeys.MODULE_FORWARD:
-                    module_pointer: InstructionVariable | None = operation.params.get("module", None)
-                    if module_pointer is None:
-                        FORWARD_LOGGER.error(f"ERROR: Couldn't find module_var for operation {idx} - Params: {operation.params}")
-                        break
+                    successful = self._module_forward(idx, operation, safe)
+                    break
 
-                    module_part = self.internal_var_controller.get_non_none_value(module_pointer)
-                    if not type(module_part) is ModulePart:
-                        FORWARD_LOGGER.error(f"ERROR: Wrong type for module part var on operation {idx} - Params: {operation.params}")
-                        break
-                    
-                    # Check if the operation targets a Input
-                    # otherwise we just get the model's input pointer
-                    internal_input_var: InstructionVariable | None = operation.params.get("input", None)
-                    if internal_input_var is None:
-                        # This InstructionVariable points to an internal variable in the forward runtime through the target key
-                        # its raw_value should always be None
-                        global_input_pointer = self.global_var_controller.get_var_from_path(f"$modules:{module_part.key}:input")
-                        if global_input_pointer is None:
-                            FORWARD_LOGGER.error(f"ERROR: Couldn't find any input variable for module {module_part.key} on operation {idx} - Params: {operation.params}")
-                            break
-                        
-                        internal_input_var = InstructionVariable(global_input_pointer.target_key, None)
-
-                    input_value = self.internal_var_controller.get_non_none_value(internal_input_var)
-                    if not type(input_value) is torch.Tensor:
-                        FORWARD_LOGGER.error(f"ERROR: Module's input is not a Tensor on operation {idx} - Module {module_part.key}")
-                        break
-                    
-                    if not ShapeCalculator.check_module_input_shape(module_part, input_value.shape):
-                        FORWARD_LOGGER.error(f"ERROR: Couldn't pass Tensor to module since Shape Error on operation {idx} - Module {module_part.key}")
-                        break
-
-                    model_output = module_part.torch_module(input_value)
-                    # Register module output so other modules can use this value
-                    self.internal_var_controller.set_variable(
-                        InstructionVariable.from_data_variable(["modules", module_part.key, "out"], model_output)
-                    )
-
-                case OperationKeys.RESHAPE: 
-                    pass
-                
-                case OperationKeys.PERMUTE: 
-                    pass
+                case _:
+                    successful = self._run_operation_function(idx, operation, safe)
             
     def post_forward_pass(self):
         # probably some cleanup
@@ -206,3 +171,57 @@ class ForwardPlanner:
                 continue
         
         return len(missing_inputs) == 0 and len(invalid_inputs) == 0, missing_inputs, invalid_inputs
+
+
+    def _module_forward(self,  idx: int, operation: ForwardOperation, safe: bool = True) -> bool:
+        module_pointer: InstructionVariable | None = operation.params.get("module", None)
+        if module_pointer is None:
+            FORWARD_LOGGER.error(f"ERROR: Couldn't find module_var for operation {idx} - Params: {operation.params}")
+            return False
+
+        module_part = self.internal_var_controller.get_non_none_value(module_pointer)
+        if not type(module_part) is ModulePart:
+            FORWARD_LOGGER.error(f"ERROR: Wrong type for module part var on operation {idx} - Params: {operation.params}")
+            return False
+        
+        # Check if the operation targets a Input
+        # otherwise we just get the model's input pointer
+        internal_input_var: InstructionVariable | None = operation.params.get("input", None)
+        if internal_input_var is None:
+            # This InstructionVariable points to an internal variable in the forward runtime through the target key
+            # its raw_value should always be None
+            global_input_pointer = self.global_var_controller.get_var_from_path(f"$modules:{module_part.key}:input")
+            if global_input_pointer is None:
+                FORWARD_LOGGER.error(f"ERROR: Couldn't find any input variable for module {module_part.key} on operation {idx} - Params: {operation.params}")
+                return False
+            
+            internal_input_var = InstructionVariable(global_input_pointer.target_key, None)
+
+        input_value = self.internal_var_controller.get_non_none_value(internal_input_var)
+        if safe:
+            if not type(input_value) is torch.Tensor:
+                FORWARD_LOGGER.error(f"ERROR: Module's input is not a Tensor on operation {idx} - Module {module_part.key}")
+                return False
+            
+            if not ShapeCalculator.check_module_input_shape(module_part, input_value.shape):
+                FORWARD_LOGGER.error(f"ERROR: Couldn't pass Tensor to module since Shape Error on operation {idx} - Module {module_part.key}")
+                return False
+
+        model_output = module_part.torch_module(input_value)
+        # Register module output so other modules can use this value
+        self.internal_var_controller.set_variable(
+            InstructionVariable.from_data_variable(["modules", module_part.key, "out"], model_output)
+        )
+        
+        return True
+    
+    def _run_operation_function(self, idx: int, operation: ForwardOperation, safe: bool) -> bool:
+        successful = False
+        match operation.operation_type:
+            case OperationKeys.RESHAPE:
+                FORWARD_LOGGER.debug(f"Running reshape operation {operation}")
+        
+            case OperationKeys.PERMUTE:
+                FORWARD_LOGGER.debug(f"Running permute operation {operation}")
+
+        return successful

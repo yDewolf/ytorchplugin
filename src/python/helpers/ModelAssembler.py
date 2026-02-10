@@ -34,7 +34,8 @@ class ModelAssembler:
         )
         return Model(
             module_parts,
-            forward_planner
+            forward_planner,
+            torch_device
         )
     
     @staticmethod
