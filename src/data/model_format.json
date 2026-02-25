@@ -8,27 +8,20 @@
     "modules": {
         "module_0": {
             "type": "Linear",
-            "params": {
+            "data": {
                 "in_features": 42,
                 "out_features": 32
             },
             "activation": "ReLU",
-            "before": {},
             "input": "$inputs:something"
         },
         "module_1": {
             "type": "Linear",
-            "params": {
-                "in_features": "$modules:module_0:params:out_features",
+            "data": {
+                "in_features": "$modules:module_0:data:out_features",
                 "out_features": 16
             },
             "activation": "ReLU",
-            "before": {
-                "function": "reshape",
-                "arguments": {
-                    "shape": [4, 4]
-                }
-            },
             "input": "$modules:module_0:out"
         }
     }

@@ -41,7 +41,7 @@ class ModuleParameters:
 
     @staticmethod
     def from_dict(data_dict: dict, module_path: list[str] = []):
-        path = module_path + ["params"]
+        path = module_path + ["data"]
         return ModuleParameters(
             data_dict,
             InstructionVariable.from_data_variable(path + ["in_features"], data_dict["in_features"]),
@@ -55,36 +55,36 @@ class ModuleInstructions:
     init_parameters: InstructionVariable[ModuleParameters]
     input_key: InstructionVariable
     
-    before: InstructionVariable[ModuleFunction] | None
+    # before: InstructionVariable[ModuleFunction] | None
     activation: InstructionVariable
 
-    def __init__(self, module_key: str, type: InstructionVariable, init_parameters: InstructionVariable[ModuleParameters], input_key: InstructionVariable, before: InstructionVariable[ModuleFunction] | None, activation: InstructionVariable) -> None:
+    def __init__(self, module_key: str, type: InstructionVariable, init_parameters: InstructionVariable[ModuleParameters], input_key: InstructionVariable, activation: InstructionVariable) -> None:
         self.module_key = module_key
         self.module_type = type
         self.init_parameters = init_parameters
         self.input_key = input_key
-        self.before = before
+        # self.before = before
         self.activation = activation
 
     @staticmethod
     def from_dict(key: str, data_dict: dict, root_path: list[str] = []):
-        before = data_dict.get("before", {})
+        # before = data_dict.get("before", {})
         path = root_path + [key]
 
-        func: InstructionVariable[ModuleFunction] | None = InstructionVariable[ModuleFunction].from_data_variable(
-            path + ["before"],    
-            ModuleFunction.from_dict(before) 
-        ) if before != {} else None
+        # func: InstructionVariable[ModuleFunction] | None = InstructionVariable[ModuleFunction].from_data_variable(
+        #     path + ["before"],    
+        #     ModuleFunction.from_dict(before) 
+        # ) if before != {} else None
         
         return ModuleInstructions( 
             key,
             InstructionVariable.from_data_variable(path + ["type"], data_dict["type"]),
             InstructionVariable[ModuleParameters].from_data_variable(
                 path, 
-                ModuleParameters.from_dict(data_dict["params"], module_path=path)
+                ModuleParameters.from_dict(data_dict["data"], module_path=path)
             ),
             InstructionVariable.from_data_variable(path + ["input"], data_dict["input"]),
-            func,
+            # func,
             InstructionVariable.from_data_variable(path + ["activation"], data_dict.get("activation", None)),
         )
 

@@ -125,7 +125,7 @@ class ForwardPlanner:
                 case OperationKeys.UNKNOWN: return Exception("Unknown Operation Type")
                 case OperationKeys.MODULE_FORWARD:
                     successful = self._module_forward(idx, operation, safe)
-                    break
+                    continue
 
                 case _:
                     successful = self._run_operation_function(idx, operation, safe)

@@ -1,0 +1,29 @@
+{
+    "version": 0,
+    "device": "cpu",
+    "forward": [
+        {"operation": "module_forward", "params": {"module": "$modules:module_0"}},
+        {"operation": "reshape", "params": {"tensor": "$modules:module_0:out", "bind": "$modules:module_0:out@reshaped_0", "shape": [4, 4]}},
+        {"operation": "module_forward", "params": {"module": "$modules:module_1"}}
+    ],
+    "modules": {
+        "module_0": {
+            "type": "Linear",
+            "data": {
+                "in_features": 42,
+                "out_features": 32
+            },
+            "activation": "ReLU",
+            "input": "$inputs:something"
+        },
+        "module_1": {
+            "type": "Linear",
+            "data": {
+                "in_features": "$modules:module_0:data:out_features",
+                "out_features": 16
+            },
+            "activation": "ReLU",
+            "input": "$modules:module_0:out@reshaped_0"
+        }
+    }
+}
