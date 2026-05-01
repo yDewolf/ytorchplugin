@@ -55,13 +55,16 @@ class DatasetInputNode(BaseTorchNode):
         super().__init__(mirror)
         self.bypass_cache = True
 
+    # Carregar o dataset caso ele não tenha sido carregado ainda
     def pre_forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]):
         pass
 
+    # Selecionar um elemento aleatório do dataset
     def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
         output_data = {"out_0": torch.rand((64,))}
         return self.map_to_slots(output_data)
     
+    # Fazer alguma limpeza se necessário (é interessante que o dataset ainda esteja carregado na memória para acelerar o pre_forward)
     def post_forward(self):
         pass
 

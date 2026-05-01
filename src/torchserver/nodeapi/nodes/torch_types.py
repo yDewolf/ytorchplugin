@@ -7,6 +7,7 @@ from nodeserver.wrapper.nodes.data.node_data import NodeData
 from nodeserver.wrapper.nodes.helpers.file.type_dataclasses import NodeFileParameter
 
 from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, TorchModuleNode, BaseTorchNode, TorchSlotOutput
+from torchserver.nodeapi.nodes.dataset_nodes import MNISTDatasetNode
 from torchserver.nodeapi.nodes.torch_nodes import LinearNode, ReshapeNode
 
 DATASET_EXTENSIONS: list[str] = []
@@ -16,6 +17,7 @@ def _torch_builder(mirror: NodeMirror) -> BaseNode:
         case "DatasetInput": return DatasetInputNode(mirror)
         case "Linear": return LinearNode(mirror)
         case "util_reshape": return ReshapeNode(mirror)
+        case "MNISTDataset": return MNISTDatasetNode(mirror)
 
     if mirror.type_name.startswith("util"):
         return BaseTorchNode(mirror)
@@ -38,7 +40,15 @@ TORCH_TYPES.set_new_constructors(TypeReaderUtils.make_constructors(
         ConstructorModel.new(
             "DatasetInput", 
             NodeData({"file": NodeFileParameter(extension_filter=DATASET_EXTENSIONS)}), 
-            {"out_0": SlotData(type="output", data_type=DataTypes.ARRAY)} # FIXME: Change this to a Tensor DataType 
+            {"out_0": SlotData(type="output", data_type=DataTypes.ARRAY),
+             "labels": SlotData(type="output", data_type=DataTypes.ARRAY)} # FIXME: Change this to a Tensor DataType 
+        ),
+        # FIXME Test:
+        ConstructorModel.new(
+            "MNISTDataset", 
+            NodeData({"file": NodeFileParameter(extension_filter=DATASET_EXTENSIONS)}), 
+            {"out_0": SlotData(type="output", data_type=DataTypes.ARRAY),
+             "labels": SlotData(type="output", data_type=DataTypes.ARRAY)} # FIXME: Change this to a Tensor DataType 
         ),
         ConstructorModel.new(
             "Linear", 
