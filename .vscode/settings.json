@@ -1,4 +1,4 @@
 {
-    "python-env.workspaceSearchPaths": ["src", "./src/python"],
+    "python-env.workspaceSearchPaths": ["src", "./src/torchserver"],
     "python.analysis.typeCheckingMode": "standard"
 }
