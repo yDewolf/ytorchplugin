@@ -1,23 +1,26 @@
 from nodeserver.wrapper.nodes.data.node_data_types import INPUT_TYPE, OUTPUT_TYPE, BaseSlotType
-from nodeserver.wrapper.nodes.helpers.file.type_dataclasses import DataTypes, NodeNumberParameter, SlotData
+from nodeserver.wrapper.nodes.helpers.file.type_dataclasses import BaseNodeParameter, DataTypes, NodeNumberParameter, SlotData
 from nodeserver.wrapper.nodes.helpers.file.typing_file_reader import TypeFileReader, TypeReaderUtils, ConstructorModel
 from nodeserver.api.instance.base_nodes import BaseNode
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from nodeserver.wrapper.nodes.data.node_data import NodeData
 from nodeserver.wrapper.nodes.helpers.file.type_dataclasses import NodeFileParameter
 
-from torchserver.nodeapi.nodes.torch_nodes import DatasetInputNode, TorchNode, TorchUtilNode
+from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, TorchModuleNode, BaseTorchNode
+from torchserver.nodeapi.nodes.torch_nodes import LinearNode, ReshapeNode
 
 DATASET_EXTENSIONS: list[str] = []
 
 def _torch_builder(mirror: NodeMirror) -> BaseNode:
-    if mirror.type_name == "DatasetInput":
-        return DatasetInputNode(mirror)
+    match mirror.type_name:
+        case "DatasetInput": return DatasetInputNode(mirror)
+        case "Linear": return LinearNode(mirror)
+        case "util_reshape": return ReshapeNode(mirror)
 
     if mirror.type_name.startswith("util"):
-        return TorchUtilNode(mirror)
+        return BaseTorchNode(mirror)
 
-    return TorchNode(mirror)
+    return TorchModuleNode(mirror)
 
 _slot_types: dict[str, BaseSlotType] = {
     "input": INPUT_TYPE,
@@ -43,7 +46,10 @@ TORCH_TYPES.set_new_constructors(TypeReaderUtils.make_constructors(
         ConstructorModel.new("Conv2d"),
         ConstructorModel.new(
             "util_reshape", 
-            NodeData({"auto": NodeNumberParameter(type=DataTypes.UINT, range=[0, 1], step=1)})
+            NodeData({
+                "auto": NodeNumberParameter(type=DataTypes.UINT, range=[0, 1], step=1),
+                "shape": BaseNodeParameter(type=DataTypes.ARRAY)
+            })
         ), # TODO: Add a NodeBooleanParameter
     ]
 ))

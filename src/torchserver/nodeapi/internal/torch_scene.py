@@ -4,7 +4,7 @@ from nodeserver.wrapper.nodes.helpers.scene_manager import MirrorSceneManager
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 import torch
 
-from torchserver.nodeapi.nodes.torch_nodes import TorchNode
+from torchserver.nodeapi.nodes.base_torch_nodes import TorchModuleNode
 
 class TorchNodeScene(NodeScene):
     def __init__(self, nodes: list[BaseNode], mirror_manager: MirrorSceneManager, device: str = "cpu"):
@@ -23,7 +23,7 @@ class TorchNodeScene(NodeScene):
             if uid not in self._node_instances:
                 new_node = self.build_node(mirror)
                 if new_node:
-                    if isinstance(new_node, TorchNode):
+                    if isinstance(new_node, TorchModuleNode):
                         new_node.device = self.device
                     self._node_instances[uid] = new_node
             else:
@@ -35,6 +35,6 @@ class TorchNodeScene(NodeScene):
     def to(self, device: str):
         self.device = torch.device(device)
         for node in self.nodes:
-            if isinstance(node, TorchNode) and node.module:
+            if isinstance(node, TorchModuleNode) and node.module:
                 node.module.to(self.device)
                 node.device = self.device
