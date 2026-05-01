@@ -1,20 +1,31 @@
 from torch import nn
-from typing import Optional
+from typing import Any, Optional
 
 from nodeserver.api.instance.base_nodes import BaseNode
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror, SlotOutput
 import torch
 
-class DatasetInputNode(BaseNode):
-    def pre_forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]):
-        pass
+class TorchSlotOutput(SlotOutput):
+    @property
+    def value(self):
+        return self._value
 
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
-        output_data = {"out_0": torch.zeros((64,))}
-        return self.map_to_slots(output_data)
-    
-    def post_forward(self):
-        pass
+    @value.setter
+    def value(self, new_value: Any):
+        if isinstance(new_value, torch.Tensor):
+            if isinstance(self.value, torch.Tensor):
+                if not new_value.equal(self._value):
+                    self._value = new_value
+                    self._version += 1
+                return
+            
+            self._value = new_value
+            self._version += 1
+            return
+        
+        if self._value != new_value:
+            self._value = new_value
+            self._version += 1
 
 class BaseTorchNode(BaseNode):
     # FIXME: lol
@@ -26,12 +37,38 @@ class BaseTorchNode(BaseNode):
                     return output._value
         
         return None
+    
+    def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
+        with torch.no_grad():
+            preview_tensor = tensor
+            if tensor.dim() > 3:
+                preview_tensor = tensor[0]
+
+            t_min, t_max = preview_tensor.min(), preview_tensor.max()
+            if t_max > t_min:
+                preview_tensor = (preview_tensor - t_min) / (t_max - t_min) * 255
+            
+            return preview_tensor.byte().cpu().tolist()
+
+class DatasetInputNode(BaseTorchNode):
+    def __init__(self, mirror: NodeMirror | None = None):
+        super().__init__(mirror)
+        self.bypass_cache = True
+
+    def pre_forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]):
+        pass
+
+    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
+        output_data = {"out_0": torch.rand((64,))}
+        return self.map_to_slots(output_data)
+    
+    def post_forward(self):
+        pass
 
 class TorchUtilNode(BaseTorchNode):
     # TODO: Implement some cool utility I guess
     def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
         tensor_data = self.get_input_tensor(input)
-        
         return self.map_to_slots({
             "out_0": tensor_data
         })

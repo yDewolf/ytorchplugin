@@ -22,7 +22,7 @@ class ReshapeNode(TorchUtilNode):
         
         target_shape = self._mirror.data.get_parameter_value("shape")
         parsed_shape: tuple = ()
-
+ 
         if type(target_shape) is str:
             parsed_shape = tuple([int(dim_size) for dim_size in target_shape.split(",")])
 

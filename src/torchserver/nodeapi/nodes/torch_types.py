@@ -6,7 +6,7 @@ from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from nodeserver.wrapper.nodes.data.node_data import NodeData
 from nodeserver.wrapper.nodes.helpers.file.type_dataclasses import NodeFileParameter
 
-from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, TorchModuleNode, BaseTorchNode
+from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, TorchModuleNode, BaseTorchNode, TorchSlotOutput
 from torchserver.nodeapi.nodes.torch_nodes import LinearNode, ReshapeNode
 
 DATASET_EXTENSIONS: list[str] = []
@@ -34,7 +34,7 @@ _default_slots: dict[str, SlotData] = {
 
 TORCH_TYPES = TypeFileReader.new(0, "TorchTypes", _slot_types, [])
 TORCH_TYPES.set_new_constructors(TypeReaderUtils.make_constructors(
-    TORCH_TYPES, _default_slots, _torch_builder, [
+    TORCH_TYPES, _default_slots, _torch_builder, TorchSlotOutput, [
         ConstructorModel.new(
             "DatasetInput", 
             NodeData({"file": NodeFileParameter(extension_filter=DATASET_EXTENSIONS)}), 
