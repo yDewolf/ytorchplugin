@@ -1,13 +1,10 @@
 # import torch
 import time
 import torch
-import torch.nn as nn
 import json
 import os
 
 from data_types.ModuleInstructions import InstructionHolder
-from data_types.ModuleParts import ModulePart
-from helpers.ShapeCalculator import ShapeCalculator
 from helpers.ModelAssembler import ModelAssembler
 
 model_data: dict = {}
@@ -33,6 +30,5 @@ for i in range(FORWARD_COUNT):
     # print(i)
 
 print(f"Performed {FORWARD_COUNT} forwards in {((time.perf_counter() - start) * 1000):.2f}ms")
-pass
 # for module in holder.modules:
 #     print(holder.modules[module])
