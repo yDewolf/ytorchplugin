@@ -6,11 +6,14 @@ from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from nodeserver.wrapper.nodes.data.node_data import NodeData
 from nodeserver.wrapper.nodes.helpers.file.type_dataclasses import NodeFileParameter
 
-from torchserver.nodeapi.nodes.torch_nodes import TorchNode, TorchUtilNode
+from torchserver.nodeapi.nodes.torch_nodes import DatasetInputNode, TorchNode, TorchUtilNode
 
 DATASET_EXTENSIONS: list[str] = []
 
 def _torch_builder(mirror: NodeMirror) -> BaseNode:
+    if mirror.type_name == "DatasetInput":
+        return DatasetInputNode(mirror)
+
     if mirror.type_name.startswith("util"):
         return TorchUtilNode(mirror)
 
@@ -34,7 +37,9 @@ TORCH_TYPES.set_new_constructors(TypeReaderUtils.make_constructors(
             NodeData({"file": NodeFileParameter(extension_filter=DATASET_EXTENSIONS)}), 
             {"out_0": SlotData(type="output", data_type=DataTypes.ARRAY)} # FIXME: Change this to a Tensor DataType 
         ),
-        ConstructorModel.new("Linear"),
+        ConstructorModel.new(
+            "Linear", 
+            NodeData({"out_features": NodeNumberParameter(type=DataTypes.UINT, range=[0, 1024], step=1)})),
         ConstructorModel.new("Conv2d"),
         ConstructorModel.new(
             "util_reshape", 
