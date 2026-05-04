@@ -1,3 +1,12 @@
+## Built with [nodeblocks-server](https://github.com/yDewolf/nodeblocks-server)
+
+## Como rodar/desenvolver:
+Depois de clonar o repositório:
+````
+pip install -e ./lib/nodeserver
+pip install -e .
+````
+
 Ideias principais:
 - Interface web que permite você pegar vários blocos de construção (módulos de NN do pytorch, ex: Conv2D) e conectar os outputs deles para criar um modelo
 - O website deve fornecer avisos sobre shapes, assim como mostrar o shape previsto de cada output

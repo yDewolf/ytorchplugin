@@ -8,3 +8,17 @@ where=["src", "lib"]
 [project]
 name = "torch-nodeserver"
 version = "0.0.1"
+dependencies = [
+    "nodeserver",
+    "torch==2.11.0",
+    "torchvision==0.26.0"
+]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["./lib/nodeserver/requirements.txt"]}
+
+[tool.uv.sources]
+nodeserver = { path = "./lib/nodeserver", editable = true }
+
+[tool.poetry.dependencies]
+nodeserver = { path = "./lib/nodeserver", develop = true }
