@@ -1,6 +1,6 @@
 from typing import Optional
 
-from nodeserver.api.node.nodes import NoInput
+from nodeserver.api.node.nodes import NoInput, NoParameters
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
 
 from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode
@@ -9,6 +9,10 @@ from torch.utils.data import DataLoader
 
 
 class MNISTDatasetNode(DatasetInputNode):
+    class Parameters(NoParameters): # type: ignore
+        pass
+
+    _parameters: Parameters # type: ignore
     dataloader: Optional[DataLoader]
 
     def __init__(self, mirror: NodeMirror | None = None):
