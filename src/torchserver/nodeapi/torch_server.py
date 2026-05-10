@@ -1,4 +1,5 @@
-from nodeserver.api.instance.server_instance import BaseServerRuntime
+from nodeserver.api.instance.instance_runtime import InstanceRuntime
 
-class TorchRuntime(BaseServerRuntime):
+
+class TorchRuntime(InstanceRuntime):
     pass

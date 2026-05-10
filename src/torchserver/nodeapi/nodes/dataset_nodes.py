@@ -1,18 +1,18 @@
 from typing import Optional
 
-from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror, SlotOutput
-from torchserver.nodeapi.nodes.base_torch_nodes import BaseTorchNode
+from nodeserver.api.node.nodes import NoInput
+from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
+
+from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
 
-class MNISTDatasetNode(BaseTorchNode):
+class MNISTDatasetNode(DatasetInputNode):
     dataloader: Optional[DataLoader]
 
     def __init__(self, mirror: NodeMirror | None = None):
         super().__init__(mirror)
-        self.bypass_cache = True
-        
         self.dataset = None
         self.dataloader = None
         self.data_iter = None
@@ -36,7 +36,7 @@ class MNISTDatasetNode(BaseTorchNode):
         self._last_path = path
         self._last_batch_size = batch_size
 
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
+    def forward(self, input: NoInput) -> _DatasetOut:
         path = self._mirror.data.get_parameter_value("path", "./data")
         batch_size = int(self._mirror.data.get_parameter_value("batch_size", 1))
 
@@ -49,10 +49,8 @@ class MNISTDatasetNode(BaseTorchNode):
             self.data_iter = iter(self.dataloader)
             samples, labels = next(self.data_iter)
 
-        output_data = {
-            "out_0": samples,
-            "labels": labels
-        }
-        
-        return self.map_to_slots(output_data)
+        return _DatasetOut(
+            sample=samples,
+            target=labels
+        )
     

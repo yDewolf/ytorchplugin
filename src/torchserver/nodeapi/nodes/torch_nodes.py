@@ -1,26 +1,37 @@
-from nodeserver.wrapper.nodes.node.base_nodes import SlotMirror, SlotOutput
+from typing import Annotated
+
+from nodeserver.api.node.node_parameters import Param
+from nodeserver.api.node.nodes import BaseNode
 from torch import nn
 from torch.nn.modules import Module
 
-from torchserver.nodeapi.nodes.base_torch_nodes import TorchModuleNode, TorchUtilNode
+from torchserver.nodeapi.nodes.base_torch_nodes import _TorchModuleIn, _TorchModuleOut, TorchModuleNode, TorchUtilNode
 
 
 class LinearNode(TorchModuleNode):
+    class Parameters(TorchModuleNode.Parameters):
+        out_features: Annotated[int, Param(
+            label="OutFeatures"
+        )] = 1
+    _parameters: Parameters # type: ignore
+
     def build_torch_module(self, params: dict) -> Module:
         return nn.Linear(
             in_features=int(params.get("in_features", 1)),
-            out_features=int(params.get("out_features", 1))
+            out_features=self._parameters.out_features
         )
 
 class ReshapeNode(TorchUtilNode):
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
-        tensor_data = self.get_input_tensor(input)
-        if tensor_data == None:
-            return self.map_to_slots({
-                "out_0": tensor_data
-            })
+    class Parameters(BaseNode.Parameters):
+        shape: Annotated[str, Param(
+            label="Shape",
+        )] = ""
+    _parameters: Parameters # type: ignore
+
+    def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
+        tensor_data = input.in_0
         
-        target_shape = self._mirror.data.get_parameter_value("shape")
+        target_shape = self._parameters.shape
         parsed_shape: tuple = ()
  
         if type(target_shape) is str:
@@ -30,6 +41,6 @@ class ReshapeNode(TorchUtilNode):
         if len(parsed_shape) > 0:
             reshaped_tensor = tensor_data.reshape(parsed_shape)
         
-        return self.map_to_slots({
-            "out_0": reshaped_tensor
-        })
+        return _TorchModuleOut(
+            out_0=reshaped_tensor
+        )

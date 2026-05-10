@@ -1,43 +1,19 @@
+from nodeserver.api.node.node_parameters import Param
+from nodeserver.api.node.nodes import BaseNode, NoInput
+from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
+from pydantic import BaseModel
 from torch import nn
-from typing import Any, Optional
+from typing import Annotated, Any, Optional
 
-from nodeserver.api.instance.base_nodes import BaseNode
-from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror, SlotOutput
 import torch
 
-class TorchSlotOutput(SlotOutput):
-    @property
-    def value(self):
-        return self._value
+from torchserver.nodeapi.nodes.torch_slots import TorchInput, TorchOutput
 
-    @value.setter
-    def value(self, new_value: Any):
-        if isinstance(new_value, torch.Tensor):
-            if isinstance(self.value, torch.Tensor):
-                if not new_value.equal(self._value):
-                    self._value = new_value
-                    self._version += 1
-                return
-            
-            self._value = new_value
-            self._version += 1
-            return
-        
-        if self._value != new_value:
-            self._value = new_value
-            self._version += 1
+class TorchIOModel(BaseModel):
+    class Config:
+        arbitrary_types_allowed=True
 
 class BaseTorchNode(BaseNode):
-    # FIXME: lol
-    def get_input_tensor(self, inputs: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> Optional[torch.Tensor]:
-        for slot_mirror, connection_data in inputs.items():
-            if slot_mirror.slot_name != "in_0": continue
-            for source_slot, output in connection_data.items():
-                if isinstance(output._value, torch.Tensor):
-                    return output._value
-        
-        return None
-    
     def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
         with torch.no_grad():
             preview_tensor = tensor
@@ -50,33 +26,55 @@ class BaseTorchNode(BaseNode):
             
             return preview_tensor.byte().cpu().tolist()
 
+class _DatasetOut(TorchIOModel):
+    sample: Annotated[torch.Tensor, TorchOutput()]
+    target: Annotated[torch.Tensor, TorchOutput()]
+
 class DatasetInputNode(BaseTorchNode):
+    OutputModel = _DatasetOut
+    class Parameters(BaseNode.Parameters):
+        shape: Annotated[str, Param(
+            label="Shape",
+        )] = "64,64"
+    
+    _parameters: Parameters # type: ignore
+
     def __init__(self, mirror: NodeMirror | None = None):
         super().__init__(mirror)
         self.bypass_cache = True
 
     # Carregar o dataset caso ele não tenha sido carregado ainda
-    def pre_forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]):
+    def pre_forward(self, input: NoInput):
         pass
 
     # Selecionar um elemento aleatório do dataset
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
-        output_data = {"out_0": torch.rand((64,))}
-        return self.map_to_slots(output_data)
-    
+    def forward(self, input: NoInput) -> _DatasetOut:
+        parsed_shape = tuple([int(dim_size) for dim_size in self._parameters.shape.split(",")])
+
+        random_tensor = torch.randn(parsed_shape)
+        return _DatasetOut(
+            sample=random_tensor,
+            target=random_tensor
+        )
+
     # Fazer alguma limpeza se necessário (é interessante que o dataset ainda esteja carregado na memória para acelerar o pre_forward)
     def post_forward(self):
         pass
 
+
+class _TorchModuleIn(TorchIOModel):
+    in_0: Annotated[torch.Tensor, TorchInput()]
+class _TorchModuleOut(TorchIOModel):
+    out_0: Annotated[torch.Tensor, TorchOutput()]
+
 class TorchUtilNode(BaseTorchNode):
-    # TODO: Implement some cool utility I guess
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
-        tensor_data = self.get_input_tensor(input)
-        return self.map_to_slots({
-            "out_0": tensor_data
-        })
+    InputModel = _TorchModuleIn
+    OutputModel = _TorchModuleOut
 
 class TorchModuleNode(BaseTorchNode):
+    InputModel = _TorchModuleIn
+    OutputModel = _TorchModuleOut
+
     module: Optional[nn.Module] = None
     device: torch.device = torch.device("cpu")
 
@@ -85,19 +83,10 @@ class TorchModuleNode(BaseTorchNode):
         self.module: Optional[nn.Module] = None
         self._last_applied_params = {}
 
-    def _get_current_params(self, inputs: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict:
-        params = {}
-        for param_name, parameter in self._mirror.data.parameters.items():
-            params[param_name] = parameter.value
-
-        for slot_mirror, connection_data in inputs.items():
-            if slot_mirror.slot_name != "in_0": continue
-            # FIXME
-            for source_slot, output in connection_data.items():
-                if isinstance(output._value, torch.Tensor):
-                    params["in_features"] = int(output._value.shape[-1])
-        
-        return params
+    def _get_current_params(self, inputs: _TorchModuleIn) -> dict:
+        return {
+            "in_features": int(inputs.in_0.shape[-1])
+        }
 
     def _should_rebuild(self, new_params: dict) -> bool:
         return self.module is None or new_params != self._last_applied_params
@@ -106,16 +95,16 @@ class TorchModuleNode(BaseTorchNode):
         raise NotImplementedError
 
 
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
+    def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
         module_parameters = self._get_current_params(input)
-        tensor_data = self.get_input_tensor(input)
+        tensor_data = input.in_0
+
         if self._should_rebuild(module_parameters):
+            # TODO: add some logger here
+            print(f"Rebuilding module for node: {self}")
             new_module = self.build_torch_module(module_parameters)
             new_module.to(self.device)
-            
-            # if self.module:
-            #     new_module.load_state_dict(self.module.state_dict(), strict=False)
-            
+
             self.module = new_module
             self._last_applied_params = module_parameters
 
@@ -123,4 +112,9 @@ class TorchModuleNode(BaseTorchNode):
         if self.module and isinstance(tensor_data, torch.Tensor):
             output_tensor = self.module(tensor_data)
 
-        return self.map_to_slots({"out_0": output_tensor})
+        if output_tensor is None:
+            raise Exception(f"Couldn't run module for node {self}")
+
+        return _TorchModuleOut(
+            out_0=output_tensor
+        )
