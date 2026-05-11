@@ -1,5 +1,10 @@
+from collections import deque
+
+from nodeserver.api.instance.instance_runtime import _ReadonlyContext, ContextAwareInput
+from nodeserver.api.node.abstract._nodes import _Node
 from nodeserver.api.node.node_parameters import Param
-from nodeserver.api.node.nodes import BaseNode, NoInput
+from nodeserver.api.node.nodes import BaseNode, NoInput, NoOutput
+from nodeserver.wrapper.nodes.data.node_data_types import SuperSlotTypes
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from pydantic import BaseModel
 from torch import nn
@@ -94,11 +99,8 @@ class TorchModuleNode(BaseTorchNode):
     def build_torch_module(self, params: dict) -> nn.Module:
         raise NotImplementedError
 
-
-    def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
+    def pre_forward(self, input: _TorchModuleIn):
         module_parameters = self._get_current_params(input)
-        tensor_data = input.in_0
-
         if self._should_rebuild(module_parameters):
             # TODO: add some logger here
             print(f"Rebuilding module for node: {self}")
@@ -107,6 +109,10 @@ class TorchModuleNode(BaseTorchNode):
 
             self.module = new_module
             self._last_applied_params = module_parameters
+
+
+    def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
+        tensor_data = input.in_0
 
         output_tensor: Optional[torch.Tensor] = None
         if self.module and isinstance(tensor_data, torch.Tensor):
@@ -118,3 +124,138 @@ class TorchModuleNode(BaseTorchNode):
         return _TorchModuleOut(
             out_0=output_tensor
         )
+
+
+    def get_parameters(self) -> list[torch.nn.Parameter]:
+        if self.module is None: return []
+
+        return list(self.module.parameters())
+
+class _LossNodeIn(TorchIOModel):
+    preds: Annotated[torch.Tensor, TorchInput()]
+    targets: Annotated[torch.Tensor, TorchOutput()]
+class _LossNodeOut(TorchIOModel):
+    loss: torch.Tensor
+
+class LossNode(BaseTorchNode):
+    InputModel = _LossNodeIn
+    OutputModel = _LossNodeOut
+
+    class Parameters(BaseTorchNode.Parameters):
+        criterion: Annotated[str, Param(
+            label="Criterion",
+            options=["mse", "bce"]
+        )] = "mse"
+        weight: Annotated[float, Param(
+            label="Weight",
+            min=0.01,
+            max=1.0,
+            step=0.05
+        )] = 1.0
+
+    _parameters: Parameters # type: ignore
+
+    criterion: Optional[nn.modules.loss._Loss] = None
+
+    def __init__(self, mirror: NodeMirror | None = None):
+        super().__init__(mirror)
+
+    def pre_forward(self, input: _LossNodeIn):
+        match self._parameters.criterion:
+            case "mse": self.criterion = nn.MSELoss()
+            case "bce": self.criterion = nn.BCELoss()
+        
+
+    def forward(self, input: _LossNodeIn) -> _LossNodeOut:
+        if not self.criterion:
+            raise Exception("Missing criterion for loss node")
+        
+        loss = self.criterion(input.preds, input.targets)
+        return _LossNodeOut(
+            loss=loss
+        )
+
+class _TrainerNodeInput(ContextAwareInput):
+    loss: Annotated[torch.Tensor, TorchInput()]
+
+class TrainerNode(BaseTorchNode):
+    InputModel = _TrainerNodeInput
+
+    class Parameters(BaseTorchNode.Parameters):
+        lr: Annotated[float, Param(
+            label="Learning Rate",
+            min=0.001,
+            max=1.0,
+            step=0.05
+        )] = 0.001
+    _parameters: Parameters # type: ignore
+    optimizer: Optional[torch.optim.Optimizer]
+    _cached_params_ids: set[int]
+
+    def __init__(self, mirror: NodeMirror | None = None):
+        super().__init__(mirror)
+        self.bypass_cache = True
+        self.optimizer = None
+        self._cached_params_ids = set()
+
+    def pre_forward(self, input: _TrainerNodeInput):
+        if not input._context: return
+        model_nodes = self.get_model_nodes(input._context)
+        self._update_optimizer(model_nodes)
+        return super().pre_forward(input)
+
+    def forward(self, input: _TrainerNodeInput) -> NoOutput:
+        if self.optimizer is None: return NoOutput()
+        
+        self.optimizer.zero_grad()
+        input.loss.backward()
+        self.optimizer.step()
+
+        return NoOutput()
+
+    def _update_optimizer(self, model_nodes: list[TorchModuleNode]):
+        all_params = []
+        current_params_ids = set()
+        
+        for node in model_nodes:
+            params = node.get_parameters()
+            all_params.extend(params)
+            current_params_ids.update(id(p) for p in params)
+
+        # Se a lista de parâmetros mudou (nó novo ou removido), recria o optimizer
+        if current_params_ids != self._cached_params_ids:
+            self.optimizer = torch.optim.AdamW(all_params, lr=self._parameters.lr)
+            self._cached_params_ids = current_params_ids
+            return
+        
+        if self.optimizer:
+            for param_group in self.optimizer.param_groups:
+                param_group['lr'] = self._parameters.lr
+
+    def get_model_nodes(self, context: _ReadonlyContext) -> list[TorchModuleNode]:
+        if not context._scene:
+            return []
+        
+        found_modules = []
+        visited = set()
+        queue = deque()
+        for slot in self._mirror.slots.get(SuperSlotTypes.INPUT, []):
+            for connection in slot.connections:
+                queue.append(connection.parent_node)
+
+        while queue:
+            node_mirror = queue.popleft()
+            if node_mirror.uid in visited:
+                continue
+            
+            visited.add(node_mirror.uid)
+            node_instance = context._scene.get_node(node_mirror.uid)
+            if isinstance(node_instance, TorchModuleNode):
+                found_modules.append(node_instance)
+
+            for input_slot in node_mirror.slots.get(SuperSlotTypes.INPUT, []):
+                for connection in input_slot.connections:
+                    queue.append(connection.parent_node)
+
+        print(found_modules)
+        return found_modules

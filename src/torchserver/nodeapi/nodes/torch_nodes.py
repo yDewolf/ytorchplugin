@@ -7,7 +7,6 @@ from torch.nn.modules import Module
 
 from torchserver.nodeapi.nodes.base_torch_nodes import _TorchModuleIn, _TorchModuleOut, TorchModuleNode, TorchUtilNode
 
-
 class LinearNode(TorchModuleNode):
     class Parameters(TorchModuleNode.Parameters):
         out_features: Annotated[int, Param(
