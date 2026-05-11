@@ -133,9 +133,9 @@ class TorchModuleNode(BaseTorchNode):
 
 class _LossNodeIn(TorchIOModel):
     preds: Annotated[torch.Tensor, TorchInput()]
-    targets: Annotated[torch.Tensor, TorchOutput()]
+    targets: Annotated[torch.Tensor, TorchInput()]
 class _LossNodeOut(TorchIOModel):
-    loss: torch.Tensor
+    loss: Annotated[torch.Tensor, TorchOutput()]
 
 class LossNode(BaseTorchNode):
     InputModel = _LossNodeIn
