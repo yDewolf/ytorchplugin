@@ -15,9 +15,48 @@ class LinearNode(TorchModuleNode):
     _parameters: Parameters # type: ignore
 
     def build_torch_module(self, params: dict) -> Module:
+        input_shape = params.get("input_shape", (1, ))
         return nn.Linear(
-            in_features=int(params.get("in_features", 1)),
+            in_features=int(input_shape[-1]),
             out_features=self._parameters.out_features
+        )
+
+
+class Conv2DNode(TorchModuleNode):
+    class Parameters(TorchModuleNode.Parameters):
+        out_channels: Annotated[int, Param(
+            label="OutFeatures"
+        )] = 1
+        kernel_size: Annotated[str, Param(
+            label="KernelSize"
+        )] = "3,3"
+        padding: Annotated[str, Param(
+            label="Padding"
+        )] = "3,3"
+
+    _parameters: Parameters # type: ignore
+
+    def build_torch_module(self, params: dict) -> Module:
+        parsed_kernel = [int(dim_size) for dim_size in self._parameters.kernel_size.split(",")]
+        kernel_size = (parsed_kernel[0], parsed_kernel[1])
+        
+        parsed_padding = [int(dim_size) for dim_size in self._parameters.padding.split(",")]
+        padding = (parsed_padding[0], parsed_padding[1])
+
+        input_shape = params.get("input_shape", (1, 1, 1, 1))
+        C = 1
+        if len(input_shape) == 4:
+            B, C, H, W = input_shape
+        elif len(input_shape) == 3:
+            C, H, W = input_shape
+        else:
+            raise Exception("Wrong input for Conv2D, should be 4D or 3D (B, C, H, W) or (C, H, W)")
+
+        return nn.Conv2d(
+            in_channels=C,
+            out_channels=self._parameters.out_channels,
+            kernel_size=kernel_size,
+            padding=padding
         )
 
 class ReshapeNode(TorchUtilNode):

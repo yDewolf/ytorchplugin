@@ -4,11 +4,12 @@ from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 
 from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, LossNode, TorchModuleNode, BaseTorchNode, TrainerNode
 from torchserver.nodeapi.nodes.dataset_nodes import MNISTDatasetNode
-from torchserver.nodeapi.nodes.torch_nodes import ArgmaxNode, LinearNode, ReshapeNode
+from torchserver.nodeapi.nodes.torch_nodes import ArgmaxNode, Conv2DNode, LinearNode, ReshapeNode
 
 DATASET_EXTENSIONS: list[str] = []
 NODE_REGISTRY: dict[str, type[BaseNode]] = {
     "LinearNode": LinearNode,
+    "Conv2D": Conv2DNode,
     "RandomData": DatasetInputNode,
     "MNISTDataset": MNISTDatasetNode,
     "util_reshape": ReshapeNode,

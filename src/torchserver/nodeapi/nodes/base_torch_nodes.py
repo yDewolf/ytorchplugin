@@ -90,7 +90,7 @@ class TorchModuleNode(BaseTorchNode):
 
     def _get_current_params(self, inputs: _TorchModuleIn) -> dict:
         return {
-            "in_features": int(inputs.in_0.shape[-1]),
+            "input_shape": inputs.in_0.shape,
             **self._parameters.model_dump()
         }
 
