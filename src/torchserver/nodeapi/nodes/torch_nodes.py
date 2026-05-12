@@ -91,3 +91,4 @@ class ArgmaxNode(TorchUtilNode):
         return _TorchModuleOut(
             out_0=argmax_tensor
         )
+
