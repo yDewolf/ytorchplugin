@@ -4,7 +4,7 @@ from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 
 from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, LossNode, TorchModuleNode, BaseTorchNode, TrainerNode
 from torchserver.nodeapi.nodes.dataset_nodes import MNISTDatasetNode
-from torchserver.nodeapi.nodes.torch_nodes import LinearNode, ReshapeNode
+from torchserver.nodeapi.nodes.torch_nodes import ArgmaxNode, LinearNode, ReshapeNode
 
 DATASET_EXTENSIONS: list[str] = []
 NODE_REGISTRY: dict[str, type[BaseNode]] = {
@@ -12,6 +12,7 @@ NODE_REGISTRY: dict[str, type[BaseNode]] = {
     "RandomData": DatasetInputNode,
     "MNISTDataset": MNISTDatasetNode,
     "util_reshape": ReshapeNode,
+    "util_argmax": ArgmaxNode,
     "LossNode": LossNode,
     "TrainerNode": TrainerNode
 }

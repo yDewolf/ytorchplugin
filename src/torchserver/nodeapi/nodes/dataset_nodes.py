@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Annotated, Optional
 
+from nodeserver.api.node.node_parameters import DataTypes, Param
 from nodeserver.api.node.nodes import NoInput, NoParameters
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
 
@@ -10,7 +11,11 @@ from torch.utils.data import DataLoader
 
 class MNISTDatasetNode(DatasetInputNode):
     class Parameters(NoParameters): # type: ignore
-        pass
+        batch_size: Annotated[int, Param(
+            label="Batch Size",
+            step=1,
+            datatype_override=DataTypes.UINT
+        )] = 1
 
     _parameters: Parameters # type: ignore
     dataloader: Optional[DataLoader]
@@ -42,8 +47,7 @@ class MNISTDatasetNode(DatasetInputNode):
 
     def forward(self, input: NoInput) -> _DatasetOut:
         path = self._mirror.data.get_parameter_value("path", "./data")
-        batch_size = int(self._mirror.data.get_parameter_value("batch_size", 1))
-
+        batch_size = self._parameters.batch_size
         if path != self._last_path or batch_size != self._last_batch_size:
             self._load_dataset(path, batch_size)
 

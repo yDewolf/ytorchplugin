@@ -43,3 +43,12 @@ class ReshapeNode(TorchUtilNode):
         return _TorchModuleOut(
             out_0=reshaped_tensor
         )
+
+class ArgmaxNode(TorchUtilNode):
+    def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
+        tensor_data = input.in_0
+        argmax_tensor = tensor_data.argmax(keepdim=True) # TODO: Add parameter for keepdim
+        
+        return _TorchModuleOut(
+            out_0=argmax_tensor
+        )

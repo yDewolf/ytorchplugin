@@ -21,7 +21,7 @@ class TorchIOModel(BaseModel):
 class BaseTorchNode(BaseNode):
     def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
         with torch.no_grad():
-            preview_tensor = tensor
+            preview_tensor = torch.tensor(tensor)
             if tensor.dim() > 3:
                 preview_tensor = tensor[0]
 
@@ -90,7 +90,8 @@ class TorchModuleNode(BaseTorchNode):
 
     def _get_current_params(self, inputs: _TorchModuleIn) -> dict:
         return {
-            "in_features": int(inputs.in_0.shape[-1])
+            "in_features": int(inputs.in_0.shape[-1]),
+            **self._parameters.model_dump()
         }
 
     def _should_rebuild(self, new_params: dict) -> bool:
@@ -144,7 +145,7 @@ class LossNode(BaseTorchNode):
     class Parameters(BaseTorchNode.Parameters):
         criterion: Annotated[str, Param(
             label="Criterion",
-            options=["mse", "bce"]
+            options=["mse", "bce", "cel"]
         )] = "mse"
         weight: Annotated[float, Param(
             label="Weight",
@@ -164,7 +165,8 @@ class LossNode(BaseTorchNode):
         match self._parameters.criterion:
             case "mse": self.criterion = nn.MSELoss()
             case "bce": self.criterion = nn.BCELoss()
-        
+            case "cel": self.criterion = nn.CrossEntropyLoss()
+
 
     def forward(self, input: _LossNodeIn) -> _LossNodeOut:
         if not self.criterion:
@@ -174,6 +176,11 @@ class LossNode(BaseTorchNode):
         return _LossNodeOut(
             loss=loss
         )
+    
+    def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
+        with torch.no_grad():
+            preview_tensor = torch.tensor(tensor)
+            return preview_tensor.cpu().tolist()
 
 class _TrainerNodeInput(ContextAwareInput):
     loss: Annotated[torch.Tensor, TorchInput()]
@@ -184,10 +191,10 @@ class TrainerNode(BaseTorchNode):
     class Parameters(BaseTorchNode.Parameters):
         lr: Annotated[float, Param(
             label="Learning Rate",
-            min=0.001,
+            min=0.0001,
             max=1.0,
-            step=0.05
-        )] = 0.001
+            step=0.0001
+        )] = 0.0001
     _parameters: Parameters # type: ignore
     optimizer: Optional[torch.optim.Optimizer]
     _cached_params_ids: set[int]
