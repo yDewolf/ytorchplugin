@@ -1,6 +1,7 @@
-from nodeserver.api.instance.base_nodes import BaseNode
 from nodeserver.api.instance.server_instance import ServerInstance
-from nodeserver.wrapper.nodes.node.base_nodes import SlotMirror, SlotOutput
+from nodeserver.api.node.abstract._nodes import _Node
+from nodeserver.api.node.abstract._slots import _SlotIO
+from nodeserver.wrapper.nodes.node.base_nodes import SlotMirror
 import torch
 
 from torchserver.nodeapi.internal.torch_scene import TorchNodeScene
@@ -17,7 +18,7 @@ class TorchServerInstance(ServerInstance):
         self._runtime = TorchRuntime()
         self._scene = TorchNodeScene([], self.mirror_manager)
     
-    def _prepare_to_send_output(self, node: BaseNode, slot_results: dict[SlotMirror, SlotOutput] | None):
+    def _prepare_to_send_output(self, node: _Node, slot_results: dict[SlotMirror, _SlotIO] | None):
         result_data = {}
         if slot_results != None:
             for slot, result in slot_results.items():

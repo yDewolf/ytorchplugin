@@ -1,18 +1,27 @@
-from typing import Optional
+from typing import Annotated, Optional
 
-from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror, SlotOutput
-from torchserver.nodeapi.nodes.base_torch_nodes import BaseTorchNode
+from nodeserver.api.node.node_parameters import DataTypes, Param
+from nodeserver.api.node.nodes import NoInput, NoParameters
+from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
+
+from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
 
-class MNISTDatasetNode(BaseTorchNode):
+class MNISTDatasetNode(DatasetInputNode):
+    class Parameters(NoParameters): # type: ignore
+        batch_size: Annotated[int, Param(
+            label="Batch Size",
+            step=1,
+            datatype_override=DataTypes.UINT
+        )] = 1
+
+    _parameters: Parameters # type: ignore
     dataloader: Optional[DataLoader]
 
     def __init__(self, mirror: NodeMirror | None = None):
         super().__init__(mirror)
-        self.bypass_cache = True
-        
         self.dataset = None
         self.dataloader = None
         self.data_iter = None
@@ -36,10 +45,9 @@ class MNISTDatasetNode(BaseTorchNode):
         self._last_path = path
         self._last_batch_size = batch_size
 
-    def forward(self, input: dict[SlotMirror, dict[SlotMirror, SlotOutput]]) -> dict[SlotMirror, SlotOutput]:
+    def forward(self, input: NoInput) -> _DatasetOut:
         path = self._mirror.data.get_parameter_value("path", "./data")
-        batch_size = int(self._mirror.data.get_parameter_value("batch_size", 1))
-
+        batch_size = self._parameters.batch_size
         if path != self._last_path or batch_size != self._last_batch_size:
             self._load_dataset(path, batch_size)
 
@@ -49,10 +57,8 @@ class MNISTDatasetNode(BaseTorchNode):
             self.data_iter = iter(self.dataloader)
             samples, labels = next(self.data_iter)
 
-        output_data = {
-            "out_0": samples,
-            "labels": labels
-        }
-        
-        return self.map_to_slots(output_data)
+        return _DatasetOut(
+            sample=samples,
+            target=labels
+        )
     

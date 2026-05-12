@@ -1,16 +1,15 @@
-from nodeserver.api.instance.base_nodes import BaseNode
 from nodeserver.api.instance.node_scene import NodeScene, logger
 from nodeserver.wrapper.nodes.helpers.scene_manager import MirrorSceneManager
-from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
+from nodeserver.wrapper.nodes.node.base_nodes import _ParsedNode
 import torch
 
 from torchserver.nodeapi.nodes.base_torch_nodes import TorchModuleNode
 
 class TorchNodeScene(NodeScene):
-    def __init__(self, nodes: list[BaseNode], mirror_manager: MirrorSceneManager, device: str = "cpu"):
+    def __init__(self, nodes: list[_ParsedNode], mirror_manager: MirrorSceneManager, device: str = "cpu"):
         super().__init__(nodes, mirror_manager)
         self.device = torch.device(device)
-        self._node_instances: dict[str, BaseNode] = {}
+        self._node_instances: dict[str, _ParsedNode] = {}
 
     def update_nodes(self) -> bool:
         current_uids = set(self.mirror_manager.node_manager._nodes.keys())
