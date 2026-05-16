@@ -153,3 +153,32 @@ class StackNode(TorchUtilNode):
             out_0=catted_tensor
         )
 
+
+class SumNode(TorchUtilNode):
+    InputModel = _DoubleTensorIn
+    class Parameters(BaseNode.Parameters):
+        weight_0: Annotated[float, TorchInput(
+            label="Weight_0"
+        )] = 1.0
+        weight_1: Annotated[float, TorchInput(
+            label="Weight_1"
+        )] = 1.0
+    _parameters: Parameters # type: ignore
+
+    def forward(self, input: _DoubleTensorIn) -> _TorchModuleOut:
+        # if input.in_0.size() != input.in_1.size():
+        #     raise Exception("Tensors should have the same size")
+
+        weight_0 = self._parameters.weight_0 if self._parameters.weight_0 else 1.0
+        weight_1 = self._parameters.weight_1 if self._parameters.weight_1 else 1.0
+        sum_tensor = input.in_0 * weight_0 + input.in_1 * weight_1
+        return _TorchModuleOut(
+            out_0=sum_tensor
+        )
+
+class NoGradNode(TorchUtilNode):
+    def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
+        with torch.no_grad():
+            return _TorchModuleOut(
+                out_0=input.in_0.detach()
+            )
