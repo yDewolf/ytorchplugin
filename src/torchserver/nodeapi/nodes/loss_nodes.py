@@ -1,10 +1,12 @@
-from typing import Annotated
+from typing import Annotated, Optional
 
+from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from torch import nn
 import torch
 
 from torchserver.nodeapi.nodes.base_torch_nodes import _LossNodeIn, _LossNodeOut, BaseTorchNode, LossNode
+from torchserver.nodeapi.nodes.metadata import TORCH_LOSS_CATEGORY
 from torchserver.nodeapi.nodes.torch_slots import TorchOutput
 
 
@@ -19,6 +21,11 @@ class CrossEntropyLossNode(LossNode):
         pass
     
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_LOSS_CATEGORY,
+        capitalized_type="CrossEntropyLoss",
+        tags=[]
+    )
 
     def __init__(self, mirror: NodeMirror | None = None):
         self.criterion = nn.CrossEntropyLoss()

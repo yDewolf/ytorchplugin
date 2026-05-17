@@ -16,7 +16,7 @@ from torch import nn
 from typing import Annotated, Any, Optional
 
 import torch
-from torchserver.nodeapi.nodes.metadata import BASE_NODE_TAG, TORCH_DATASET_CATEGORY, TORCH_LOSS_CATEGORY, TORCH_NODE_CATEGORY, TORCH_TRAINER_CATEGORY, TORCH_UTIL_CATEGORY
+from torchserver.nodeapi.nodes.metadata import BASE_NODE_TAG, TORCH_DATASET_CATEGORY, TORCH_LOSS_CATEGORY, TORCH_MODULE_CATEGORY, TORCH_NODE_CATEGORY, TORCH_TRAINER_CATEGORY, TORCH_UTIL_CATEGORY
 from torchserver.nodeapi.nodes.torch_slots import TorchInput, TorchOutput
 
 TORCH_MODEL_EXTENSION = "pt"
@@ -108,7 +108,7 @@ class TorchModuleNode(BaseTorchNode):
     device: torch.device = torch.device("cpu")
 
     _metadata: Optional[NodeMetadata] = NodeMetadata(
-        category=TORCH_DATASET_CATEGORY,
+        category=TORCH_MODULE_CATEGORY,
         capitalized_type="",
         tags=[BASE_NODE_TAG]
     )

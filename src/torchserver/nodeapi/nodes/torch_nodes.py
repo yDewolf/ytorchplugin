@@ -2,11 +2,13 @@ from typing import Annotated, Optional
 
 from nodeserver.api.node.node_parameters import Param
 from nodeserver.api.node.nodes import BaseNode
+from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
 from torch import nn
 import torch
 from torch.nn.modules import Module
 
 from torchserver.nodeapi.nodes.base_torch_nodes import _TorchModuleIn, _TorchModuleOut, TorchModuleNode, TorchUtilNode
+from torchserver.nodeapi.nodes.metadata import TORCH_UTIL_CATEGORY
 from torchserver.nodeapi.nodes.torch_slots import TorchInput
 from torchserver.nodeapi.utils.parameter_utils import ParameterUtils
 
@@ -68,6 +70,11 @@ class ReshapeNode(TorchUtilNode):
             label="Shape",
         )] = ""
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="Reshape",
+        tags=[]
+    )
 
     def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
         tensor_data = input.in_0
@@ -81,6 +88,12 @@ class ReshapeNode(TorchUtilNode):
         )
 
 class ArgmaxNode(TorchUtilNode):
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="Argmax",
+        tags=[]
+    )
+
     def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
         tensor_data = input.in_0
         argmax_tensor = tensor_data.argmax(keepdim=True) # TODO: Add parameter for keepdim
@@ -95,6 +108,11 @@ class RepeatNode(TorchUtilNode):
             label="Shape",
         )] = ""
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="RepeatTensor",
+        tags=[]
+    )
 
     def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
         tensor_data = input.in_0
@@ -119,6 +137,11 @@ class ConcatNode(TorchUtilNode):
             label="Dimension",
         )] = 0
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="Concatenate",
+        tags=[]
+    )
 
     def forward(self, input: _DoubleTensorIn) -> _TorchModuleOut:
         target_dim = self._parameters.dim if self._parameters.dim else 0
@@ -141,6 +164,11 @@ class StackNode(TorchUtilNode):
             label="Dimension",
         )] = 0
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="StackTensors",
+        tags=[]
+    )
 
     def forward(self, input: _DoubleTensorIn) -> _TorchModuleOut:
         # if input.in_0.size() != input.in_1.size():
@@ -164,6 +192,11 @@ class SumNode(TorchUtilNode):
             label="Weight_1"
         )] = 1.0
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="SumTensors",
+        tags=[]
+    )
 
     def forward(self, input: _DoubleTensorIn) -> _TorchModuleOut:
         # if input.in_0.size() != input.in_1.size():
@@ -177,6 +210,11 @@ class SumNode(TorchUtilNode):
         )
 
 class NoGradNode(TorchUtilNode):
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="Remove Gradients",
+        tags=[]
+    )
     def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:
         with torch.no_grad():
             return _TorchModuleOut(
