@@ -1,9 +1,13 @@
 from collections import deque
+import json
+import os
+import pathlib
 
 from nodeserver.api.instance.instance_runtime import _ReadonlyContext, ContextAwareInput
+from nodeserver.api.internal.instance_state import InternalNodeState
 from nodeserver.api.node.abstract._nodes import _Node
 from nodeserver.api.node.node_parameters import Param
-from nodeserver.api.node.nodes import BaseNode, NoInput, NoOutput
+from nodeserver.api.node.nodes import BaseNode, NoInput, NoOutput, NodeUtils
 from nodeserver.wrapper.nodes.data.node_data_types import SuperSlotTypes
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from pydantic import BaseModel
@@ -11,8 +15,9 @@ from torch import nn
 from typing import Annotated, Any, Optional
 
 import torch
-
 from torchserver.nodeapi.nodes.torch_slots import TorchInput, TorchOutput
+
+TORCH_MODEL_EXTENSION = "pt"
 
 class TorchIOModel(BaseModel):
     class Config:
@@ -131,6 +136,34 @@ class TorchModuleNode(BaseTorchNode):
         if self.module is None: return []
 
         return list(self.module.parameters())
+
+    def save_state(self, root_state_path: str) -> InternalNodeState | None:
+        if not self.module: 
+            return
+        
+        file_path, filename = NodeUtils.make_state_file_path(self._mirror, root_state_path, TORCH_MODEL_EXTENSION)
+        model_context = {}
+        model_context["model_state"] = self.module.state_dict()
+        model_context["module_parameters"] = self._last_applied_params
+        torch.save(model_context, file_path)
+
+        return InternalNodeState(
+            relative_state_path=str(pathlib.Path(file_path).relative_to(root_state_path)),
+            state_data=None
+        )
+
+    def load_state(self, root_state_path: str, state: InternalNodeState):
+        if state.relative_state_path:
+            state_file_path = os.path.join(root_state_path, state.relative_state_path)
+            
+            if state_file_path.endswith(TORCH_MODEL_EXTENSION):
+                model_data = torch.load(state_file_path)
+
+                self._last_applied_params = model_data["module_parameters"]
+                self.module = self.build_torch_module(self._last_applied_params)
+                self.module.to(self.device)
+
+                self.module.load_state_dict(model_data["model_state"], strict=True)
 
 class _LossNodeIn(TorchIOModel):
     preds: Annotated[torch.Tensor, TorchInput()]
