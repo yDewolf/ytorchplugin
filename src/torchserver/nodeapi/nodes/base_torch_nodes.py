@@ -9,12 +9,14 @@ from nodeserver.api.node.abstract._nodes import _Node
 from nodeserver.api.node.node_parameters import Param
 from nodeserver.api.node.nodes import BaseNode, NoInput, NoOutput, NodeUtils
 from nodeserver.wrapper.nodes.data.node_data_types import SuperSlotTypes
+from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from pydantic import BaseModel
 from torch import nn
 from typing import Annotated, Any, Optional
 
 import torch
+from torchserver.nodeapi.nodes.metadata import BASE_NODE_TAG, TORCH_DATASET_CATEGORY, TORCH_LOSS_CATEGORY, TORCH_NODE_CATEGORY, TORCH_TRAINER_CATEGORY, TORCH_UTIL_CATEGORY
 from torchserver.nodeapi.nodes.torch_slots import TorchInput, TorchOutput
 
 TORCH_MODEL_EXTENSION = "pt"
@@ -24,6 +26,12 @@ class TorchIOModel(BaseModel):
         arbitrary_types_allowed=True
 
 class BaseTorchNode(BaseNode):
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_NODE_CATEGORY,
+        capitalized_type="",
+        tags=[BASE_NODE_TAG]
+    )
+
     def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
         with torch.no_grad():
             preview_tensor = torch.tensor(tensor)
@@ -48,6 +56,11 @@ class DatasetInputNode(BaseTorchNode):
         )] = "64,64"
     
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_DATASET_CATEGORY,
+        capitalized_type="",
+        tags=[BASE_NODE_TAG]
+    )
 
     def __init__(self, mirror: NodeMirror | None = None):
         super().__init__(mirror)
@@ -70,7 +83,7 @@ class DatasetInputNode(BaseTorchNode):
     # Fazer alguma limpeza se necessário (é interessante que o dataset ainda esteja carregado na memória para acelerar o pre_forward)
     def post_forward(self):
         pass
-
+    
 
 class _TorchModuleIn(TorchIOModel):
     in_0: Annotated[torch.Tensor, TorchInput()]
@@ -81,12 +94,24 @@ class TorchUtilNode(BaseTorchNode):
     InputModel = _TorchModuleIn
     OutputModel = _TorchModuleOut
 
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_UTIL_CATEGORY,
+        capitalized_type="",
+        tags=[BASE_NODE_TAG]
+    )
+
 class TorchModuleNode(BaseTorchNode):
     InputModel = _TorchModuleIn
     OutputModel = _TorchModuleOut
 
     module: Optional[nn.Module] = None
     device: torch.device = torch.device("cpu")
+
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_DATASET_CATEGORY,
+        capitalized_type="",
+        tags=[BASE_NODE_TAG]
+    )
 
     def __init__(self, mirror: NodeMirror | None = None):
         super().__init__(mirror)
@@ -188,6 +213,11 @@ class LossNode(BaseTorchNode):
         )] = 1.0
 
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_LOSS_CATEGORY,
+        capitalized_type="",
+        tags=[BASE_NODE_TAG]
+    )
 
     criterion: Optional[nn.modules.loss._Loss] = None
 
@@ -229,6 +259,12 @@ class TrainerNode(BaseTorchNode):
             step=0.0001
         )] = 0.0001
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_TRAINER_CATEGORY,
+        capitalized_type="",
+        tags=[BASE_NODE_TAG]
+    )
+
     optimizer: Optional[torch.optim.Optimizer]
     _cached_params_ids: set[int]
 

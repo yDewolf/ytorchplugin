@@ -2,11 +2,14 @@ from typing import Annotated, Optional
 
 from nodeserver.api.node.node_parameters import DataTypes, Param
 from nodeserver.api.node.nodes import NoInput, NoParameters
+from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
 
 from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
+
+from torchserver.nodeapi.nodes.metadata import IMAGE_TAG, TORCH_DATASET_CATEGORY
 
 
 class MNISTDatasetNode(DatasetInputNode):
@@ -18,6 +21,12 @@ class MNISTDatasetNode(DatasetInputNode):
         )] = 1
 
     _parameters: Parameters # type: ignore
+    _metadata: Optional[NodeMetadata] = NodeMetadata(
+        category=TORCH_DATASET_CATEGORY,
+        capitalized_type="",
+        tags=[IMAGE_TAG]
+    )
+    
     dataloader: Optional[DataLoader]
 
     def __init__(self, mirror: NodeMirror | None = None):
