@@ -1,0 +1,25 @@
+{
+ "capitalized_name": "CrossEntropyLoss",
+ "description": "",
+ "category": "Loss",
+ "tags": [],
+ "parameter_meta": {},
+ "slot_meta": {
+  "preds": {
+   "capitalized_name": "preds",
+   "description": ""
+  },
+  "targets": {
+   "capitalized_name": "targets",
+   "description": ""
+  },
+  "loss": {
+   "capitalized_name": "loss",
+   "description": ""
+  },
+  "model_output": {
+   "capitalized_name": "model_output",
+   "description": ""
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "capitalized_name": "RepeatTensor",
+ "description": "",
+ "category": "Util",
+ "tags": [],
+ "parameter_meta": {
+  "shape": {
+   "capitalized_name": "Shape",
+   "description": ""
+  }
+ },
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "description": ""
+  },
+  "out_0": {
+   "capitalized_name": "out_0",
+   "description": ""
+  }
+ }
+}

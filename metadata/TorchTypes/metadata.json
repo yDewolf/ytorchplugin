@@ -1,0 +1,112 @@
+{
+ "types_id": "TorchTypes",
+ "types_version": 0,
+ "meta_version": 1,
+ "last_modified": 1779654718.0998178,
+ "tags": {
+  "PyTorch/base": {
+   "description": "Nodes that don't implement a specific behavior, they usually have more parameters"
+  },
+  "PyTorch/module": {
+   "description": ""
+  },
+  "Tensor/processor": {
+   "description": ""
+  },
+  "PyTorch/dataset": {
+   "description": ""
+  },
+  "data/image": {
+   "description": "Nodes that use/outputs images (2D/3D Tensors)"
+  },
+  "PyTorch/utils": {
+   "description": ""
+  },
+  "PyTorch/loss": {
+   "description": ""
+  },
+  "PyTorch/optimizer": {
+   "description": ""
+  }
+ },
+ "categories": {
+  "Module": {
+   "description": "Nodes that implements PyTorch modules like Linear, Conv2d, etc",
+   "super_category": {
+    "description": "Nodes that implements PyTorch functions or modules",
+    "super_category": null,
+    "default_tags": [
+     "lib/PyTorch"
+    ]
+   },
+   "default_tags": [
+    "PyTorch/module",
+    "Tensor/processor"
+   ]
+  },
+  "Dataset": {
+   "description": "Nodes that pulls Samples and Targets from PyTorch datasets like MNIST",
+   "super_category": {
+    "description": "Nodes that implements PyTorch functions or modules",
+    "super_category": null,
+    "default_tags": [
+     "lib/PyTorch"
+    ]
+   },
+   "default_tags": [
+    "PyTorch/dataset"
+   ]
+  },
+  "Util": {
+   "description": "Tensor utility functions from PyTorch",
+   "super_category": {
+    "description": "Nodes that implements PyTorch functions or modules",
+    "super_category": null,
+    "default_tags": [
+     "lib/PyTorch"
+    ]
+   },
+   "default_tags": [
+    "PyTorch/utils"
+   ]
+  },
+  "Loss": {
+   "description": "Nodes that calculate how wrong the Model prediction is based on a Target",
+   "super_category": {
+    "description": "Nodes that do backward / gradient update",
+    "super_category": {
+     "description": "Nodes that implements PyTorch functions or modules",
+     "super_category": null,
+     "default_tags": [
+      "lib/PyTorch"
+     ]
+    },
+    "default_tags": [
+     "PyTorch/gradient"
+    ]
+   },
+   "default_tags": [
+    "PyTorch/loss"
+   ]
+  },
+  "Trainer": {
+   "description": "Nodes that receive Loss result and updates Modules weights and biases",
+   "super_category": {
+    "description": "Nodes that do backward / gradient update",
+    "super_category": {
+     "description": "Nodes that implements PyTorch functions or modules",
+     "super_category": null,
+     "default_tags": [
+      "lib/PyTorch"
+     ]
+    },
+    "default_tags": [
+     "PyTorch/gradient"
+    ]
+   },
+   "default_tags": [
+    "PyTorch/optimizer"
+   ]
+  }
+ }
+}

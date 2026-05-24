@@ -1,0 +1,24 @@
+{
+ "capitalized_name": "MNISTDataset",
+ "description": "",
+ "category": "Dataset",
+ "tags": [
+  "data/image"
+ ],
+ "parameter_meta": {
+  "batch_size": {
+   "capitalized_name": "Batch Size",
+   "description": ""
+  }
+ },
+ "slot_meta": {
+  "sample": {
+   "capitalized_name": "sample",
+   "description": ""
+  },
+  "target": {
+   "capitalized_name": "target",
+   "description": ""
+  }
+ }
+}

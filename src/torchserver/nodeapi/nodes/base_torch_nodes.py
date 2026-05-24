@@ -1,14 +1,14 @@
 from collections import deque
-import json
 import os
 import pathlib
 
 from nodeserver.api.instance.instance_runtime import _ReadonlyContext, ContextAwareInput
 from nodeserver.api.internal.instance_state import InternalNodeState
 from nodeserver.api.node.abstract._nodes import _Node
-from nodeserver.api.node.node_parameters import Param
+from nodeserver.api.node.node_parameters import OptionParam, Param
 from nodeserver.api.node.nodes import BaseNode, NoInput, NoOutput, NodeUtils
 from nodeserver.wrapper.metadata.nodes.node_metadata import NodeTypeMeta
+from nodeserver.wrapper.nodes.data.node_data_types import DefaultDataTypes
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from pydantic import BaseModel
 from torch import nn
@@ -200,8 +200,9 @@ class LossNode(BaseTorchNode):
     OutputModel = _LossNodeOut
 
     class Parameters(BaseTorchNode.Parameters):
-        criterion: Annotated[str, Param(
+        criterion: Annotated[str, OptionParam(
             label="Criterion",
+            option_type=DefaultDataTypes.TEXT,
             options=["mse", "bce", "cel"]
         )] = "mse"
         weight: Annotated[float, Param(

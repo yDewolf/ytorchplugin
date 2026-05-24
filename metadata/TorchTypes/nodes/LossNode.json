@@ -1,0 +1,32 @@
+{
+ "capitalized_name": "LossNode",
+ "description": "",
+ "category": "Loss",
+ "tags": [
+  "PyTorch/base"
+ ],
+ "parameter_meta": {
+  "criterion": {
+   "capitalized_name": "Criterion",
+   "description": ""
+  },
+  "weight": {
+   "capitalized_name": "Weight",
+   "description": ""
+  }
+ },
+ "slot_meta": {
+  "preds": {
+   "capitalized_name": "preds",
+   "description": ""
+  },
+  "targets": {
+   "capitalized_name": "targets",
+   "description": ""
+  },
+  "loss": {
+   "capitalized_name": "loss",
+   "description": ""
+  }
+ }
+}

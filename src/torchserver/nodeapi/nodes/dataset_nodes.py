@@ -2,14 +2,18 @@ from typing import Annotated, Optional
 
 from nodeserver.api.node.node_parameters import DefaultDataTypes, Param
 from nodeserver.api.node.nodes import NoInput, NoParameters
+from nodeserver.api.node.slots import Input
 from nodeserver.wrapper.metadata.nodes.node_metadata import NodeTypeMeta
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
+from pydantic import BaseModel
+import torch
 
-from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode
+from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode, TorchIOModel
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
 from torchserver.nodeapi.nodes.metadata import IMAGE_TAG, TORCH_DATASET_CATEGORY
+from torchserver.nodeapi.nodes.torch_slots import TorchInput
 
 
 class MNISTDatasetNode(DatasetInputNode):
@@ -37,7 +41,7 @@ class MNISTDatasetNode(DatasetInputNode):
         self._last_path = None
         self._last_batch_size = None
 
-    def _load_dataset(self, path: str, batch_size: int):
+    def _load_dataset(self, path: str, batch_size: int = 1):
         """Carrega o MNIST da memória/disco"""
         transform = transforms.Compose([
             transforms.ToTensor(),
@@ -68,6 +72,31 @@ class MNISTDatasetNode(DatasetInputNode):
 
         return _DatasetOut(
             sample=samples,
-            target=labels
+            target=torch.tensor(labels).to(samples)
         )
-    
+
+class _SeededDataset(TorchIOModel):
+    seed: Annotated[Optional[int], Input()]
+    tensor_seed: Annotated[Optional[torch.Tensor], TorchInput()]
+
+class SeededRandomDataset(DatasetInputNode):
+    InputModel = _SeededDataset
+
+    def forward(self, input: _SeededDataset) -> _DatasetOut: # type: ignore
+        parsed_shape = tuple([int(dim_size) for dim_size in self._parameters.shape.split(",")])
+        seed = input.seed
+        if not input.seed:
+            seed = input.tensor_seed
+        
+        torch.manual_seed(seed or 0)
+        random_tensor = torch.randn(parsed_shape)
+        return _DatasetOut(
+            sample=random_tensor,
+            target=random_tensor
+        )
+
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
+        category=TORCH_DATASET_CATEGORY,
+        capitalized_name="",
+        tags=[IMAGE_TAG]
+    )

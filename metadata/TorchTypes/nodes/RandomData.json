@@ -1,0 +1,24 @@
+{
+ "capitalized_name": "RandomData",
+ "description": "",
+ "category": "Dataset",
+ "tags": [
+  "PyTorch/base"
+ ],
+ "parameter_meta": {
+  "shape": {
+   "capitalized_name": "Shape",
+   "description": ""
+  }
+ },
+ "slot_meta": {
+  "sample": {
+   "capitalized_name": "sample",
+   "description": ""
+  },
+  "target": {
+   "capitalized_name": "target",
+   "description": ""
+  }
+ }
+}

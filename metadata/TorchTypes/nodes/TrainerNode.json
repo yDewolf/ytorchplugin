@@ -1,0 +1,20 @@
+{
+ "capitalized_name": "TrainerNode",
+ "description": "",
+ "category": "Trainer",
+ "tags": [
+  "PyTorch/base"
+ ],
+ "parameter_meta": {
+  "lr": {
+   "capitalized_name": "Learning Rate",
+   "description": ""
+  }
+ },
+ "slot_meta": {
+  "loss": {
+   "capitalized_name": "loss",
+   "description": ""
+  }
+ }
+}

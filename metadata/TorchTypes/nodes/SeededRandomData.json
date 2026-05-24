@@ -1,0 +1,32 @@
+{
+ "capitalized_name": "SeededRandomData",
+ "description": "",
+ "category": "Dataset",
+ "tags": [
+  "data/image"
+ ],
+ "parameter_meta": {
+  "shape": {
+   "capitalized_name": "Shape",
+   "description": ""
+  }
+ },
+ "slot_meta": {
+  "seed": {
+   "capitalized_name": "seed",
+   "description": ""
+  },
+  "tensor_seed": {
+   "capitalized_name": "tensor_seed",
+   "description": ""
+  },
+  "sample": {
+   "capitalized_name": "sample",
+   "description": ""
+  },
+  "target": {
+   "capitalized_name": "target",
+   "description": ""
+  }
+ }
+}
