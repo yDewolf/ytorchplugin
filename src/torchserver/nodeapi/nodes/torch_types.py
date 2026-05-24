@@ -1,6 +1,7 @@
 from nodeserver.api.node.nodes import BaseNode
 from nodeserver.wrapper.utils.type_reader_utils import TypeReaderUtils
 
+from torchserver.nodeapi.nodes.activation.base_activation import ReLU_Node, Sigmoid_Node
 from torchserver.nodeapi.nodes.base_torch_nodes import DatasetInputNode, LossNode, TrainerNode
 from torchserver.nodeapi.nodes.dataset_nodes import MNISTDatasetNode, SeededRandomDataset
 from torchserver.nodeapi.nodes.loss_nodes import CrossEntropyLossNode
@@ -22,7 +23,9 @@ NODE_REGISTRY: dict[str, type[BaseNode]] = {
     "math_sum": SumNode,
     "LossNode": LossNode,
     "CELNode": CrossEntropyLossNode,
-    "TrainerNode": TrainerNode
+    "TrainerNode": TrainerNode,
+    "act_relu": ReLU_Node,
+    "act_sigmoid": Sigmoid_Node,
 }
 
 TORCH_TYPES = TypeReaderUtils.make_types_from_registry(0, "TorchTypes", NODE_REGISTRY)

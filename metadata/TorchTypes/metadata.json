@@ -1,8 +1,8 @@
 {
  "types_id": "TorchTypes",
  "types_version": 0,
- "meta_version": 1,
- "last_modified": 1779654718.0998178,
+ "meta_version": 3,
+ "last_modified": 1779655482.5853121,
  "tags": {
   "PyTorch/base": {
    "description": "Nodes that don't implement a specific behavior, they usually have more parameters"
