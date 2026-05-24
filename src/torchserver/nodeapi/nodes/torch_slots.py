@@ -1,8 +1,8 @@
 from typing import Any, Generic, Optional
 
 from nodeserver.api.node.abstract._slots import _SlotIO
-from nodeserver.api.node.slots import BaseNodeType, NodeSlot, SlotConfig, T_SlotIO
-from nodeserver.wrapper.nodes.data.node_data_types import ARRAY_TYPE
+from nodeserver.api.node.slots import NodeSlot, SlotConfig
+from nodeserver.wrapper.nodes.data.node_data_types import DefaultDataTypes
 import torch
 
 
@@ -24,14 +24,8 @@ class _TorchSlotIO[inputType: Any, valueType: Any](_SlotIO[inputType, valueType]
         self._value = new_value # type: ignore
         self._version += 1
 
-class TorchInputIO[inputType: Any](_TorchSlotIO[inputType, None]):
-    _is_input = True
+def TorchInput(max_inputs: int = 1, base_type_override: Optional[DefaultDataTypes] = DefaultDataTypes.ARRAY, **kwargs):
+    return SlotConfig(slot_class=NodeSlot, slot_io=_TorchSlotIO, is_input=True, base_type_override=base_type_override, max_inputs=max_inputs, **kwargs)
 
-class TorchOutputIO[valueType: Any](_TorchSlotIO[None, valueType]):
-    _is_input = False
-
-def TorchInput(max_inputs: int = 1, datatype_override: Optional[BaseNodeType] = ARRAY_TYPE, **kwargs):
-    return SlotConfig(slot_class=NodeSlot, input_io=TorchInputIO, output_io=TorchOutputIO, is_input=True, datatype_override=datatype_override, max_inputs=max_inputs, **kwargs)
-
-def TorchOutput(datatype_override: Optional[BaseNodeType] = ARRAY_TYPE, **kwargs):
-    return SlotConfig(slot_class=NodeSlot, input_io=TorchInputIO, output_io=TorchOutputIO, is_input=False, datatype_override=datatype_override, **kwargs)
+def TorchOutput(base_type_override: Optional[DefaultDataTypes] = DefaultDataTypes.ARRAY, **kwargs):
+    return SlotConfig(slot_class=NodeSlot, slot_io=_TorchSlotIO, is_input=False, base_type_override=base_type_override, **kwargs)

@@ -1,8 +1,8 @@
 from typing import Annotated, Optional
 
-from nodeserver.api.node.node_parameters import DataTypes, Param
+from nodeserver.api.node.node_parameters import DefaultDataTypes, Param
 from nodeserver.api.node.nodes import NoInput, NoParameters
-from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
+from nodeserver.wrapper.metadata.nodes.node_metadata import NodeTypeMeta
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror, SlotMirror
 
 from torchserver.nodeapi.nodes.base_torch_nodes import _DatasetOut, BaseTorchNode, DatasetInputNode
@@ -17,13 +17,13 @@ class MNISTDatasetNode(DatasetInputNode):
         batch_size: Annotated[int, Param(
             label="Batch Size",
             step=1,
-            datatype_override=DataTypes.UINT
+            datatype_override=DefaultDataTypes.UINT
         )] = 1
 
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_DATASET_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[IMAGE_TAG]
     )
     

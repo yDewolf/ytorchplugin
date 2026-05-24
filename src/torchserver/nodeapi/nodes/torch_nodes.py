@@ -2,7 +2,7 @@ from typing import Annotated, Optional
 
 from nodeserver.api.node.node_parameters import Param
 from nodeserver.api.node.nodes import BaseNode
-from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
+from nodeserver.wrapper.metadata.nodes.node_metadata import NodeTypeMeta
 from torch import nn
 import torch
 from torch.nn.modules import Module
@@ -70,9 +70,9 @@ class ReshapeNode(TorchUtilNode):
             label="Shape",
         )] = ""
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="Reshape",
+        capitalized_name="Reshape",
         tags=[]
     )
 
@@ -88,9 +88,9 @@ class ReshapeNode(TorchUtilNode):
         )
 
 class ArgmaxNode(TorchUtilNode):
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="Argmax",
+        capitalized_name="Argmax",
         tags=[]
     )
 
@@ -108,9 +108,9 @@ class RepeatNode(TorchUtilNode):
             label="Shape",
         )] = ""
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="RepeatTensor",
+        capitalized_name="RepeatTensor",
         tags=[]
     )
 
@@ -137,9 +137,9 @@ class ConcatNode(TorchUtilNode):
             label="Dimension",
         )] = 0
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="Concatenate",
+        capitalized_name="Concatenate",
         tags=[]
     )
 
@@ -164,9 +164,9 @@ class StackNode(TorchUtilNode):
             label="Dimension",
         )] = 0
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="StackTensors",
+        capitalized_name="StackTensors",
         tags=[]
     )
 
@@ -192,9 +192,9 @@ class SumNode(TorchUtilNode):
             label="Weight_1"
         )] = 1.0
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="SumTensors",
+        capitalized_name="SumTensors",
         tags=[]
     )
 
@@ -210,9 +210,9 @@ class SumNode(TorchUtilNode):
         )
 
 class NoGradNode(TorchUtilNode):
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="Remove Gradients",
+        capitalized_name="Remove Gradients",
         tags=[]
     )
     def forward(self, input: _TorchModuleIn) -> _TorchModuleOut:

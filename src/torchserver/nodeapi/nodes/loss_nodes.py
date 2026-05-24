@@ -1,6 +1,6 @@
 from typing import Annotated, Optional
 
-from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
+from nodeserver.wrapper.metadata.nodes.node_metadata import NodeTypeMeta
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from torch import nn
 import torch
@@ -21,9 +21,9 @@ class CrossEntropyLossNode(LossNode):
         pass
     
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_LOSS_CATEGORY,
-        capitalized_type="CrossEntropyLoss",
+        capitalized_name="CrossEntropyLoss",
         tags=[]
     )
 

@@ -8,8 +8,7 @@ from nodeserver.api.internal.instance_state import InternalNodeState
 from nodeserver.api.node.abstract._nodes import _Node
 from nodeserver.api.node.node_parameters import Param
 from nodeserver.api.node.nodes import BaseNode, NoInput, NoOutput, NodeUtils
-from nodeserver.wrapper.nodes.data.node_data_types import SuperSlotTypes
-from nodeserver.wrapper.nodes.data.node_metadata import NodeMetadata
+from nodeserver.wrapper.metadata.nodes.node_metadata import NodeTypeMeta
 from nodeserver.wrapper.nodes.node.base_nodes import NodeMirror
 from pydantic import BaseModel
 from torch import nn
@@ -26,9 +25,9 @@ class TorchIOModel(BaseModel):
         arbitrary_types_allowed=True
 
 class BaseTorchNode(BaseNode):
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_NODE_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[BASE_NODE_TAG]
     )
 
@@ -56,9 +55,9 @@ class DatasetInputNode(BaseTorchNode):
         )] = "64,64"
     
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_DATASET_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[BASE_NODE_TAG]
     )
 
@@ -94,9 +93,9 @@ class TorchUtilNode(BaseTorchNode):
     InputModel = _TorchModuleIn
     OutputModel = _TorchModuleOut
 
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_UTIL_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[BASE_NODE_TAG]
     )
 
@@ -107,9 +106,9 @@ class TorchModuleNode(BaseTorchNode):
     module: Optional[nn.Module] = None
     device: torch.device = torch.device("cpu")
 
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_MODULE_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[BASE_NODE_TAG]
     )
 
@@ -213,9 +212,9 @@ class LossNode(BaseTorchNode):
         )] = 1.0
 
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_LOSS_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[BASE_NODE_TAG]
     )
 
@@ -259,9 +258,9 @@ class TrainerNode(BaseTorchNode):
             step=0.0001
         )] = 0.0001
     _parameters: Parameters # type: ignore
-    _metadata: Optional[NodeMetadata] = NodeMetadata(
+    _metadata: Optional[NodeTypeMeta] = NodeTypeMeta(
         category=TORCH_TRAINER_CATEGORY,
-        capitalized_type="",
+        capitalized_name="",
         tags=[BASE_NODE_TAG]
     )
 
@@ -314,8 +313,8 @@ class TrainerNode(BaseTorchNode):
         
         found_modules = []
         visited = set()
-        queue = deque()
-        for slot in self._mirror.slots.get(SuperSlotTypes.INPUT, []):
+        queue: deque[NodeMirror] = deque()
+        for slot in self._mirror.inputs:
             for connection in slot.connections:
                 queue.append(connection.parent_node)
 
@@ -329,7 +328,7 @@ class TrainerNode(BaseTorchNode):
             if isinstance(node_instance, TorchModuleNode):
                 found_modules.append(node_instance)
 
-            for input_slot in node_mirror.slots.get(SuperSlotTypes.INPUT, []):
+            for input_slot in node_mirror.inputs:
                 for connection in input_slot.connections:
                     queue.append(connection.parent_node)
 
