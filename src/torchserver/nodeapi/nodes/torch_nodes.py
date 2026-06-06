@@ -59,7 +59,7 @@ class Conv2DNode(TorchModuleNode):
 
         return nn.Conv2d(
             in_channels=C,
-            out_channels=self._parameters.out_channels,
+            out_channels=int(self._parameters.out_channels),
             kernel_size=kernel_size,
             padding=padding
         )

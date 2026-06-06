@@ -1,8 +1,9 @@
 {
  "types_id": "TorchTypes",
  "types_version": 0,
- "meta_version": 3,
- "last_modified": 1779655482.5853121,
+ "meta_version": 1,
+ "content_hash": "d97c6166e61af47dfbc8d91509fa8cee",
+ "last_modified": 1780786889.0311687,
  "tags": {
   "PyTorch/base": {
    "description": "Nodes that don't implement a specific behavior, they usually have more parameters"
@@ -26,6 +27,9 @@
    "description": ""
   },
   "PyTorch/optimizer": {
+   "description": ""
+  },
+  "input/parameter": {
    "description": ""
   }
  },
@@ -106,6 +110,13 @@
    },
    "default_tags": [
     "PyTorch/optimizer"
+   ]
+  },
+  "Input": {
+   "description": "Nodes that receives user input",
+   "super_category": null,
+   "default_tags": [
+    "input/parameter"
    ]
   }
  }

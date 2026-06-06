@@ -34,8 +34,8 @@ class BaseTorchNode(BaseNode):
     def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
         with torch.no_grad():
             preview_tensor = torch.tensor(tensor)
-            if tensor.dim() > 3:
-                preview_tensor = tensor[0]
+            # if tensor.dim() > 3:
+            #     preview_tensor = tensor[0]
 
             t_min, t_max = preview_tensor.min(), preview_tensor.max()
             if t_max > t_min:
@@ -73,6 +73,7 @@ class DatasetInputNode(BaseTorchNode):
     def forward(self, input: NoInput) -> _DatasetOut:
         parsed_shape = tuple([int(dim_size) for dim_size in self._parameters.shape.split(",")])
 
+        torch.seed()
         random_tensor = torch.randn(parsed_shape)
         return _DatasetOut(
             sample=random_tensor,
@@ -333,5 +334,5 @@ class TrainerNode(BaseTorchNode):
                 for connection in input_slot.connections:
                     queue.append(connection.parent_node)
 
-        print(found_modules)
+        # print(found_modules)
         return found_modules
