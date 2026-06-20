@@ -301,7 +301,7 @@ class TrainerNode(BaseTorchNode):
 
         # Se a lista de parâmetros mudou (nó novo ou removido), recria o optimizer
         if current_params_ids != self._cached_params_ids:
-            self.optimizer = torch.optim.AdamW(all_params, lr=self._parameters.lr)
+            self.optimizer = torch.optim.AdamW(all_params, lr=self._parameters.lr or 0.0001)
             self._cached_params_ids = current_params_ids
             return
         
