@@ -20,7 +20,12 @@ class _TorchSlotIO[inputType: Any, valueType: Any](_SlotIO[inputType, valueType]
         else:
             if self._value == new_value:
                 return
-        
+
+        self._value_meta = {
+            "shape": new_value.shape,
+            "min": new_value.min(),
+            "max": new_value.max()
+        }
         self._value = new_value # type: ignore
         self._version += 1
 

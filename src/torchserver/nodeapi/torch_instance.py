@@ -2,6 +2,7 @@ from nodeserver.api.node.abstract._nodes import _Node
 from nodeserver.api.node.abstract._slots import _SlotIO
 from nodeserver.api.web.instance.special_instance import UserSession, WsServerInstance
 from nodeserver.wrapper.nodes.node.base_nodes import SlotMirror
+from nodeserver.api.web.requests.websocket_requests import SlotOutputWrapper
 import torch
 
 from torchserver.nodeapi.internal.torch_scene import TorchNodeScene
@@ -17,15 +18,14 @@ class TorchServerInstance(WsServerInstance):
 
         self._runtime = TorchRuntime()
         self._scene = TorchNodeScene([], self.mirror_manager)
-    
-    def _prepare_to_send_output(self, node: _Node, slot_results: dict[SlotMirror, _SlotIO] | None):
-        result_data = {}
-        if slot_results != None:
-            for slot, result in slot_results.items():
-                if isinstance(result._value, torch.Tensor) and isinstance(node, BaseTorchNode):
-                    result_data[slot.slot_id] = node._prepare_for_preview(result._value)
-                    continue
 
-                result_data[slot.slot_id] = result._value
+    def _parse_slot_result(self, result: _SlotIO, node: _Node) -> SlotOutputWrapper:
+        value = result.value
+        if isinstance(result._value, torch.Tensor) and isinstance(node, BaseTorchNode):
+            value = node._prepare_for_preview(result._value)
+
         
-        return result_data
+        return SlotOutputWrapper(
+            value=value,
+            value_meta=result.value_meta
+        )
