@@ -17,6 +17,13 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Run Server",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/torchserver/main_server.py",
+            "console": "integratedTerminal"
         }
     ]
 }

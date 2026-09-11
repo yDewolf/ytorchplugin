@@ -72,7 +72,7 @@ class MNISTDatasetNode(DatasetInputNode):
 
         return _DatasetOut(
             sample=samples,
-            target=torch.tensor(labels)
+            target=labels.detach().clone()
         )
 
 class _SeededDataset(TorchIOModel):

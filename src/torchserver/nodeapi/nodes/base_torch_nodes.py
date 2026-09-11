@@ -33,15 +33,14 @@ class BaseTorchNode(BaseNode):
 
     def _prepare_for_preview(self, tensor: torch.Tensor) -> list:
         with torch.no_grad():
-            preview_tensor = torch.tensor(tensor)
-            # if tensor.dim() > 3:
-            #     preview_tensor = tensor[0]
+            preview_tensor = tensor.detach().cpu()
 
+            # FIXME: this should be normalized btw (0 to 1)
             t_min, t_max = preview_tensor.min(), preview_tensor.max()
             if t_max > t_min:
                 preview_tensor = (preview_tensor - t_min) / (t_max - t_min) * 255
             
-            return preview_tensor.byte().cpu().tolist()
+            return preview_tensor.byte().tolist()
 
 class _DatasetOut(TorchIOModel):
     sample: Annotated[torch.Tensor, TorchOutput()]
