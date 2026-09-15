@@ -237,7 +237,7 @@ class LossNode(BaseTorchNode):
         
         loss = self.criterion(input.preds, input.targets)
         return _LossNodeOut(
-            loss=loss
+            loss=loss # FIXME: multiplicar por weight
         )
     
     def _prepare_for_preview(self, tensor: torch.Tensor) -> list:

@@ -1,6 +1,6 @@
 {
  "capitalized_name": "LinearNode",
- "description": "",
+ "description": "Aplica uma transformação linear do tipo y = xW^T + b aos dados de entrada.",
  "category": "Module",
  "tags": [
   "PyTorch/base"
@@ -14,11 +14,11 @@
  "slot_meta": {
   "in_0": {
    "capitalized_name": "in_0",
-   "description": ""
+   "description": "Tensor o qual a operação deve ser aplicada."
   },
   "out_0": {
    "capitalized_name": "out_0",
-   "description": ""
+   "description": "Tensor resultante da operação."
   }
  }
 }

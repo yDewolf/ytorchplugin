@@ -1,4 +1,4 @@
 {
- "capitalized_name": "_SlotIO:int",
- "description": ""
+ "capitalized_name": "Integer",
+ "description": "Tipo de dado primitivo para manipulação e transferência de valores numéricos inteiros."
 }

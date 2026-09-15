@@ -1,6 +1,6 @@
 {
  "capitalized_name": "SeededRandomData",
- "description": "",
+ "description": "Gera tensores com dados aleatórios baseado em uma seed em determinado [formato](@params:shape) usando `torch.randn(shape)`. Uma mesma seed sempre gera os mesmos resultados.",
  "category": "Dataset",
  "tags": [
   "data/image"
@@ -8,25 +8,25 @@
  "parameter_meta": {
   "shape": {
    "capitalized_name": "Shape",
-   "description": ""
+   "description": "Formato utilizado para gerar os tensores."
   }
  },
  "slot_meta": {
   "seed": {
    "capitalized_name": "seed",
-   "description": ""
+   "description": "Determina uma seed númerica para o gerador de números do PyTorch."
   },
   "tensor_seed": {
    "capitalized_name": "tensor_seed",
-   "description": ""
+   "description": "Determina uma seed númerica baseada no tensor passado (obrigatoriamente no formato (1)) para o gerador de números do PyTorch."
   },
   "sample": {
    "capitalized_name": "sample",
-   "description": ""
+   "description": "Tensor aleatório no formato @params:shape."
   },
   "target": {
    "capitalized_name": "target",
-   "description": ""
+   "description": "Tensor idêntico ao @slot:sample (por enquanto)"
   }
  }
 }

@@ -1,6 +1,6 @@
 {
  "capitalized_name": "LossNode",
- "description": "",
+ "description": "Nó configurável para seleção e cálculo da função de perda (MSE, BCE, CEL) durante o treinamento.",
  "category": "Loss",
  "tags": [
   "PyTorch/base"
@@ -8,25 +8,25 @@
  "parameter_meta": {
   "criterion": {
    "capitalized_name": "Criterion",
-   "description": ""
+   "description": "Critério da loss (MSE, BCE ou CEL)"
   },
   "weight": {
    "capitalized_name": "Weight",
-   "description": ""
+   "description": "Peso da [loss](@slot:loss) (loss * weight)"
   }
  },
  "slot_meta": {
   "preds": {
    "capitalized_name": "preds",
-   "description": ""
+   "description": "Valores previstos pelo modelo, ou valores que devem ser comparados com um valor [alvo](@slot:targets)."
   },
   "targets": {
    "capitalized_name": "targets",
-   "description": ""
+   "description": "Valores alvo para serem comparados com os valores [previstos](@slot:preds)."
   },
   "loss": {
    "capitalized_name": "loss",
-   "description": ""
+   "description": "'Diferença' entre o [valor previsto](@slot:preds) e o [valor esperado](@slot:targets)."
   }
  }
 }
