@@ -1,6 +1,6 @@
 {
  "capitalized_name": "MNISTDataset",
- "description": "Fornece lotes de imagens (@datatype:_TorchSlotIO:tensor -> (B, 28, 28)) e rótulos (B, ) do conjunto de dados MNIST. As imagens são dígitos (0 a 9) desenhados a mão, frequentemente utilizados para treinar modelos simples de classificação de dígitos.",
+ "description": "Fornece lotes de imagens (@datatype:_TorchSlotIO:Tensor_array -> (B, 28, 28)) e rótulos (B, ) do conjunto de dados MNIST. As imagens são dígitos (0 a 9) desenhados a mão, frequentemente utilizados para treinar modelos simples de classificação de dígitos.",
  "category": "Dataset",
  "tags": [
   "data/image"
