@@ -40,7 +40,7 @@ class LossNode[inputType: LossNodeInput, outputType: LossNodeOutput](BaseNode[in
         
         loss = self.criterion(inputs.preds, inputs.targets)
         return LossNodeOutput(
-            loss=loss
+            loss=LossDataType(loss=loss * self.params.weight)
         ) # type: ignore
 
 class CELNodeOutput(LossNodeOutput):
@@ -48,10 +48,10 @@ class CELNodeOutput(LossNodeOutput):
 
 @plugin_node(id="loss-cel")
 class CrossEntropyLossNode(LossNode[LossNodeInput, CELNodeOutput]):
-    OutputModel = LossNodeOutput
+    OutputModel = CELNodeOutput
 
     def on_setup_params(self):
-        self.criterion = nn.CrossEntropyLoss(torch.tensor(self.params.weight))
+        self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, inputs: LossNodeInput) -> CELNodeOutput:
         if not self.criterion:
@@ -60,16 +60,16 @@ class CrossEntropyLossNode(LossNode[LossNodeInput, CELNodeOutput]):
         loss = self.criterion(inputs.preds, inputs.targets)
         class_idx = inputs.preds.argmax(keepdim=True)
         return CELNodeOutput(
-            loss=loss,
+            loss=LossDataType(loss=(loss * self.params.weight)),
             model_output=class_idx
         )
 
 @plugin_node(id="loss-bce")
 class BinaryCrossEntropyLossNode(LossNode[LossNodeInput, LossNodeOutput]):
     def on_setup_params(self):
-        self.criterion = nn.BCELoss(torch.tensor(self.params.weight))
+        self.criterion = nn.BCELoss()
 
 @plugin_node(id="loss-mse")
 class MinimumSquaredErrorLossNode(LossNode[LossNodeInput, LossNodeOutput]):
     def on_setup_params(self):
-        self.criterion = nn.MSELoss(torch.tensor(self.params.weight))
+        self.criterion = nn.MSELoss()

@@ -1,0 +1,24 @@
+{
+ "capitalized_name": "trainer",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {
+  "lr": {
+   "capitalized_name": "lr",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "loss": {
+   "capitalized_name": "loss",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}

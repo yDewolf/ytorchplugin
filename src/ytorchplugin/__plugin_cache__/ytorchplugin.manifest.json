@@ -22,9 +22,9 @@
     }
   },
   "node_types": {
-    "ytorchplugin:DatasetInputNode": {
+    "ytorchplugin:random_tensor": {
       "namespace": "ytorchplugin",
-      "id": "DatasetInputNode",
+      "id": "random_tensor",
       "parameters": {
         "shape": {
           "type": "text",
@@ -48,9 +48,9 @@
         }
       }
     },
-    "ytorchplugin:BinaryCrossEntropyLossNode": {
+    "ytorchplugin:loss-bce": {
       "namespace": "ytorchplugin",
-      "id": "BinaryCrossEntropyLossNode",
+      "id": "loss-bce",
       "parameters": {
         "weight": {
           "type": "float",
@@ -83,9 +83,50 @@
         }
       }
     },
-    "ytorchplugin:CrossEntropyLossNode": {
+    "ytorchplugin:loss-cel": {
       "namespace": "ytorchplugin",
-      "id": "CrossEntropyLossNode",
+      "id": "loss-cel",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "core:unknown",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        },
+        "model_output": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:loss-mse": {
+      "namespace": "ytorchplugin",
+      "id": "loss-mse",
       "parameters": {
         "weight": {
           "type": "float",
@@ -118,44 +159,32 @@
         }
       }
     },
-    "ytorchplugin:MinimumSquaredErrorLossNode": {
+    "ytorchplugin:trainer": {
       "namespace": "ytorchplugin",
-      "id": "MinimumSquaredErrorLossNode",
+      "id": "trainer",
       "parameters": {
-        "weight": {
+        "lr": {
           "type": "float",
-          "default": 1.0,
+          "default": 1e-6,
           "required": false,
           "datatype_fqn": "core:float",
           "min": null,
-          "max": null,
-          "step": null
+          "max": 1.0,
+          "step": 1e-6
         }
       },
       "slots": {
-        "preds": {
-          "datatype_fqn": "ytorchplugin:tensor",
-          "max_connections": 1,
-          "required": false,
-          "is_input": true
-        },
-        "targets": {
-          "datatype_fqn": "ytorchplugin:tensor",
-          "max_connections": 1,
-          "required": false,
-          "is_input": true
-        },
         "loss": {
           "datatype_fqn": "core:unknown",
-          "max_connections": 0,
+          "max_connections": 1,
           "required": false,
-          "is_input": false
+          "is_input": true
         }
       }
     },
-    "ytorchplugin:RepeatNode": {
+    "ytorchplugin:repeat": {
       "namespace": "ytorchplugin",
-      "id": "RepeatNode",
+      "id": "repeat",
       "parameters": {
         "shape": {
           "type": "text",
@@ -173,9 +202,9 @@
         }
       }
     },
-    "ytorchplugin:ReshapeNode": {
+    "ytorchplugin:reshape": {
       "namespace": "ytorchplugin",
-      "id": "ReshapeNode",
+      "id": "reshape",
       "parameters": {
         "shape": {
           "type": "text",
@@ -193,9 +222,9 @@
         }
       }
     },
-    "ytorchplugin:ConcatNode": {
+    "ytorchplugin:concat": {
       "namespace": "ytorchplugin",
-      "id": "ConcatNode",
+      "id": "concat",
       "parameters": {
         "dim": {
           "type": "int",
@@ -228,9 +257,9 @@
         }
       }
     },
-    "ytorchplugin:StackNode": {
+    "ytorchplugin:stack": {
       "namespace": "ytorchplugin",
-      "id": "StackNode",
+      "id": "stack",
       "parameters": {
         "dim": {
           "type": "int",
@@ -263,9 +292,9 @@
         }
       }
     },
-    "ytorchplugin:SumNode": {
+    "ytorchplugin:sumtensors": {
       "namespace": "ytorchplugin",
-      "id": "SumNode",
+      "id": "sumtensors",
       "parameters": {
         "weight_0": {
           "type": "float",
@@ -307,9 +336,9 @@
         }
       }
     },
-    "ytorchplugin:ArgmaxNode": {
+    "ytorchplugin:argmax": {
       "namespace": "ytorchplugin",
-      "id": "ArgmaxNode",
+      "id": "argmax",
       "parameters": {},
       "slots": {
         "in_0": {
@@ -320,9 +349,9 @@
         }
       }
     },
-    "ytorchplugin:NoGradnode": {
+    "ytorchplugin:nograd": {
       "namespace": "ytorchplugin",
-      "id": "NoGradnode",
+      "id": "nograd",
       "parameters": {},
       "slots": {
         "in_0": {

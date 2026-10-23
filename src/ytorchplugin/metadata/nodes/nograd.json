@@ -1,0 +1,17 @@
+{
+ "capitalized_name": "nograd",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {},
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}
