@@ -26,3 +26,23 @@ class TensorDataType(PluginDatatype):
                 detached_tensor = (detached_tensor - t_min) / (t_max - t_min) * 255
 
             return detached_tensor.tolist()
+
+@plugin_datatype(
+    id="loss",
+    base_id=DefaultDataTypes.ARRAY,
+    default_renderer=DefaultRenderers.ARRAY,
+)
+class LossDataType(PluginDatatype):
+    loss_tensor: torch.Tensor
+
+    def __init__(self, loss: torch.Tensor) -> None:
+        self.loss_tensor = loss
+
+    def serialize(self):
+        return self.serialize_value(self.loss_tensor)
+    
+    @classmethod
+    def serialize_value(cls, value: torch.Tensor) -> list:
+        with torch.no_grad():
+            detached_tensor = value.detach().cpu()
+            return detached_tensor.tolist()

@@ -1,5 +1,5 @@
 {
-  "source_hash": "2e0fa9e99555f9c0cbddf0910125d51afaf86612ac92f3c3599ee806c216803b",
+  "source_hash": "d2289861b3a6c7a79b4043b130dd15b7130ef06eb3140f44f22a3bc56eaf87b8",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
@@ -15,22 +15,46 @@
     "ytorchplugin:DatasetInputNode": {
       "class_path": "nodes.datasets.base_dataset_node.DatasetInputNode",
       "required_datatypes": [
+        "core:string",
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:BinaryCrossEntropyLossNode": {
+      "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
+      "required_datatypes": [
+        "core:float",
         "ytorchplugin:tensor",
-        "core:string"
+        "core:unknown"
+      ]
+    },
+    "ytorchplugin:CrossEntropyLossNode": {
+      "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
+      "required_datatypes": [
+        "core:float",
+        "ytorchplugin:tensor",
+        "core:unknown"
+      ]
+    },
+    "ytorchplugin:MinimumSquaredErrorLossNode": {
+      "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
+      "required_datatypes": [
+        "core:float",
+        "ytorchplugin:tensor",
+        "core:unknown"
       ]
     },
     "ytorchplugin:RepeatNode": {
       "class_path": "nodes.utils.shape_util_nodes.RepeatNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:ReshapeNode": {
       "class_path": "nodes.utils.shape_util_nodes.ReshapeNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:ConcatNode": {
@@ -69,11 +93,18 @@
   },
   "node_modules": [
     "nodes.datasets.base_dataset_node",
+    "nodes.loss.loss_nodes",
     "nodes.utils.shape_util_nodes",
     "nodes.utils.tensor_operation",
     "nodes.utils.util_nodes"
   ],
   "data_types": [
+    {
+      "namespace": "ytorchplugin",
+      "id": "loss",
+      "class_path": "datatypes.torch_types.LossDataType",
+      "alias_class_paths": []
+    },
     {
       "namespace": "ytorchplugin",
       "id": "tensor",

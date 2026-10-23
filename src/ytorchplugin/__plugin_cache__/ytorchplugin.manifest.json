@@ -2,6 +2,15 @@
   "version": "0.1.0",
   "package_id": "ytorchplugin",
   "data_types": {
+    "ytorchplugin:loss": {
+      "namespace": "ytorchplugin",
+      "id": "loss",
+      "base_id": "array",
+      "default_renderer": "array",
+      "whitelist": [
+        "array"
+      ]
+    },
     "ytorchplugin:tensor": {
       "namespace": "ytorchplugin",
       "id": "tensor",
@@ -33,6 +42,111 @@
         },
         "target": {
           "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:BinaryCrossEntropyLossNode": {
+      "namespace": "ytorchplugin",
+      "id": "BinaryCrossEntropyLossNode",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "core:unknown",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:CrossEntropyLossNode": {
+      "namespace": "ytorchplugin",
+      "id": "CrossEntropyLossNode",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "core:unknown",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:MinimumSquaredErrorLossNode": {
+      "namespace": "ytorchplugin",
+      "id": "MinimumSquaredErrorLossNode",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "core:unknown",
           "max_connections": 0,
           "required": false,
           "is_input": false
