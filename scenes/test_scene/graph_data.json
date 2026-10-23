@@ -1,1 +1,1 @@
-{"uid":"test_scene","dependencies":{"ytorchplugin":"0.1.0","core":"0.1.0"},"nodes":{"jhOkED":{"uid":"jhOkED","nodetype_fqn":"ytorchplugin:DatasetInputNode","position":{"x":200.0,"y":260.0},"data":{"shape":"16,16"}}},"connections":{}}
+{"uid":"test_scene","dependencies":{"core":"0.1.0","ytorchplugin":"0.1.0"},"nodes":{"jhOkED":{"uid":"jhOkED","nodetype_fqn":"ytorchplugin:DatasetInputNode","position":{"x":200.0,"y":260.0},"data":{"shape":"16,16"}}},"connections":{}}

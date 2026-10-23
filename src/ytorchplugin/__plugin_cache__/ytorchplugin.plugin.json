@@ -1,5 +1,5 @@
 {
-  "source_hash": "b82ca040e35b721b60a9574acb5071e7cc3007f0abe53b597aac48dd9f112ed4",
+  "source_hash": "2e0fa9e99555f9c0cbddf0910125d51afaf86612ac92f3c3599ee806c216803b",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
@@ -18,10 +18,60 @@
         "ytorchplugin:tensor",
         "core:string"
       ]
+    },
+    "ytorchplugin:RepeatNode": {
+      "class_path": "nodes.utils.shape_util_nodes.RepeatNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor",
+        "core:string"
+      ]
+    },
+    "ytorchplugin:ReshapeNode": {
+      "class_path": "nodes.utils.shape_util_nodes.ReshapeNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor",
+        "core:string"
+      ]
+    },
+    "ytorchplugin:ConcatNode": {
+      "class_path": "nodes.utils.tensor_operation.ConcatNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor",
+        "core:int"
+      ]
+    },
+    "ytorchplugin:StackNode": {
+      "class_path": "nodes.utils.tensor_operation.StackNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor",
+        "core:int"
+      ]
+    },
+    "ytorchplugin:SumNode": {
+      "class_path": "nodes.utils.tensor_operation.SumNode",
+      "required_datatypes": [
+        "core:float",
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:ArgmaxNode": {
+      "class_path": "nodes.utils.util_nodes.ArgmaxNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:NoGradnode": {
+      "class_path": "nodes.utils.util_nodes.NoGradnode",
+      "required_datatypes": [
+        "ytorchplugin:tensor"
+      ]
     }
   },
   "node_modules": [
-    "nodes.datasets.base_dataset_node"
+    "nodes.datasets.base_dataset_node",
+    "nodes.utils.shape_util_nodes",
+    "nodes.utils.tensor_operation",
+    "nodes.utils.util_nodes"
   ],
   "data_types": [
     {
