@@ -1,0 +1,36 @@
+{
+ "capitalized_name": "DatasetInputNode",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {
+  "shape": {
+   "capitalized_name": "shape",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "sample": {
+   "capitalized_name": "sample",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "target": {
+   "capitalized_name": "target",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}

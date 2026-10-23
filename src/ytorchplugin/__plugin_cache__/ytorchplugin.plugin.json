@@ -1,0 +1,34 @@
+{
+  "source_hash": "b82ca040e35b721b60a9574acb5071e7cc3007f0abe53b597aac48dd9f112ed4",
+  "package_id": "ytorchplugin",
+  "plugin_version": "0.1.0",
+  "engine_version": ">=0.1.0",
+  "plugin_api_version": ">=1.1.0",
+  "description": "Description for Ytorchplugin",
+  "authors": [
+    "yDewolf"
+  ],
+  "dependencies": {
+    "core": ">=0.1.0"
+  },
+  "nodes_cache": {
+    "ytorchplugin:DatasetInputNode": {
+      "class_path": "nodes.datasets.base_dataset_node.DatasetInputNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor",
+        "core:string"
+      ]
+    }
+  },
+  "node_modules": [
+    "nodes.datasets.base_dataset_node"
+  ],
+  "data_types": [
+    {
+      "namespace": "ytorchplugin",
+      "id": "tensor",
+      "class_path": "datatypes.torch_types.TensorDataType",
+      "alias_class_paths": []
+    }
+  ]
+}
