@@ -2,9 +2,8 @@ from abc import ABC, abstractmethod
 from typing import Annotated, Optional
 
 from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.node.logic_nodes import BaseNode
 from nodeserver.engine.protocols.parameters.param_wrappers import Param
-from nodeserver.protocols.manifest.node.node_graph import NodeSceneData
+from nodeserver.engine.protocols.node.logic_nodes import BaseNode
 import torch
 from torch import nn
 

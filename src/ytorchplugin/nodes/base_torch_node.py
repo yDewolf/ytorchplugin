@@ -15,12 +15,10 @@ class TorchOutputModel(NodeOutputs):
 class TorchNodeInput(TorchInputModel):
     in_0: torch.Tensor
 
-
 class TorchNodeOutput(TorchOutputModel):
     out_0: torch.Tensor
 
-
-class BaseTorchNode(BaseNode[TorchNodeInput, TorchOutputModel], ABC):
+class BaseTorchNode(BaseNode[TorchNodeInput, TorchNodeOutput], ABC):
     InputModel = TorchNodeInput
-    OutputModel = TorchOutputModel
+    OutputModel = TorchNodeOutput
 

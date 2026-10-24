@@ -1,0 +1,42 @@
+{
+ "capitalized_name": "conv2d",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {
+  "out_channels": {
+   "capitalized_name": "out_channels",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "kernel_size": {
+   "capitalized_name": "kernel_size",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "padding": {
+   "capitalized_name": "padding",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "out_0": {
+   "capitalized_name": "out_0",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}

@@ -7,7 +7,7 @@ from nodeserver.engine.protocols.parameters.param_wrappers import Param
 from nodeserver.protocols.manifest.node.node_graph import NodeSceneData
 import torch
 
-from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchOutputModel
+from ytorchplugin.nodes.base_torch_node import TorchOutputModel
 
 
 class DatasetOut(TorchOutputModel):

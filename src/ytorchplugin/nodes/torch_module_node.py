@@ -77,6 +77,8 @@ class TorchModuleNode(BaseTorchNode, ABC):
             return
 
         folder = state_provider.get_node_state_folder(self.scene_data.uid)
+        folder.mkdir(exist_ok=True)
+        
         file_path = folder / f"module_weights.{TORCH_MODEL_EXTENSION}"
         
         model_context = {}

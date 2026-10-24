@@ -78,8 +78,8 @@ class TrainerNode(BaseNode[TrainerNodeInput, NodeOutputs]):
         found_modules = []
         visited = set()
 
-        queue: deque[str] = deque()
-        queue += scene.graph.get_upstream_node_ids(self.scene_data.uid)
+        upstream_nodes = scene.graph.get_upstream_node_ids(self.scene_data.uid)
+        queue: deque[str] = deque(list(upstream_nodes))
         while queue:
             node_uid = queue.popleft()
             if node_uid in visited:
@@ -90,7 +90,7 @@ class TrainerNode(BaseNode[TrainerNodeInput, NodeOutputs]):
             if isinstance(logic_node, TorchModuleNode):
                 found_modules.append(logic_node)
 
-            queue += scene.graph.get_upstream_node_ids(node_uid)
+            for upstream_id in scene.graph.get_upstream_node_ids(node_uid):
+                queue.append(upstream_id)
 
-        print(found_modules)
         return found_modules
