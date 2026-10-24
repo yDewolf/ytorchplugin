@@ -22,6 +22,35 @@
     }
   },
   "node_types": {
+    "ytorchplugin:dataset-mnist": {
+      "namespace": "ytorchplugin",
+      "id": "dataset-mnist",
+      "parameters": {
+        "batch_size": {
+          "type": "int",
+          "default": null,
+          "required": true,
+          "datatype_fqn": "core:int",
+          "min": 1.0,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "sample": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        },
+        "target": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
     "ytorchplugin:random_tensor": {
       "namespace": "ytorchplugin",
       "id": "random_tensor",

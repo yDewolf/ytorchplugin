@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from typing import Annotated
 
 from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
@@ -14,10 +15,8 @@ class DatasetOut(TorchOutputModel):
     sample: torch.Tensor
     target: torch.Tensor
 
-@plugin_node(
-    id="random_tensor"
-)
-class DatasetInputNode(BaseNode):
+# @plugin_node(id="random_tensor")
+class DatasetInputNode(BaseNode[NodeInputs, DatasetOut], ABC):
     OutputModel = DatasetOut
 
     class Parameters(NodeParameters): # type: ignore
@@ -34,16 +33,11 @@ class DatasetInputNode(BaseNode):
         pass
 
     # Selecionar um elemento aleatório do dataset
+    @abstractmethod
     def forward(self, inputs: NodeInputs) -> DatasetOut:
-        parsed_shape = tuple([int(dim_size) for dim_size in self.params.shape.split(",")])
-
-        torch.seed()
-        random_tensor = torch.randn(parsed_shape)
-        return DatasetOut(
-            sample=random_tensor,
-            target=torch.zeros(parsed_shape)
-        )
+        pass
  
     # Fazer alguma limpeza se necessário (é interessante que o dataset ainda esteja carregado na memória para acelerar o pre_forward)
     def post_forward(self):
         pass
+
