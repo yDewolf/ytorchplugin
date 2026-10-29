@@ -9,6 +9,6 @@ class YtorchpluginPlugin(Plugin):
         description="Description for Ytorchplugin",
         authors=["yDewolf"],
         engine_version=f">=0.1.0", # Current Engine Version
-        plugin_api_version=f">=1.1.0", # Current Plugin API Version
+        plugin_api_version=f">=1.2.0", # Current Plugin API Version
         dependencies={"core": ">=0.1.0"},
     )

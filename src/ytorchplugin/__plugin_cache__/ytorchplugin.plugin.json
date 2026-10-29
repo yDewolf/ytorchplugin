@@ -1,9 +1,9 @@
 {
-  "source_hash": "7c05fd89f6e4e434fd574f52b4ae493c7af82f08625c52c19a70ecc784bcc72e",
+  "source_hash": "8b874c27c7afbbe71b4524930b764616d907c2c49d53208a0078f421c84e326f",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
-  "plugin_api_version": ">=1.1.0",
+  "plugin_api_version": ">=1.2.0",
   "description": "Description for Ytorchplugin",
   "authors": [
     "yDewolf"
@@ -15,15 +15,15 @@
     "ytorchplugin:dataset-mnist": {
       "class_path": "nodes.datasets.mnist_dataset_node.MNISTDatasetNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:random_tensor": {
       "class_path": "nodes.datasets.random_tensor_node.RandomNodeTensor",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:loss-bce": {
@@ -53,51 +53,51 @@
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
-        "core:string",
+        "core:int",
         "ytorchplugin:tensor",
-        "core:int"
+        "core:string"
       ]
     },
     "ytorchplugin:linear": {
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:trainer": {
       "class_path": "nodes.training.training_nodes.TrainerNode",
       "required_datatypes": [
-        "core:float",
-        "ytorchplugin:loss"
+        "ytorchplugin:loss",
+        "core:float"
       ]
     },
     "ytorchplugin:repeat": {
       "class_path": "nodes.utils.shape_util_nodes.RepeatNode",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:reshape": {
       "class_path": "nodes.utils.shape_util_nodes.ReshapeNode",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:concat": {
       "class_path": "nodes.utils.tensor_operation.ConcatNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:stack": {
       "class_path": "nodes.utils.tensor_operation.StackNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:sumtensors": {
@@ -110,8 +110,8 @@
     "ytorchplugin:torch_info": {
       "class_path": "nodes.utils.torchinfo_node.TorchInfoNode",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:argmax": {
