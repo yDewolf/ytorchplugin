@@ -1,13 +1,15 @@
 {
- "capitalized_name": "conv2d",
+ "capitalized_name": "Conv2D",
  "brief": null,
- "description": "",
+ "description": "Aplica uma operação de convolução bidimensional sobre o tensor de imagem ou feature map de entrada.",
  "usages": null,
- "category": "default",
- "tags": [],
+ "category": "Module",
+ "tags": [
+  "PyTorch/base"
+ ],
  "parameter_meta": {
   "out_channels": {
-   "capitalized_name": "out_channels",
+   "capitalized_name": "OutChannels",
    "brief": null,
    "description": "",
    "usages": null
@@ -29,13 +31,13 @@
   "in_0": {
    "capitalized_name": "in_0",
    "brief": null,
-   "description": "",
+   "description": "Tensor o qual a operação deve ser aplicada.",
    "usages": null
   },
   "out_0": {
    "capitalized_name": "out_0",
    "brief": null,
-   "description": "",
+   "description": "Tensor resultante da operação.",
    "usages": null
   }
  }

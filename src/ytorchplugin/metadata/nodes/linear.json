@@ -1,10 +1,12 @@
 {
- "capitalized_name": "linear",
+ "capitalized_name": "Linear",
  "brief": null,
- "description": "",
+ "description": "Aplica uma transformação linear do tipo y = xW^T + b aos dados de entrada.",
  "usages": null,
- "category": "default",
- "tags": [],
+ "category": "Module",
+ "tags": [
+  "PyTorch/base"
+ ],
  "parameter_meta": {
   "out_features": {
    "capitalized_name": "out_features",

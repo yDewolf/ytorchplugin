@@ -1,5 +1,5 @@
 {
-  "source_hash": "edd264750dd2d4da7df3aea5f6aa2c9ec663e6f3d1e478b82c320c03917184f2",
+  "source_hash": "7c05fd89f6e4e434fd574f52b4ae493c7af82f08625c52c19a70ecc784bcc72e",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
@@ -15,8 +15,8 @@
     "ytorchplugin:dataset-mnist": {
       "class_path": "nodes.datasets.mnist_dataset_node.MNISTDatasetNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:random_tensor": {
@@ -29,40 +29,40 @@
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
-        "core:float",
         "ytorchplugin:tensor",
+        "core:float",
         "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
-        "core:float",
         "ytorchplugin:tensor",
+        "core:float",
         "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
-        "core:float",
         "ytorchplugin:tensor",
+        "core:float",
         "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
-        "core:int",
         "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:linear": {
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:trainer": {
@@ -89,22 +89,22 @@
     "ytorchplugin:concat": {
       "class_path": "nodes.utils.tensor_operation.ConcatNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:stack": {
       "class_path": "nodes.utils.tensor_operation.StackNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:torch_info": {

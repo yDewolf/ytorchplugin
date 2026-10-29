@@ -1,15 +1,17 @@
 {
- "capitalized_name": "trainer",
+ "capitalized_name": "TrainerNode",
  "brief": null,
- "description": "",
+ "description": "Rastreia os nós de módulo (por exemplo: LinearNode, Conv2D, etc) conectados (indiretamente) a esse nó, gerencia o otimizador (AdamW) e executa backward propagation. Utilizado para atualizar os pesos dos módulos conectados a partir de [uma loss](@slot:loss)",
  "usages": null,
- "category": "default",
- "tags": [],
+ "category": "Trainer",
+ "tags": [
+  "PyTorch/base"
+ ],
  "parameter_meta": {
   "lr": {
-   "capitalized_name": "lr",
+   "capitalized_name": "Learning Rate",
    "brief": null,
-   "description": "",
+   "description": "Funciona como um fator de escala global que controla o quanto o otimizador pode alterar os pesos na direção alvo. Ou seja, learning rates altas podem ser instáveis, learning rates baixas permitem que o modelo seja atualizado gradualmente.",
    "usages": null
   }
  },
@@ -17,7 +19,7 @@
   "loss": {
    "capitalized_name": "loss",
    "brief": null,
-   "description": "",
+   "description": "Erro do modelo. É importante que venha de um node do tipo Loss.",
    "usages": null
   }
  }

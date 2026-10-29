@@ -1,41 +1,41 @@
 {
- "capitalized_name": "sumtensors",
+ "capitalized_name": "SumTensors",
  "brief": null,
- "description": "",
+ "description": "Realiza uma soma ponderada elemento a elemento dos tensores recebidos. Os tensores devem ter o mesmo formato (shape). Cálculo da soma: tensor_0 * weight_0 + tensor_1 * weight_1",
  "usages": null,
- "category": "default",
+ "category": "Util",
  "tags": [],
  "parameter_meta": {
   "weight_0": {
-   "capitalized_name": "weight_0",
+   "capitalized_name": "Weight 0",
    "brief": null,
-   "description": "",
+   "description": "Peso aplicado aos valores do [tensor 0](@slot:in_0).",
    "usages": null
   },
   "weight_1": {
-   "capitalized_name": "weight_1",
+   "capitalized_name": "Weight 1",
    "brief": null,
-   "description": "",
+   "description": "Peso aplicado aos valores do [tensor 1](@slot:in_1).",
    "usages": null
   }
  },
  "slot_meta": {
   "in_0": {
-   "capitalized_name": "in_0",
+   "capitalized_name": "Tensor 0",
    "brief": null,
-   "description": "",
+   "description": "Tensor a ser somado com o @slot:in_1.",
    "usages": null
   },
   "in_1": {
-   "capitalized_name": "in_1",
+   "capitalized_name": "Tensor 1",
    "brief": null,
-   "description": "",
+   "description": "Tensor a ser somado com o @slot:in_0.",
    "usages": null
   },
   "out_0": {
-   "capitalized_name": "out_0",
+   "capitalized_name": "out",
    "brief": null,
-   "description": "",
+   "description": "Tensor resultante da soma entre os dois passados.",
    "usages": null
   }
  }
