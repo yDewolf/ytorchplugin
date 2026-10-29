@@ -55,6 +55,12 @@ class TorchModuleNode(BaseTorchNode, ABC):
     def build_torch_module(self, params: dict) -> nn.Module:
         raise NotImplementedError
 
+    def get_torch_module(self) -> nn.Module:
+        if not self.module:
+            raise Exception(f"Module not initialized for node {self.scene_data.uid}")
+        
+        return self.module
+    
 
     def _get_current_params(self, inputs: TorchNodeInput):
         return {

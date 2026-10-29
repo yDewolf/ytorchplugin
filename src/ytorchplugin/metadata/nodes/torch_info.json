@@ -1,0 +1,30 @@
+{
+ "capitalized_name": "torch_info",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {
+  "input_size_str": {
+   "capitalized_name": "input_size_str",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "summary": {
+   "capitalized_name": "summary",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}

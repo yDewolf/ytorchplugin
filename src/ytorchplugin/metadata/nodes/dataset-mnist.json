@@ -1,0 +1,30 @@
+{
+ "capitalized_name": "dataset-mnist",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {
+  "batch_size": {
+   "capitalized_name": "batch_size",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "sample": {
+   "capitalized_name": "sample",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "target": {
+   "capitalized_name": "target",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}

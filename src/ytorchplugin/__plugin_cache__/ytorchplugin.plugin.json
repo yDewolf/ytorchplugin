@@ -1,5 +1,5 @@
 {
-  "source_hash": "e2c3c575bc51f2112fe4cd393919ca4de63edc42a6886e771c376d793d25526a",
+  "source_hash": "edd264750dd2d4da7df3aea5f6aa2c9ec663e6f3d1e478b82c320c03917184f2",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
@@ -29,32 +29,32 @@
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
+        "core:float",
         "ytorchplugin:tensor",
-        "ytorchplugin:loss",
-        "core:float"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
+        "core:float",
         "ytorchplugin:tensor",
-        "ytorchplugin:loss",
-        "core:float"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
+        "core:float",
         "ytorchplugin:tensor",
-        "ytorchplugin:loss",
-        "core:float"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
-        "core:string",
         "core:int",
+        "core:string",
         "ytorchplugin:tensor"
       ]
     },
@@ -68,8 +68,8 @@
     "ytorchplugin:trainer": {
       "class_path": "nodes.training.training_nodes.TrainerNode",
       "required_datatypes": [
-        "ytorchplugin:loss",
-        "core:float"
+        "core:float",
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:repeat": {
@@ -103,8 +103,15 @@
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:float"
+        "core:float",
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:torch_info": {
+      "class_path": "nodes.utils.torchinfo_node.TorchInfoNode",
+      "required_datatypes": [
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:argmax": {
@@ -129,6 +136,7 @@
     "nodes.training.training_nodes",
     "nodes.utils.shape_util_nodes",
     "nodes.utils.tensor_operation",
+    "nodes.utils.torchinfo_node",
     "nodes.utils.util_nodes"
   ],
   "data_types": [

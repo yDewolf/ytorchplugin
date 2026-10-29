@@ -26,3 +26,4 @@ class NoGradnode(TorchUtilNode):
             return TorchNodeOutput(
                 out_0=inputs.in_0.detach()
             )
+

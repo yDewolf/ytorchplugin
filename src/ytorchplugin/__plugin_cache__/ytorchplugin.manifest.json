@@ -447,6 +447,32 @@
         }
       }
     },
+    "ytorchplugin:torch_info": {
+      "namespace": "ytorchplugin",
+      "id": "torch_info",
+      "parameters": {
+        "input_size_str": {
+          "type": "text",
+          "default": "1,1,28,28",
+          "required": false,
+          "datatype_fqn": "core:string"
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "summary": {
+          "datatype_fqn": "core:string",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
     "ytorchplugin:argmax": {
       "namespace": "ytorchplugin",
       "id": "argmax",
