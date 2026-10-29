@@ -1,13 +1,17 @@
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("Agg")
+
+from matplotlib.figure import Figure
 from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
 from nodeserver.engine.protocols.node.logic_nodes import BaseNode
 from nodeserver.engine.runtime.context_injectors import ArtifactAwareInput
 from nodeserver.engine.utils.context_managers import safe_atomic_save
-import torch
 from pathlib import Path
 
 from core.datatypes import ArtifactDataType
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel
+
+import torch
 
 class PlotNodeInput(TorchInputModel, ArtifactAwareInput):
     tensor_data: torch.Tensor
@@ -35,20 +39,20 @@ class MatplotlibPlotNode(BaseNode[PlotNodeInput, PlotNodeOutput]):
 
         try:
             with safe_atomic_save(final_path) as temp_path:
-                fig, ax = plt.subplots(figsize=(6, 4))
+                fig = Figure(figsize=(6, 4), dpi=50)
+                ax = fig.add_subplot(111)
                 
                 if data_np.ndim == 1:
-                    ax.plot(data_np)
+                    ax.plot(data_np, linewidth=1.0)
                 elif data_np.ndim >= 2:
-                    ax.imshow(data_np.squeeze(), cmap="viridis")
+                    ax.imshow(data_np.squeeze(), cmap="viridis", aspect="auto")
                 else:
                     ax.plot([data_np.item()])
                     
-                ax.set_title(f"Tensor Shape: {list(inputs.tensor_data.shape)}")
-                ax.grid(True)
+                ax.grid(True, linestyle="--", alpha=0.5)
                 
-                fig.savefig(temp_path, bbox_inches="tight", dpi=150)
-                plt.close(fig)
+                fig.savefig(temp_path, bbox_inches="tight", format="png")
+                fig.clear()
                 
         except Exception as e:
             raise RuntimeError(f"Falha ao gerar o plot com Matplotlib: {e}")
