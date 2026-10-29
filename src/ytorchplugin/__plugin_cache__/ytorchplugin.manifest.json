@@ -258,6 +258,25 @@
         }
       }
     },
+    "ytorchplugin:tensor_plot": {
+      "namespace": "ytorchplugin",
+      "id": "tensor_plot",
+      "parameters": {},
+      "slots": {
+        "tensor_data": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "plot_artifact": {
+          "datatype_fqn": "core:file_artifact",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
     "ytorchplugin:trainer": {
       "namespace": "ytorchplugin",
       "id": "trainer",

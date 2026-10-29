@@ -11,6 +11,15 @@
         "array"
       ]
     },
+    "core:file_artifact": {
+      "namespace": "core",
+      "id": "file_artifact",
+      "base_id": "file",
+      "default_renderer": "file",
+      "whitelist": [
+        "file"
+      ]
+    },
     "core:bool": {
       "namespace": "core",
       "id": "bool",

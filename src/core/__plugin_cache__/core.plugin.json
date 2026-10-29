@@ -1,5 +1,5 @@
 {
-  "source_hash": "8a239b20886495878b940da3edb923d12961ac39f160e4ff5f210525d17fac36",
+  "source_hash": "2846e0601938d4ddb07dee9cd2a04159e6cef4159b0d0124b2525c0a0cdec3aa",
   "package_id": "core",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
@@ -16,6 +16,12 @@
       "namespace": "core",
       "id": "array",
       "class_path": "datatypes.ArrayDataType",
+      "alias_class_paths": []
+    },
+    {
+      "namespace": "core",
+      "id": "file_artifact",
+      "class_path": "datatypes.ArtifactDataType",
       "alias_class_paths": []
     },
     {

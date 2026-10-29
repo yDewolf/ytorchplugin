@@ -1,5 +1,5 @@
 {
-  "source_hash": "8b874c27c7afbbe71b4524930b764616d907c2c49d53208a0078f421c84e326f",
+  "source_hash": "5cb9b6e53febd6f90af440c26aed86e3c1acfe37757513a170ac234a660f4ccc",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.1.0",
@@ -29,25 +29,25 @@
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
+        "ytorchplugin:loss",
         "core:float",
-        "ytorchplugin:loss"
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
+        "ytorchplugin:loss",
         "core:float",
-        "ytorchplugin:loss"
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
+        "ytorchplugin:loss",
         "core:float",
-        "ytorchplugin:loss"
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:conv2d": {
@@ -62,6 +62,13 @@
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
         "core:int",
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:tensor_plot": {
+      "class_path": "nodes.plot.plot_tensor_node.MatplotlibPlotNode",
+      "required_datatypes": [
+        "core:file_artifact",
         "ytorchplugin:tensor"
       ]
     },
@@ -103,8 +110,8 @@
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:float"
+        "core:float",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:torch_info": {
@@ -133,6 +140,7 @@
     "nodes.loss.loss_nodes",
     "nodes.modules.conv2d_node",
     "nodes.modules.linear_node",
+    "nodes.plot.plot_tensor_node",
     "nodes.training.training_nodes",
     "nodes.utils.shape_util_nodes",
     "nodes.utils.tensor_operation",

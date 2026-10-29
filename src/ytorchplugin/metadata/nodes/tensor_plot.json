@@ -1,0 +1,35 @@
+{
+ "capitalized_name": "tensor_plot",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {},
+ "slot_meta": {
+  "tensor_data": {
+   "capitalized_name": "tensor_data",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "plot_artifact": {
+   "capitalized_name": "plot_artifact",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "current_hash": {
+   "capitalized_name": "current_hash",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "scene_artifacts": {
+   "capitalized_name": "scene_artifacts",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}
