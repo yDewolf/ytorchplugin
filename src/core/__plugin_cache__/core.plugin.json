@@ -1,8 +1,8 @@
 {
-  "source_hash": "2846e0601938d4ddb07dee9cd2a04159e6cef4159b0d0124b2525c0a0cdec3aa",
+  "source_hash": "11619345e71faa4014fda1e3e4fb0d36f31b8a1c7fcefe46170792f361171297",
   "package_id": "core",
-  "plugin_version": "0.1.0",
-  "engine_version": ">=0.1.0",
+  "plugin_version": "0.2.0",
+  "engine_version": ">=0.2.0",
   "plugin_api_version": ">=1.1.0",
   "description": "Description for Core",
   "authors": [

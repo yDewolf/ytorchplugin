@@ -1,75 +1,75 @@
 {
-  "source_hash": "5cb9b6e53febd6f90af440c26aed86e3c1acfe37757513a170ac234a660f4ccc",
+  "source_hash": "085c457f749c7047697d1dff1bce0f42d67a0c324255967d3725262f4b5d87ee",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
-  "engine_version": ">=0.1.0",
+  "engine_version": ">=0.2.0",
   "plugin_api_version": ">=1.2.0",
   "description": "Description for Ytorchplugin",
   "authors": [
     "yDewolf"
   ],
   "dependencies": {
-    "core": ">=0.1.0"
+    "core": ">=0.2.0"
   },
   "nodes_cache": {
     "ytorchplugin:dataset-mnist": {
       "class_path": "nodes.datasets.mnist_dataset_node.MNISTDatasetNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:random_tensor": {
       "class_path": "nodes.datasets.random_tensor_node.RandomNodeTensor",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
         "ytorchplugin:loss",
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
         "ytorchplugin:loss",
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
         "ytorchplugin:loss",
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
-        "core:int",
+        "core:string",
         "ytorchplugin:tensor",
-        "core:string"
+        "core:int"
       ]
     },
     "ytorchplugin:linear": {
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:tensor_plot": {
       "class_path": "nodes.plot.plot_tensor_node.MatplotlibPlotNode",
       "required_datatypes": [
-        "core:file_artifact",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:file_artifact"
       ]
     },
     "ytorchplugin:trainer": {
@@ -82,43 +82,43 @@
     "ytorchplugin:repeat": {
       "class_path": "nodes.utils.shape_util_nodes.RepeatNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:reshape": {
       "class_path": "nodes.utils.shape_util_nodes.ReshapeNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:concat": {
       "class_path": "nodes.utils.tensor_operation.ConcatNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:stack": {
       "class_path": "nodes.utils.tensor_operation.StackNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:torch_info": {
       "class_path": "nodes.utils.torchinfo_node.TorchInfoNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:argmax": {
