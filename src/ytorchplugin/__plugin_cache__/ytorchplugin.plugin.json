@@ -1,5 +1,5 @@
 {
-  "source_hash": "69f7370483f43a6c87256dbe6339fdfb58760760bfbb0f301fbaecda6d7c531f",
+  "source_hash": "99655acf263c474587e0a21caa35172bd4ba9f5a6b008694c9847f50de442743",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.2.0",
@@ -15,61 +15,61 @@
     "ytorchplugin:dataset-mnist": {
       "class_path": "nodes.datasets.mnist_dataset_node.MNISTDatasetNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:random_tensor": {
       "class_path": "nodes.datasets.random_tensor_node.RandomNodeTensor",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
+        "ytorchplugin:tensor",
         "core:float",
-        "ytorchplugin:loss",
-        "ytorchplugin:tensor"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
+        "ytorchplugin:tensor",
         "core:float",
-        "ytorchplugin:loss",
-        "ytorchplugin:tensor"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
+        "ytorchplugin:tensor",
         "core:float",
-        "ytorchplugin:loss",
-        "ytorchplugin:tensor"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
-        "core:int",
+        "ytorchplugin:tensor",
         "core:string",
-        "ytorchplugin:tensor"
+        "core:int"
       ]
     },
     "ytorchplugin:linear": {
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:tensor_plot": {
       "class_path": "nodes.plot.plot_tensor_node.MatplotlibPlotNode",
       "required_datatypes": [
-        "core:file_artifact",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:file_artifact"
       ]
     },
     "ytorchplugin:trainer": {
@@ -82,43 +82,43 @@
     "ytorchplugin:repeat": {
       "class_path": "nodes.utils.shape_util_nodes.RepeatNode",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:reshape": {
       "class_path": "nodes.utils.shape_util_nodes.ReshapeNode",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:concat": {
       "class_path": "nodes.utils.tensor_operation.ConcatNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:stack": {
       "class_path": "nodes.utils.tensor_operation.StackNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:torch_info": {
       "class_path": "nodes.utils.torchinfo_node.TorchInfoNode",
       "required_datatypes": [
-        "core:string",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:string"
       ]
     },
     "ytorchplugin:argmax": {

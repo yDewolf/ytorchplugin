@@ -7,6 +7,33 @@
  "tags": {
   "default": {
    "description": ""
+  },
+  "PyTorch/base": {
+   "description": "Nodes that don't implement a specific behavior, they usually have more parameters"
+  },
+  "PyTorch/module": {
+   "description": ""
+  },
+  "Tensor/processor": {
+   "description": ""
+  },
+  "PyTorch/dataset": {
+   "description": ""
+  },
+  "data/image": {
+   "description": "Nodes that use/outputs images (2D/3D Tensors)"
+  },
+  "PyTorch/utils": {
+   "description": ""
+  },
+  "PyTorch/loss": {
+   "description": ""
+  },
+  "PyTorch/optimizer": {
+   "description": ""
+  },
+  "input/parameter": {
+   "description": ""
   }
  },
  "categories": {
@@ -15,6 +42,104 @@
    "super_category": null,
    "default_tags": [
     "default"
+   ],
+   "color": null
+  },
+  "Module": {
+   "description": "Nodes that implements PyTorch modules like Linear, Conv2d, etc",
+   "super_category": {
+    "description": "Nodes that implements PyTorch functions or modules",
+    "super_category": null,
+    "default_tags": [
+     "lib/PyTorch"
+    ],
+    "color": null
+   },
+   "default_tags": [
+    "PyTorch/module",
+    "Tensor/processor"
+   ],
+   "color": null
+  },
+  "Dataset": {
+   "description": "Nodes that pulls Samples and Targets from PyTorch datasets like MNIST",
+   "super_category": {
+    "description": "Nodes that implements PyTorch functions or modules",
+    "super_category": null,
+    "default_tags": [
+     "lib/PyTorch"
+    ],
+    "color": null
+   },
+   "default_tags": [
+    "PyTorch/dataset"
+   ],
+   "color": null
+  },
+  "Util": {
+   "description": "Tensor utility functions from PyTorch",
+   "super_category": {
+    "description": "Nodes that implements PyTorch functions or modules",
+    "super_category": null,
+    "default_tags": [
+     "lib/PyTorch"
+    ],
+    "color": null
+   },
+   "default_tags": [
+    "PyTorch/utils"
+   ],
+   "color": null
+  },
+  "Loss": {
+   "description": "Nodes that calculate how wrong the Model prediction is based on a Target",
+   "super_category": {
+    "description": "Nodes that do backward / gradient update",
+    "super_category": {
+     "description": "Nodes that implements PyTorch functions or modules",
+     "super_category": null,
+     "default_tags": [
+      "lib/PyTorch"
+     ],
+     "color": null
+    },
+    "default_tags": [
+     "PyTorch/gradient"
+    ],
+    "color": null
+   },
+   "default_tags": [
+    "PyTorch/loss"
+   ],
+   "color": null
+  },
+  "Trainer": {
+   "description": "Nodes that receive Loss result and updates Modules weights and biases",
+   "super_category": {
+    "description": "Nodes that do backward / gradient update",
+    "super_category": {
+     "description": "Nodes that implements PyTorch functions or modules",
+     "super_category": null,
+     "default_tags": [
+      "lib/PyTorch"
+     ],
+     "color": null
+    },
+    "default_tags": [
+     "PyTorch/gradient"
+    ],
+    "color": null
+   },
+   "default_tags": [
+    "PyTorch/optimizer"
+   ],
+   "color": null
+  },
+  "Input": {
+   "description": "Nodes that receives user input",
+   "super_category": null,
+   "default_tags": [
+    "input/parameter"
    ],
    "color": null
   }

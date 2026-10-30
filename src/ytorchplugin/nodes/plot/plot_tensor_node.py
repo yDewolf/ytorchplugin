@@ -30,7 +30,7 @@ class MatplotlibPlotNode(BaseNode[PlotNodeInput, PlotNodeOutput]):
         node_uid = self.scene_data.uid
 
         filename, extension = "tensor_plot", "png"
-        final_path: Path = inputs.scene_artifacts.get_node_artifact_path(
+        final_path: Path = inputs.scene_artifacts.make_node_artifact_path(
             node_uid=node_uid,
             filename=filename,
             hash=inputs.current_hash,
@@ -57,6 +57,7 @@ class MatplotlibPlotNode(BaseNode[PlotNodeInput, PlotNodeOutput]):
         except Exception as e:
             raise RuntimeError(f"Falha ao gerar o plot com Matplotlib: {e}")
 
+        inputs.scene_artifacts.commit_node_artifact(self.scene_data.uid, final_path)
         artifact_name = inputs.scene_artifacts.get_formatted_filename(filename, inputs.current_hash, extension)
         return PlotNodeOutput(
             plot_artifact=ArtifactDataType(
