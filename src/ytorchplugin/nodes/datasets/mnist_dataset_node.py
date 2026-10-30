@@ -1,14 +1,14 @@
 from typing import Annotated, Optional
 
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.node.logic_nodes import NodeInputs
-from nodeserver.engine.protocols.parameters.node_parameter import NodeParameters
-from nodeserver.engine.protocols.parameters.param_wrappers import Param
-from nodeserver.protocols.manifest.node.node_graph import NodeSceneData
-from torchvision import datasets, transforms
+from nodeserver.engine import NodeInputs, NodeParameters
+from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeserver.engine.protocols import Param
+from nodeserver.protocols import NodeSceneData
 
 from ytorchplugin.nodes.datasets.base_dataset_node import DatasetInputNode, DatasetOut
+
 from torch.utils.data import DataLoader
+from torchvision import datasets, transforms
 
 @plugin_node(id="dataset-mnist")
 class MNISTDatasetNode(DatasetInputNode):

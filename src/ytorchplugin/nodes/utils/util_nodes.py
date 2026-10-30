@@ -1,10 +1,9 @@
 from abc import ABC
 
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-import torch
-
+from nodeserver.engine.plugins.api.decorators import plugin_node
 from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchNodeInput, TorchNodeOutput, TorchOutputModel
 
+import torch
 
 class TorchUtilNode(BaseTorchNode, ABC):
     pass

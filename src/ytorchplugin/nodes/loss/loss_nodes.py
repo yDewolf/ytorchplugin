@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Annotated, Optional
 
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.parameters.param_wrappers import Param
-from nodeserver.engine.protocols.node.logic_nodes import BaseNode
-import torch
-from torch import nn
+from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeserver.engine.protocols import Param
+from nodeserver.engine import BaseNode
 
 from ytorchplugin.datatypes.torch_types import LossDataType
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel
+from torch import nn
+import torch
 
 class LossNodeInput(TorchInputModel):
     preds: torch.Tensor

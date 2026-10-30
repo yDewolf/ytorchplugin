@@ -1,10 +1,10 @@
 from abc import ABC
 from typing import Annotated
 
-from torchserver.nodeapi.utils.parameter_utils import ParameterUtils
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.parameters.param_wrappers import Param
+from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeserver.engine.protocols import Param
 
+from torchserver.nodeapi.utils.parameter_utils import ParameterUtils
 from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchNodeInput, TorchNodeOutput
 from ytorchplugin.nodes.utils.util_nodes import TorchUtilNode
 

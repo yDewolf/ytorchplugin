@@ -1,11 +1,11 @@
 from typing import Annotated
 
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.parameters.param_wrappers import Param
-from torch import nn
+from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeserver.engine.protocols import Param
 
 from torchserver.nodeapi.utils.parameter_utils import ParameterUtils
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode
+from torch import nn
 
 @plugin_node(id="conv2d")
 class Conv2DNode(TorchModuleNode):

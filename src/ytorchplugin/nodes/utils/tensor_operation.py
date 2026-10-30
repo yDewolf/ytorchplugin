@@ -2,12 +2,12 @@
 from abc import ABC
 from typing import Annotated
 
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.node.logic_nodes import BaseNode
-from nodeserver.engine.protocols.parameters.param_wrappers import Param
-import torch
+from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeserver.engine import BaseNode
+from nodeserver.engine.protocols import Param
 
 from ytorchplugin.nodes.base_torch_node import TorchNodeInput, TorchNodeOutput
+import torch
 
 
 class DoubleTensorIn(TorchNodeInput):

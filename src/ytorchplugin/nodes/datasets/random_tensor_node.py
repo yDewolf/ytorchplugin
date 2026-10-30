@@ -1,5 +1,5 @@
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
-from nodeserver.engine.protocols.node.logic_nodes import NodeInputs
+from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeserver.engine import NodeInputs
 import torch
 
 from ytorchplugin.nodes.datasets.base_dataset_node import DatasetInputNode, DatasetOut

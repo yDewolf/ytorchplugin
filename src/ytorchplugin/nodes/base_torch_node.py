@@ -1,6 +1,6 @@
 from abc import ABC
 
-from nodeserver.engine.protocols.node.logic_nodes import BaseNode, NodeInputs, NodeOutputs
+from nodeserver.engine import BaseNode, NodeInputs, NodeOutputs
 from pydantic import ConfigDict
 import torch
 
