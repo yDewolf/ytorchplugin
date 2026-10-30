@@ -1,0 +1,23 @@
+{
+ "capitalized_name": "Argmax",
+ "brief": null,
+ "description": "Retorna os índices dos valores máximos de um tensor ao longo do eixo especificado (todos por padrão).",
+ "usages": null,
+ "category": "Util",
+ "tags": [],
+ "parameter_meta": {},
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "Tensor o qual a operação deve ser aplicada.",
+   "usages": null
+  },
+  "out_0": {
+   "capitalized_name": "out_0",
+   "brief": null,
+   "description": "Tensor resultante da operação.",
+   "usages": null
+  }
+ }
+}

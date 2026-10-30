@@ -1,0 +1,534 @@
+{
+  "version": "0.1.0",
+  "package_id": "ytorchplugin",
+  "data_types": {
+    "ytorchplugin:loss": {
+      "namespace": "ytorchplugin",
+      "id": "loss",
+      "base_id": "array",
+      "default_renderer": "array",
+      "whitelist": [
+        "array"
+      ]
+    },
+    "ytorchplugin:tensor": {
+      "namespace": "ytorchplugin",
+      "id": "tensor",
+      "base_id": "array",
+      "default_renderer": "array",
+      "whitelist": [
+        "array"
+      ]
+    }
+  },
+  "node_types": {
+    "ytorchplugin:dataset-mnist": {
+      "namespace": "ytorchplugin",
+      "id": "dataset-mnist",
+      "parameters": {
+        "batch_size": {
+          "type": "int",
+          "default": null,
+          "required": true,
+          "datatype_fqn": "core:int",
+          "min": 1.0,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "sample": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        },
+        "target": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:random_tensor": {
+      "namespace": "ytorchplugin",
+      "id": "random_tensor",
+      "parameters": {
+        "shape": {
+          "type": "text",
+          "default": null,
+          "required": true,
+          "datatype_fqn": "core:string"
+        }
+      },
+      "slots": {
+        "sample": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        },
+        "target": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:loss-bce": {
+      "namespace": "ytorchplugin",
+      "id": "loss-bce",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "ytorchplugin:loss",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:loss-cel": {
+      "namespace": "ytorchplugin",
+      "id": "loss-cel",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "ytorchplugin:loss",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        },
+        "model_output": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:loss-mse": {
+      "namespace": "ytorchplugin",
+      "id": "loss-mse",
+      "parameters": {
+        "weight": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "preds": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "targets": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "loss": {
+          "datatype_fqn": "ytorchplugin:loss",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:conv2d": {
+      "namespace": "ytorchplugin",
+      "id": "conv2d",
+      "parameters": {
+        "out_channels": {
+          "type": "int",
+          "default": null,
+          "required": false,
+          "datatype_fqn": "core:int",
+          "min": null,
+          "max": null,
+          "step": null
+        },
+        "kernel_size": {
+          "type": "text",
+          "default": null,
+          "required": false,
+          "datatype_fqn": "core:string"
+        },
+        "padding": {
+          "type": "text",
+          "default": null,
+          "required": false,
+          "datatype_fqn": "core:string"
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:linear": {
+      "namespace": "ytorchplugin",
+      "id": "linear",
+      "parameters": {
+        "out_features": {
+          "type": "int",
+          "default": null,
+          "required": false,
+          "datatype_fqn": "core:int",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:tensor_plot": {
+      "namespace": "ytorchplugin",
+      "id": "tensor_plot",
+      "parameters": {},
+      "slots": {
+        "tensor_data": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "plot_artifact": {
+          "datatype_fqn": "core:file_artifact",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:trainer": {
+      "namespace": "ytorchplugin",
+      "id": "trainer",
+      "parameters": {
+        "lr": {
+          "type": "float",
+          "default": 1e-6,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": 1.0,
+          "step": 1e-6
+        }
+      },
+      "slots": {
+        "loss": {
+          "datatype_fqn": "ytorchplugin:loss",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        }
+      }
+    },
+    "ytorchplugin:repeat": {
+      "namespace": "ytorchplugin",
+      "id": "repeat",
+      "parameters": {
+        "shape": {
+          "type": "text",
+          "default": null,
+          "required": true,
+          "datatype_fqn": "core:string"
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:reshape": {
+      "namespace": "ytorchplugin",
+      "id": "reshape",
+      "parameters": {
+        "shape": {
+          "type": "text",
+          "default": null,
+          "required": true,
+          "datatype_fqn": "core:string"
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:concat": {
+      "namespace": "ytorchplugin",
+      "id": "concat",
+      "parameters": {
+        "dim": {
+          "type": "int",
+          "default": 0,
+          "required": true,
+          "datatype_fqn": "core:int",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "in_1": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:stack": {
+      "namespace": "ytorchplugin",
+      "id": "stack",
+      "parameters": {
+        "dim": {
+          "type": "int",
+          "default": 0,
+          "required": true,
+          "datatype_fqn": "core:int",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "in_1": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:sumtensors": {
+      "namespace": "ytorchplugin",
+      "id": "sumtensors",
+      "parameters": {
+        "weight_0": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        },
+        "weight_1": {
+          "type": "float",
+          "default": 1.0,
+          "required": false,
+          "datatype_fqn": "core:float",
+          "min": null,
+          "max": null,
+          "step": null
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "in_1": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:torch_info": {
+      "namespace": "ytorchplugin",
+      "id": "torch_info",
+      "parameters": {
+        "input_size_str": {
+          "type": "text",
+          "default": "1,1,28,28",
+          "required": false,
+          "datatype_fqn": "core:string"
+        }
+      },
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "summary": {
+          "datatype_fqn": "core:string",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:argmax": {
+      "namespace": "ytorchplugin",
+      "id": "argmax",
+      "parameters": {},
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    },
+    "ytorchplugin:nograd": {
+      "namespace": "ytorchplugin",
+      "id": "nograd",
+      "parameters": {},
+      "slots": {
+        "in_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 1,
+          "required": false,
+          "is_input": true
+        },
+        "out_0": {
+          "datatype_fqn": "ytorchplugin:tensor",
+          "max_connections": 0,
+          "required": false,
+          "is_input": false
+        }
+      }
+    }
+  }
+}

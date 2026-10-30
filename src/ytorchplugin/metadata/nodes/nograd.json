@@ -1,0 +1,23 @@
+{
+ "capitalized_name": "Remove Gradients",
+ "brief": null,
+ "description": "Remove os gradientes de [um determinado tensor](@slot:in_0). Gradientes são utilizados para atualizar os pesos dos módulos através de um TrainerNode (tensor.backward()). Remover os gradientes permite que o tensor ocupe menos espaço na memória.",
+ "usages": null,
+ "category": "Util",
+ "tags": [],
+ "parameter_meta": {},
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "Tensor o qual a operação deve ser aplicada.",
+   "usages": null
+  },
+  "out_0": {
+   "capitalized_name": "out_0",
+   "brief": null,
+   "description": "Tensor resultante da operação.",
+   "usages": null
+  }
+ }
+}

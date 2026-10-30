@@ -1,0 +1,36 @@
+{
+ "capitalized_name": "StackTensors",
+ "brief": null,
+ "description": "Empilha uma sequência de tensores ao longo de uma nova dimensão. Os tensores devem ter o mesmo tamanho e formato. A principal diferença para o Concatenate é que concatenar dois tensores 2D resultaria em um 2D maior, e empilhar dois tensores 2D resultaria em um tensor 3D. Exemplo: Dois tensores com forma igual a (3, 3) stackados na dimensão 0 resultariam em (2, 3, 3)",
+ "usages": null,
+ "category": "Util",
+ "tags": [],
+ "parameter_meta": {
+  "dim": {
+   "capitalized_name": "Dimension",
+   "brief": null,
+   "description": "Dimensão a qual os tensores devem ser empilhados.",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "Tensor 0",
+   "brief": null,
+   "description": "Tensor a ser operado com o @slot:in_1.",
+   "usages": null
+  },
+  "in_1": {
+   "capitalized_name": "Tensor 1",
+   "brief": null,
+   "description": "Tensor a ser operado com o @slot:in_0.",
+   "usages": null
+  },
+  "out_0": {
+   "capitalized_name": "out",
+   "brief": null,
+   "description": "Tensor resultante da operação entre os dois passados.",
+   "usages": null
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "capitalized_name": "loss-cel",
+ "brief": null,
+ "description": "",
+ "usages": null,
+ "category": "default",
+ "tags": [],
+ "parameter_meta": {
+  "weight": {
+   "capitalized_name": "weight",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "preds": {
+   "capitalized_name": "preds",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "targets": {
+   "capitalized_name": "targets",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "loss": {
+   "capitalized_name": "loss",
+   "brief": null,
+   "description": "",
+   "usages": null
+  },
+  "model_output": {
+   "capitalized_name": "model_output",
+   "brief": null,
+   "description": "",
+   "usages": null
+  }
+ }
+}

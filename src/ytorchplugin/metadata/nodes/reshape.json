@@ -1,0 +1,30 @@
+{
+ "capitalized_name": "Reshape",
+ "brief": null,
+ "description": "Altera o formato de um tensor para [outro](@params:shape), mantendo o conteúdo e a ordem dos dados originais.",
+ "usages": null,
+ "category": "Util",
+ "tags": [],
+ "parameter_meta": {
+  "shape": {
+   "capitalized_name": "Shape",
+   "brief": null,
+   "description": "Formato que o Tensor deve assumir depois da operação",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "Tensor o qual a operação deve ser aplicada.",
+   "usages": null
+  },
+  "out_0": {
+   "capitalized_name": "out_0",
+   "brief": null,
+   "description": "Tensor resultante da operação. No formato: @params:shape",
+   "usages": null
+  }
+ }
+}

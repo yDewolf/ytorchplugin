@@ -10,8 +10,10 @@ name = "torch-nodeserver"
 version = "0.0.1"
 dependencies = [
     "nodeserver",
-    "torch==2.11.0",
-    "torchvision==0.26.0"
+    "torch>=2.11.0",
+    "torchvision>=0.26.0",
+    "torchinfo>=1.8.0",
+    "matplotlib>=3.11.2"
 ]
 
 [tool.setuptools.dynamic]

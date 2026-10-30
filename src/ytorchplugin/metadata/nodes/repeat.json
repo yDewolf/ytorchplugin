@@ -1,0 +1,30 @@
+{
+ "capitalized_name": "Repeat",
+ "brief": null,
+ "description": "Repete os elementos de um tensor ao longo das dimensões configuradas.",
+ "usages": null,
+ "category": "Util",
+ "tags": [],
+ "parameter_meta": {
+  "shape": {
+   "capitalized_name": "Shape",
+   "brief": null,
+   "description": "Indica quantas vezes o tensor deve ser repetido em cada dimensão. Exemplo: Tensor Shape = (2, 3) Repeat Shape = (4, 2) -> Result Shape (8, 6).",
+   "usages": null
+  }
+ },
+ "slot_meta": {
+  "in_0": {
+   "capitalized_name": "in_0",
+   "brief": null,
+   "description": "Tensor o qual a operação deve ser aplicada.",
+   "usages": null
+  },
+  "out_0": {
+   "capitalized_name": "out_0",
+   "brief": null,
+   "description": "Tensor resultante da operação.",
+   "usages": null
+  }
+ }
+}
