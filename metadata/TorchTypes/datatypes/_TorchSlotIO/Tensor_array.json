@@ -1,4 +1,0 @@
-{
- "capitalized_name": "Tensor",
- "description": "Tipo de dado do PyTorch que armazena dados númericos no formato de 'Arrays Multidimensionais'. É necessário atentar-se ao formato de entrada/saída de slots que utilizam esse tipo de dado."
-}
