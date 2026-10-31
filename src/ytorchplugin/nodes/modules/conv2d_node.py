@@ -3,7 +3,7 @@ from typing import Annotated
 from nodeserver.engine.plugins.api.decorators import plugin_node
 from nodeserver.engine.protocols import Param
 
-from torchserver.nodeapi.utils.parameter_utils import ParameterUtils
+from ytorchplugin.utils.parameter_utils import ParameterUtils
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode
 from torch import nn
 

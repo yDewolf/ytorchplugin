@@ -4,7 +4,7 @@ from typing import Annotated
 from nodeserver.engine.plugins.api.decorators import plugin_node
 from nodeserver.engine.protocols import Param
 
-from torchserver.nodeapi.utils.parameter_utils import ParameterUtils
+from ytorchplugin.utils.parameter_utils import ParameterUtils
 from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchNodeInput, TorchNodeOutput
 from ytorchplugin.nodes.utils.util_nodes import TorchUtilNode
 

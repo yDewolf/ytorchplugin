@@ -1,5 +1,5 @@
 {
-  "source_hash": "cc3f2779a2af32b388186da449ccac18eb06538a9af7f4ca91ac74e093f218b6",
+  "source_hash": "23f74f4b69546e0b0053474d1f123e1e60138de427d42f657452fe09a57f22f5",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.2.0",
@@ -12,11 +12,29 @@
     "core": ">=0.2.0"
   },
   "nodes_cache": {
+    "ytorchplugin:actv_relu": {
+      "class_path": "nodes.activation.base_activation.ReLUNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:actv_sigmoid": {
+      "class_path": "nodes.activation.base_activation.SigmoidNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor"
+      ]
+    },
+    "ytorchplugin:actv_softmax": {
+      "class_path": "nodes.activation.base_activation.SoftmaxNode",
+      "required_datatypes": [
+        "ytorchplugin:tensor"
+      ]
+    },
     "ytorchplugin:dataset-mnist": {
       "class_path": "nodes.datasets.mnist_dataset_node.MNISTDatasetNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:random_tensor": {
@@ -53,23 +71,23 @@
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
+        "core:int",
         "ytorchplugin:tensor",
-        "core:string",
-        "core:int"
+        "core:string"
       ]
     },
     "ytorchplugin:linear": {
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:tensor_plot": {
       "class_path": "nodes.plot.plot_tensor_node.MatplotlibPlotNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:file_artifact"
+        "core:file_artifact",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:trainer": {
@@ -96,15 +114,15 @@
     "ytorchplugin:concat": {
       "class_path": "nodes.utils.tensor_operation.ConcatNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:stack": {
       "class_path": "nodes.utils.tensor_operation.StackNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:int"
+        "core:int",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:sumtensors": {
@@ -135,6 +153,7 @@
     }
   },
   "node_modules": [
+    "nodes.activation.base_activation",
     "nodes.datasets.mnist_dataset_node",
     "nodes.datasets.random_tensor_node",
     "nodes.loss.loss_nodes",
