@@ -1,3 +1,5 @@
+import numpy
+
 from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_datatype
 from nodeserver.engine.plugins.api.plugin_datatype import PluginDatatype
 from nodeserver.protocols.enums.datatype_enums import DefaultDataTypes, DefaultRenderers
@@ -19,6 +21,11 @@ class TensorDataType(PluginDatatype[ArrayMetadata]):
     def serialize_value(cls, value: torch.Tensor):
         # FIXME: talvez a gente precise modificar o serialize para incluir
         # o node que deu esse resultado
+        # TODO: include more info about the tensor in metadata like:
+        # - dtype
+        # - device
+        # - dim labels
+        
         with torch.no_grad():
             detached_tensor = value.detach().cpu()
 
@@ -26,8 +33,9 @@ class TensorDataType(PluginDatatype[ArrayMetadata]):
             if t_max > t_min:
                 detached_tensor = (detached_tensor - t_min) / (t_max - t_min) * 255
             
+            arr = numpy.asarray(detached_tensor, dtype=numpy.float32)
             return SerializedDataTypeValue(
-                value=detached_tensor.tolist(), 
+                value=arr.tobytes(), 
                 metadata=ArrayMetadata(
                     shape=detached_tensor.shape,
                     min=float(detached_tensor.min()),

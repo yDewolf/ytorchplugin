@@ -1,5 +1,5 @@
 {
-  "source_hash": "23f74f4b69546e0b0053474d1f123e1e60138de427d42f657452fe09a57f22f5",
+  "source_hash": "745b2eef88b024c203dae91fa16b8d0ff21fe2d475481c10463ed8b1b6fde0a2",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.2.0",
@@ -47,25 +47,25 @@
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
-        "ytorchplugin:loss",
+        "core:float",
         "ytorchplugin:tensor",
-        "core:float"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
-        "ytorchplugin:loss",
+        "core:float",
         "ytorchplugin:tensor",
-        "core:float"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
-        "ytorchplugin:loss",
+        "core:float",
         "ytorchplugin:tensor",
-        "core:float"
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:conv2d": {
@@ -93,8 +93,8 @@
     "ytorchplugin:trainer": {
       "class_path": "nodes.training.training_nodes.TrainerNode",
       "required_datatypes": [
-        "ytorchplugin:loss",
-        "core:float"
+        "core:float",
+        "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:repeat": {
@@ -128,8 +128,8 @@
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "ytorchplugin:tensor",
-        "core:float"
+        "core:float",
+        "ytorchplugin:tensor"
       ]
     },
     "ytorchplugin:torch_info": {
