@@ -17,7 +17,6 @@ class YtorchpluginPlugin(Plugin):
             "torch": ">=2.11.0",
             "torchvision": ">=0.26.0",
             "torchinfo": ">=1.8.0",
-            "matplotlib": ">=3.11.2",
-            "platformdirs": ">=4.14.5"
+            "matplotlib": ">=3.11.2"
         }
     )
