@@ -1,17 +1,22 @@
-## Built with [nodeblocks-server](https://github.com/yDewolf/nodeblocks-server)
+## Feito com [nodeblocks](https://github.com/yDewolf/nodeblocks-server)
+Este plugin adiciona alguns nodes que implementam módulos da biblioteca [PyTorch](https://pytorch.org), permitindo que você desenvolva redes neurais simples usando nodes !! Além disso, os nodes apresentam documentação em português que você pode acessar por meio do seu client ([client padrão](https://github.com/yDewolf/nodeblocks-editor)).
+
+## Como instalar:
+1. Baixe alguma release em [releases](https://github.com/yDewolf/ytorchplugin/releases);
+2. Adicione o arquivo `.nbplugin` a sua pasta de plugins;
+3. Não tem.
+
+### Exemplos de grafos que usam esse plugin:
+**Todas as imagens a seguir são prints tiradas do [editor padrão](https://github.com/yDewolf/nodeblocks-editor)**
+
+#### Modelo de Remoção de ruído
+![Remoção de ruído](repo/noise_remover.png)
+#### Classificação de dígitos
+![Classificação de Dígitos Simples](repo/mnist_classifier.png)
 
 ## Como rodar/desenvolver:
 Depois de clonar o repositório:
 ````
-pip install -e ./lib/nodeserver
+pip install ./lib/nodeserver
 pip install -e .
 ````
-
-Ideias principais:
-- Interface web que permite você pegar vários blocos de construção (módulos de NN do pytorch, ex: Conv2D) e conectar os outputs deles para criar um modelo
-- O website deve fornecer avisos sobre shapes, assim como mostrar o shape previsto de cada output
-- A ideia é salvar os outputs e inputs em um cache para que eu possa fazer um modo "stop motion", que passa por cada camada do modelo em forma de uma animaçãozinha
-- Os inputs de cada módulo do modelo devem poder ser qualquer output de outro módulo, ou o input inicial
-- Deve existir a possibilidade de "agendar" reshapes, permutes e views, para corrigir os shapes dos outputs
-
-Acho que é basicamente isso (vou levar 3 anos para conseguir terminar)
