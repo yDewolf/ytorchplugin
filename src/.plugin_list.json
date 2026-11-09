@@ -1,6 +1,7 @@
 {
   "cached_plugins": {
-    "core": "31e3336534e8dd903b4c6f676f9f630dbbe871ae058dcd689df90751407be927",
-    "ytorchplugin": "745b2eef88b024c203dae91fa16b8d0ff21fe2d475481c10463ed8b1b6fde0a2"
-  }
+    "core": "8b6c3a8a827578ba0abc811f42ed124bbc432b631fd3fcfcad5db2745786f9f9",
+    "ytorchplugin": "cb1cd51c6107870c3d6610f621663f72ecc0d8147dd63cd7f170d2d10416dd1f"
+  },
+  "libs_fingerprint": "5f24bf28ee96610a"
 }

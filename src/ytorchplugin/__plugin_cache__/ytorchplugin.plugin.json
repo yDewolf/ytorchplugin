@@ -1,16 +1,24 @@
 {
-  "source_hash": "745b2eef88b024c203dae91fa16b8d0ff21fe2d475481c10463ed8b1b6fde0a2",
   "package_id": "ytorchplugin",
   "plugin_version": "0.1.0",
   "engine_version": ">=0.2.0",
-  "plugin_api_version": ">=1.2.0",
-  "description": "Description for Ytorchplugin",
-  "authors": [
-    "yDewolf"
-  ],
+  "plugin_api_version": ">=1.3.0",
   "dependencies": {
     "core": ">=0.2.0"
   },
+  "python_dependencies": {
+    "torch": ">=2.11.0",
+    "torchvision": ">=0.26.0",
+    "torchinfo": ">=1.8.0",
+    "matplotlib": ">=3.11.2",
+    "platformdirs": ">=4.14.5"
+  },
+  "authors": [
+    "yDewolf"
+  ],
+  "description": "This plugin implements some PyTorch nodes.",
+  "root_path": "C:\\dev\\Python\\ytorchplugin\\src\\ytorchplugin",
+  "source_hash": "cb1cd51c6107870c3d6610f621663f72ecc0d8147dd63cd7f170d2d10416dd1f",
   "nodes_cache": {
     "ytorchplugin:actv_relu": {
       "class_path": "nodes.activation.base_activation.ReLUNode",
@@ -33,8 +41,8 @@
     "ytorchplugin:dataset-mnist": {
       "class_path": "nodes.datasets.mnist_dataset_node.MNISTDatasetNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:random_tensor": {
@@ -47,47 +55,47 @@
     "ytorchplugin:loss-bce": {
       "class_path": "nodes.loss.loss_nodes.BinaryCrossEntropyLossNode",
       "required_datatypes": [
-        "core:float",
         "ytorchplugin:tensor",
+        "core:float",
         "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-cel": {
       "class_path": "nodes.loss.loss_nodes.CrossEntropyLossNode",
       "required_datatypes": [
-        "core:float",
         "ytorchplugin:tensor",
+        "core:float",
         "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:loss-mse": {
       "class_path": "nodes.loss.loss_nodes.MinimumSquaredErrorLossNode",
       "required_datatypes": [
-        "core:float",
         "ytorchplugin:tensor",
+        "core:float",
         "ytorchplugin:loss"
       ]
     },
     "ytorchplugin:conv2d": {
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
-        "core:int",
         "ytorchplugin:tensor",
-        "core:string"
+        "core:string",
+        "core:int"
       ]
     },
     "ytorchplugin:linear": {
       "class_path": "nodes.modules.linear_node.LinearNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:tensor_plot": {
       "class_path": "nodes.plot.plot_tensor_node.MatplotlibPlotNode",
       "required_datatypes": [
-        "core:file_artifact",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:file_artifact"
       ]
     },
     "ytorchplugin:trainer": {
@@ -114,22 +122,22 @@
     "ytorchplugin:concat": {
       "class_path": "nodes.utils.tensor_operation.ConcatNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:stack": {
       "class_path": "nodes.utils.tensor_operation.StackNode",
       "required_datatypes": [
-        "core:int",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:int"
       ]
     },
     "ytorchplugin:sumtensors": {
       "class_path": "nodes.utils.tensor_operation.SumNode",
       "required_datatypes": [
-        "core:float",
-        "ytorchplugin:tensor"
+        "ytorchplugin:tensor",
+        "core:float"
       ]
     },
     "ytorchplugin:torch_info": {

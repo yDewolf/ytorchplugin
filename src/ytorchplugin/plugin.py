@@ -6,9 +6,18 @@ class YtorchpluginPlugin(Plugin):
     manifest = PluginManifest(
         package_id="ytorchplugin",
         plugin_version="0.1.0",
-        description="Description for Ytorchplugin",
+        description="This plugin implements some PyTorch nodes.",
         authors=["yDewolf"],
-        engine_version=f">=0.2.0", # Current Engine Version
-        plugin_api_version=f">=1.2.0", # Current Plugin API Version
+        
+        engine_version=f">=0.2.0",
+        plugin_api_version=f">=1.3.0",
+        
         dependencies={"core": ">=0.2.0"},
+        python_dependencies={
+            "torch": ">=2.11.0",
+            "torchvision": ">=0.26.0",
+            "torchinfo": ">=1.8.0",
+            "matplotlib": ">=3.11.2",
+            "platformdirs": ">=4.14.5"
+        }
     )
