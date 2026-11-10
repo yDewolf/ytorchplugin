@@ -7,7 +7,7 @@ where=["src", "lib"]
 
 [project]
 name = "ytorchplugin"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
     "nodeblocks",
     "torch>=2.11.0",

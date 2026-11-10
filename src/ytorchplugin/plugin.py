@@ -5,7 +5,7 @@ from nodeblocks.engine.plugins.api import Plugin
 class YtorchpluginPlugin(Plugin):
     manifest = PluginManifest(
         package_id="ytorchplugin",
-        plugin_version="0.1.0",
+        plugin_version="0.1.1",
         description="This plugin implements some PyTorch nodes.",
         authors=["yDewolf"],
         
