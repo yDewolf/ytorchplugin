@@ -17,6 +17,6 @@ Este plugin adiciona alguns nodes que implementam módulos da biblioteca [PyTorc
 ## Como rodar/desenvolver:
 Depois de clonar o repositório:
 ````
-pip install ./lib/nodeserver
+pip install ./lib/nodeblocks
 pip install -e .
 ````

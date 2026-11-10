@@ -1,5 +1,5 @@
-from nodeserver.engine.plugins import PluginManifest
-from nodeserver.engine.plugins.api import Plugin
+from nodeblocks.engine.plugins import PluginManifest
+from nodeblocks.engine.plugins.api import Plugin
 
 
 class YtorchpluginPlugin(Plugin):

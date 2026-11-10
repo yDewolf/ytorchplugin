@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Annotated
 
-from nodeserver.engine import BaseNode, NodeInputs, NodeParameters
-from nodeserver.engine.protocols import Param
-from nodeserver.protocols import NodeSceneData
+from nodeblocks.engine import BaseNode, NodeInputs, NodeParameters
+from nodeblocks.engine.protocols import Param
+from nodeblocks.protocols import NodeSceneData
 
 from ytorchplugin.nodes.base_torch_node import TorchOutputModel
 import torch

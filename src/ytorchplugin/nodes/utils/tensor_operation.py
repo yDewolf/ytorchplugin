@@ -2,9 +2,9 @@
 from abc import ABC
 from typing import Annotated
 
-from nodeserver.engine.plugins.api.decorators import plugin_node
-from nodeserver.engine import BaseNode
-from nodeserver.engine.protocols import Param
+from nodeblocks.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine import BaseNode
+from nodeblocks.engine.protocols import Param
 
 from ytorchplugin.nodes.base_torch_node import TorchNodeInput, TorchNodeOutput
 import torch

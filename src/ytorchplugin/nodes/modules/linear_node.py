@@ -1,7 +1,7 @@
 from typing import Annotated
 
-from nodeserver.engine.plugins.api.decorators import plugin_node
-from nodeserver.engine.protocols import Param
+from nodeblocks.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine.protocols import Param
 from torch import nn
 
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode

@@ -9,7 +9,7 @@ where=["src", "lib"]
 name = "ytorchplugin"
 version = "0.1.0"
 dependencies = [
-    "nodeserver",
+    "nodeblocks",
     "torch>=2.11.0",
     "torchvision>=0.26.0",
     "torchinfo>=1.8.0",
@@ -17,10 +17,10 @@ dependencies = [
 ]
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["./lib/nodeserver/requirements.txt"]}
+dependencies = {file = ["./lib/nodeblocks/requirements.txt"]}
 
 [tool.uv.sources]
-nodeserver = { path = "./lib/nodeserver", editable = true }
+nodeblocks = { path = "./lib/nodeblocks", editable = true }
 
 [tool.poetry.dependencies]
-nodeserver = { path = "./lib/nodeserver", develop = true }
+nodeblocks = { path = "./lib/nodeblocks", develop = true }

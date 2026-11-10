@@ -1,11 +1,11 @@
 from collections import deque
 from typing import Annotated
 
-from nodeserver.engine.plugins.api.decorators import plugin_node
-from nodeserver.engine.protocols import Param
-from nodeserver.engine import SceneGraph, BaseNode, NodeScene
-from nodeserver.engine.runtime import SceneAwareInput
-from nodeserver.protocols import NodeSceneData
+from nodeblocks.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine.protocols import Param
+from nodeblocks.engine import SceneGraph, BaseNode, NodeScene
+from nodeblocks.engine.runtime import SceneAwareInput
+from nodeblocks.protocols import NodeSceneData
 
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode

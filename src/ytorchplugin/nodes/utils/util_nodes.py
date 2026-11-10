@@ -1,6 +1,6 @@
 from abc import ABC
 
-from nodeserver.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine.plugins.api.decorators import plugin_node
 from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchNodeInput, TorchNodeOutput, TorchOutputModel
 
 import torch

@@ -4,10 +4,10 @@ import matplotlib
 matplotlib.use("Agg")
 from matplotlib.figure import Figure
 
-from nodeserver.engine.plugins.api.decorators import plugin_node
-from nodeserver.engine import BaseNode
-from nodeserver.engine.runtime import ArtifactAwareInput
-from nodeserver.engine.utils import safe_atomic_save
+from nodeblocks.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine import BaseNode
+from nodeblocks.engine.runtime import ArtifactAwareInput
+from nodeblocks.engine.utils import safe_atomic_save
 from pathlib import Path
 
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel

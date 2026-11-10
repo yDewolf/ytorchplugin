@@ -1,9 +1,9 @@
 from typing import Annotated, Optional
 
-from nodeserver.engine import NodeInputs, NodeParameters
-from nodeserver.engine.plugins.api.decorators import plugin_node
-from nodeserver.engine.protocols import Param
-from nodeserver.protocols import NodeSceneData
+from nodeblocks.engine import NodeInputs, NodeParameters
+from nodeblocks.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine.protocols import Param
+from nodeblocks.protocols import NodeSceneData
 
 from ytorchplugin.nodes.datasets.base_dataset_node import DatasetInputNode, DatasetOut
 

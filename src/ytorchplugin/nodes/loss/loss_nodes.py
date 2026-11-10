@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Annotated, Optional
 
-from nodeserver.engine.plugins.api.decorators import plugin_node
-from nodeserver.engine.protocols import Param
-from nodeserver.engine import BaseNode
+from nodeblocks.engine.plugins.api.decorators import plugin_node
+from nodeblocks.engine.protocols import Param
+from nodeblocks.engine import BaseNode
 
 from ytorchplugin.datatypes.torch_types import LossDataType
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel

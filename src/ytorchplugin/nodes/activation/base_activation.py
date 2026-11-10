@@ -1,4 +1,4 @@
-from nodeserver.engine.plugins.api.decorators.plugin_decorators import plugin_node
+from nodeblocks.engine.plugins.api.decorators.plugin_decorators import plugin_node
 
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode
 import torch.nn as nn

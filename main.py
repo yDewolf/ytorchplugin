@@ -2,9 +2,9 @@
 import logging
 from pathlib import Path
 
-from nodeserver.engine.engine_env import ENGINE_ENV
-from nodeserver.engine.logging_config import setup_logging
-from nodeserver.server.web.server import NodeServer
+from nodeblocks.engine.engine_env import ENGINE_ENV
+from nodeblocks.engine.logging_config import setup_logging
+from nodeblocks.server.web.server import NodeServer
 
 
 setup_logging(default_level=logging.DEBUG)

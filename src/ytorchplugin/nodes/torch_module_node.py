@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from nodeserver.engine import LogicNodeState, ISceneStateProvider
-from nodeserver.protocols import NodeSceneData
+from nodeblocks.engine import LogicNodeState, ISceneStateProvider
+from nodeblocks.protocols import NodeSceneData
 from torch import nn
 import torch
 
