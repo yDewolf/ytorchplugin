@@ -1,42 +1,25 @@
 {
- "capitalized_name": "loss-cel",
- "brief": null,
- "description": "",
- "usages": null,
- "category": "default",
+ "capitalized_name": "CrossEntropyLoss",
+ "description": "Calcula a perda de entropia cruzada entre as probabilidades preditas e as classes alvo. Basicamente checa o quão próxima a [previsão](@slot:preds) é do valor [alvo](@slot:targets), retornando o erro em [loss](@slot:loss). Recomendada para problemas de classificação",
+ "category": "Loss",
  "tags": [],
- "parameter_meta": {
-  "weight": {
-   "capitalized_name": "weight",
-   "brief": null,
-   "description": "",
-   "usages": null
-  }
- },
+ "parameter_meta": {},
  "slot_meta": {
   "preds": {
    "capitalized_name": "preds",
-   "brief": null,
-   "description": "",
-   "usages": null
+   "description": "Valores previstos pelo modelo, ou valores que devem ser comparados com um valor [alvo](@slot:targets)."
   },
   "targets": {
    "capitalized_name": "targets",
-   "brief": null,
-   "description": "",
-   "usages": null
+   "description": "Valores alvo para serem comparados com os valores [previstos](@slot:preds)."
   },
   "loss": {
    "capitalized_name": "loss",
-   "brief": null,
-   "description": "",
-   "usages": null
+   "description": "'Diferença' entre o [valor previsto](@slot:preds) e o [valor esperado](@slot:targets)."
   },
   "model_output": {
    "capitalized_name": "model_output",
-   "brief": null,
-   "description": "",
-   "usages": null
+   "description": "'Index da classe prevista pelo modelo'. Encontrado pela busca do valor máximo dentro do [tensor previsto](@slot:preds)"
   }
  }
 }
