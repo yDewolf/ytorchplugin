@@ -12,6 +12,7 @@ from ytorchplugin.nodes.torch_module_node import TorchModuleNode
 from torchinfo import summary
 from torch import nn
 import torch
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 
 class TorchInfoNodeInput(TorchInputModel, SceneAwareInput):

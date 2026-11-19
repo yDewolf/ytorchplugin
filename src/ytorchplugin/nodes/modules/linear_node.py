@@ -5,6 +5,7 @@ from nodeblocks.engine.protocols import Param
 from torch import nn
 
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 @plugin_node(id="linear")
 class LinearNode(TorchModuleNode):

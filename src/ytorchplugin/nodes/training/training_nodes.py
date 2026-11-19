@@ -11,6 +11,7 @@ from ytorchplugin.datatypes.torch_types import LossDataType
 from ytorchplugin.nodes.base_torch_node import TorchInputModel
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode
 import torch
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 
 class TrainerNodeInput(TorchInputModel, SceneAwareInput):

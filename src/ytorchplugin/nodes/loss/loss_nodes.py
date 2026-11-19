@@ -6,10 +6,10 @@ from nodeblocks.engine.protocols import Param
 from nodeblocks.engine import BaseNode
 
 from ytorchplugin.datatypes.torch_types import LossDataType
+from ytorchplugin.default_device import DEFAULT_DEVICE
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel
 from torch import nn
 import torch
-
 class LossNodeInput(TorchInputModel):
     preds: torch.Tensor
     targets: torch.Tensor

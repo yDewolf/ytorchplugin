@@ -6,6 +6,7 @@ from nodeblocks.engine.protocols import Param
 from ytorchplugin.utils.parameter_utils import ParameterUtils
 from ytorchplugin.nodes.torch_module_node import TorchModuleNode
 from torch import nn
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 @plugin_node(id="conv2d")
 class Conv2DNode(TorchModuleNode):

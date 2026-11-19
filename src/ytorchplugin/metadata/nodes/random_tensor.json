@@ -1,6 +1,8 @@
 {
  "capitalized_name": "RandomTensor",
+ "brief": null,
  "description": "Gera tensores com dados aleatórios em determinado [formato](@params:shape) usando `torch.randn(shape)`.",
+ "usages": null,
  "category": "Dataset",
  "tags": [
   "PyTorch/base"
@@ -8,17 +10,23 @@
  "parameter_meta": {
   "shape": {
    "capitalized_name": "Shape",
-   "description": "Formato utilizado para gerar os tensores."
+   "brief": null,
+   "description": "Formato utilizado para gerar os tensores.",
+   "usages": null
   }
  },
  "slot_meta": {
   "sample": {
    "capitalized_name": "sample",
-   "description": "Tensor aleatório no formato @params:shape."
+   "brief": null,
+   "description": "Tensor aleatório no formato @params:shape.",
+   "usages": null
   },
   "target": {
    "capitalized_name": "target",
-   "description": "Tensor idêntico ao @slot:sample (por enquanto)"
+   "brief": null,
+   "description": "Tensor idêntico ao @slot:sample (por enquanto)",
+   "usages": null
   }
  }
 }

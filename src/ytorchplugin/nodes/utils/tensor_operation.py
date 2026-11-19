@@ -8,6 +8,7 @@ from nodeblocks.engine.protocols import Param
 
 from ytorchplugin.nodes.base_torch_node import TorchNodeInput, TorchNodeOutput
 import torch
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 
 class DoubleTensorIn(TorchNodeInput):

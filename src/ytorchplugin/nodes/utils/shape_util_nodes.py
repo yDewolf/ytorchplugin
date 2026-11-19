@@ -7,6 +7,7 @@ from nodeblocks.engine.protocols import Param
 from ytorchplugin.utils.parameter_utils import ParameterUtils
 from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchNodeInput, TorchNodeOutput
 from ytorchplugin.nodes.utils.util_nodes import TorchUtilNode
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 class TorchShapeUtilNode(BaseTorchNode, ABC):
     class Parameters(TorchUtilNode.Parameters):

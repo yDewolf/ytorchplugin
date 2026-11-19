@@ -13,6 +13,7 @@ from pathlib import Path
 from ytorchplugin.nodes.base_torch_node import TorchInputModel, TorchOutputModel
 
 import torch
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 class PlotNodeInput(TorchInputModel, ArtifactAwareInput):
     tensor_data: torch.Tensor

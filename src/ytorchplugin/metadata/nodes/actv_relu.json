@@ -1,6 +1,8 @@
 {
  "capitalized_name": "ReLU Activation",
+ "brief": null,
  "description": "Aplica a função de ativação 'Rectified Linear Unit' no tensor de entrada. Essa função é correspondente a `Math.max(0, x)`, ou seja, impede que a saída contenha valores menores que zero.",
+ "usages": null,
  "category": "Module",
  "tags": [
   "PyTorch/base"
@@ -8,17 +10,23 @@
  "parameter_meta": {
   "out_features": {
    "capitalized_name": "OutFeatures",
-   "description": ""
+   "brief": null,
+   "description": "",
+   "usages": null
   }
  },
  "slot_meta": {
   "in_0": {
    "capitalized_name": "in_0",
-   "description": ""
+   "brief": null,
+   "description": "",
+   "usages": null
   },
   "out_0": {
    "capitalized_name": "out_0",
-   "description": ""
+   "brief": null,
+   "description": "",
+   "usages": null
   }
  }
 }

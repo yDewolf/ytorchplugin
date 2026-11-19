@@ -1,6 +1,8 @@
 {
  "capitalized_name": "MNISTDataset",
+ "brief": null,
  "description": "Fornece lotes de imagens (@datatype:_TorchSlotIO:Tensor_array -> (B, 28, 28)) e rótulos (B, ) do conjunto de dados MNIST. As imagens são dígitos (0 a 9) desenhados a mão, frequentemente utilizados para treinar modelos simples de classificação de dígitos.",
+ "usages": null,
  "category": "Dataset",
  "tags": [
   "data/image"
@@ -8,17 +10,23 @@
  "parameter_meta": {
   "batch_size": {
    "capitalized_name": "Batch Size",
-   "description": "Número de imagens que devem ser agrupadas em um mesmo tensor. Saída -> (Batch Size, 28, 28)."
+   "brief": null,
+   "description": "Número de imagens que devem ser agrupadas em um mesmo tensor. Saída -> (Batch Size, 28, 28).",
+   "usages": null
   }
  },
  "slot_meta": {
   "sample": {
    "capitalized_name": "sample",
-   "description": "Tensor contendo os dados das imagens no formato (@params:batch_size, 28, 28)."
+   "brief": null,
+   "description": "Tensor contendo os dados das imagens no formato (@params:batch_size, 28, 28).",
+   "usages": null
   },
   "target": {
    "capitalized_name": "target",
-   "description": "Tensor contendo os rótulos das imagens no formato (@params:batch_size, ). Caso esteja fazendo um modelo de classificação de dígitos, são esses rótulos que seu modelo deve retornar como saída."
+   "brief": null,
+   "description": "Tensor contendo os rótulos das imagens no formato (@params:batch_size, ). Caso esteja fazendo um modelo de classificação de dígitos, são esses rótulos que seu modelo deve retornar como saída.",
+   "usages": null
   }
  }
 }

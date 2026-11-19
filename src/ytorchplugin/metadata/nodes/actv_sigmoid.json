@@ -1,6 +1,8 @@
 {
  "capitalized_name": "Sigmoid Activation",
+ "brief": null,
  "description": "Aplica a função de ativação 'Sigmoid' ao tensor, mapeando os valores para o intervalo entre 0 e 1.",
+ "usages": null,
  "category": "Module",
  "tags": [
   "PyTorch/base"
@@ -8,17 +10,23 @@
  "parameter_meta": {
   "out_features": {
    "capitalized_name": "OutFeatures",
-   "description": ""
+   "brief": null,
+   "description": "",
+   "usages": null
   }
  },
  "slot_meta": {
   "in_0": {
    "capitalized_name": "in_0",
-   "description": "Tensor em que se deve aplicar Sigmoid."
+   "brief": null,
+   "description": "Tensor em que se deve aplicar Sigmoid.",
+   "usages": null
   },
   "out_0": {
    "capitalized_name": "out_0",
-   "description": "Tensor resultante da função Sigmoid."
+   "brief": null,
+   "description": "Tensor resultante da função Sigmoid.",
+   "usages": null
   }
  }
 }

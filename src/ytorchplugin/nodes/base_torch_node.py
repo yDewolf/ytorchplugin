@@ -3,6 +3,7 @@ from abc import ABC
 from nodeblocks.engine import BaseNode, NodeInputs, NodeOutputs
 from pydantic import ConfigDict
 import torch
+from ytorchplugin.default_device import DEFAULT_DEVICE
 
 
 class TorchInputModel(NodeInputs):

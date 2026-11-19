@@ -6,13 +6,13 @@ from nodeblocks.protocols import NodeSceneData
 from torch import nn
 import torch
 
+from ytorchplugin.default_device import DEFAULT_DEVICE
 from ytorchplugin.nodes.base_torch_node import BaseTorchNode, TorchNodeInput, TorchNodeOutput
 
 TORCH_MODEL_EXTENSION = "pt"
 
 class TorchModuleNode(BaseTorchNode, ABC):
     module: Optional[nn.Module]
-    device: torch.device = torch.device("cpu")
 
     def __init__(self, scene_data: NodeSceneData) -> None:
         super().__init__(scene_data)
@@ -27,7 +27,7 @@ class TorchModuleNode(BaseTorchNode, ABC):
             # TODO: add some logger here
             print(f"Rebuilding module for node: {self}")
             new_module = self.build_torch_module(module_parameters)
-            new_module.to(self.device)
+            new_module.to(DEFAULT_DEVICE)
 
             self.module = new_module
             self._last_applied_params = module_parameters
@@ -105,7 +105,7 @@ class TorchModuleNode(BaseTorchNode, ABC):
 
         self._last_applied_params = model_data["module_parameters"]
         self.module = self.build_torch_module(self._last_applied_params)
-        self.module.to(self.device)
+        self.module.to(DEFAULT_DEVICE)
 
         self.module.load_state_dict(model_data["model_state"], strict=True)
 
