@@ -1,7 +1,7 @@
 {
  "capitalized_name": "loss",
- "brief": "[Tensor](@datatype:tensor) que representa o erro entre um valor previsto e um valor alvo",
- "description": "[Tensor](@datatype:tensor) que representa o erro entre um valor previsto e um valor alvo",
+ "brief": "[Tensor](@datatype:ytorchplugin.tensor) que representa o erro entre um valor previsto e um valor alvo",
+ "description": "[Tensor](@datatype:ytorchplugin.tensor) que representa o erro entre um valor previsto e um valor alvo",
  "usages": null,
  "inStyle": {
   "color": null,
