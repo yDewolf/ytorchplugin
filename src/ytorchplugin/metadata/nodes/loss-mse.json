@@ -1,5 +1,5 @@
 {
- "capitalized_name": "loss-mse",
+ "capitalized_name": "MinimumSquaredErrorLoss",
  "brief": null,
  "description": "",
  "usages": null,

@@ -25,8 +25,8 @@ class TrainerNode(BaseNode[TrainerNodeInput, NodeOutputs]):
         lr: Annotated[float, Param(
             label="Learning Rate",
             max=1.0,
-            step=1e-6
-        )] = 1e-6
+            step=1e-4
+        )] = 1e-3
 
     params: Parameters # type: ignore
 

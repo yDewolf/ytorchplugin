@@ -1,9 +1,9 @@
 {
  "package_id": "ytorchplugin",
  "package_version": "0.1.1",
- "meta_version": 0,
- "content_hash": null,
- "last_modified": null,
+ "meta_version": 2,
+ "content_hash": "5474d02dfea72e6d6edd98cd60540d63",
+ "last_modified": 1795627473.6038733,
  "tags": {
   "default": {
    "description": ""

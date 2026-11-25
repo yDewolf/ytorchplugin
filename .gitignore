@@ -215,3 +215,5 @@ __marimo__/
 /_workspaces/test_user/instances/test_user-389752.160284/node_states
 /_workspaces
 /data
+src/.plugin_list.json
+/scenes

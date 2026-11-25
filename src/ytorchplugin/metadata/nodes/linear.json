@@ -1,6 +1,6 @@
 {
  "capitalized_name": "Linear",
- "brief": null,
+ "brief": "Aplica uma transformação linear do tipo y = xW^T + b aos dados de entrada.",
  "description": "Aplica uma transformação linear do tipo y = xW^T + b aos dados de entrada.",
  "usages": null,
  "category": "Module",

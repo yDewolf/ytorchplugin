@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "package_id": "ytorchplugin",
   "data_types": {
     "ytorchplugin:loss": {
@@ -340,12 +340,12 @@
       "parameters": {
         "lr": {
           "type": "float",
-          "default": 1e-6,
+          "default": 0.001,
           "required": false,
           "datatype_fqn": "core:float",
           "min": null,
           "max": 1.0,
-          "step": 1e-6
+          "step": 0.0001
         }
       },
       "slots": {

@@ -1,6 +1,6 @@
 {
   "package_id": "ytorchplugin",
-  "plugin_version": "0.1.0",
+  "plugin_version": "0.1.1",
   "engine_version": ">=0.2.0",
   "plugin_api_version": ">=1.3.0",
   "dependencies": {
@@ -10,15 +10,14 @@
     "torch": ">=2.11.0",
     "torchvision": ">=0.26.0",
     "torchinfo": ">=1.8.0",
-    "matplotlib": ">=3.11.2",
-    "platformdirs": ">=4.14.5"
+    "matplotlib": ">=3.11.2"
   },
   "authors": [
     "yDewolf"
   ],
   "description": "This plugin implements some PyTorch nodes.",
   "root_path": "C:\\dev\\Python\\ytorchplugin\\src\\ytorchplugin",
-  "source_hash": "cb1cd51c6107870c3d6610f621663f72ecc0d8147dd63cd7f170d2d10416dd1f",
+  "source_hash": "94bb8b32ea573809198fd4f627dec536250ea5aa0b72a17b669c7950c82b65a3",
   "nodes_cache": {
     "ytorchplugin:actv_relu": {
       "class_path": "nodes.activation.base_activation.ReLUNode",
@@ -80,8 +79,8 @@
       "class_path": "nodes.modules.conv2d_node.Conv2DNode",
       "required_datatypes": [
         "ytorchplugin:tensor",
-        "core:string",
-        "core:int"
+        "core:int",
+        "core:string"
       ]
     },
     "ytorchplugin:linear": {
